@@ -27,3 +27,11 @@ extension Navigation on BuildContext {
 
 
 
+
+
+enum EnumTypeAction {
+  proposal,
+  alert,
+  inventory,
+  stock
+}

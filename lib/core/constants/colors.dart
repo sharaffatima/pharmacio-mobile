@@ -79,4 +79,5 @@ class AppColors {
 
   // Indicator Colors
   static const Color liveIndicatorGreen = Color(0xFF10B981);
+   static const Color primaryColors = Color(0xffD5FFDD);
 }

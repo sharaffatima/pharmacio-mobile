@@ -42,7 +42,7 @@ class CustomDropdown extends StatelessWidget {
         icon: Icon(Icons.arrow_drop_down_outlined, color: AppColors.greyStone),
         hint: Text(
           hintText,
-          style: AppTextStyles.font14GreyMedium,
+          style: AppTextStyles.s14w400,
           overflow: TextOverflow.ellipsis,
         ),
         items: items
