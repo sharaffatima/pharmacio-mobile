@@ -4,6 +4,7 @@ import 'package:pharmacio_flutter_mobile/Task/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/helpers/space_helpers.dart';
+import 'package:pharmacio_flutter_mobile/Task/core/public_widgets/custom_app_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,32 +13,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
-      appBar: AppBar(
-        toolbarHeight: 132.h,
-        backgroundColor: AppColors.backGroundAppBar,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.r)),
-        ),
-        title: Padding(
-          padding: EdgeInsets.only(left: 8.w, top: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppStrings.profileSettings, style: AppTextStyles.appBar),
-              verticalSpace(4),
-              Text(
-                AppStrings.mangeYourAccount,
-                style: AppTextStyles.descriptionAppbar,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: AppStrings.profileTitle,
+        subtitle: AppStrings.profileSubTitle,
       ),
       body: SingleChildScrollView(
-        // أضفت هذا لضمان عدم حدوث Overflow
         child: Column(
           children: [
-            // بطاقة معلومات الحساب
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),

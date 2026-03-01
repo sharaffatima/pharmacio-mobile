@@ -4,6 +4,7 @@ import 'package:pharmacio_flutter_mobile/Task/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/helpers/space_helpers.dart';
+import 'package:pharmacio_flutter_mobile/Task/core/public_widgets/custom_app_bar.dart';
 import 'package:pharmacio_flutter_mobile/Task/features/Proposal/data/mock_data.dart';
 import 'package:pharmacio_flutter_mobile/Task/features/Proposal/data/mock_data.dart'
     as ProposalMockData;
@@ -18,26 +19,9 @@ class ProposalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
-      appBar: AppBar(
-        toolbarHeight: 132.h,
-        backgroundColor: AppColors.backGroundAppBar,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.r)),
-        ),
-        title: Padding(
-          padding: EdgeInsets.only(left: 8.w, top: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppStrings.proposal, style: AppTextStyles.appBar),
-              verticalSpace(4),
-              Text(
-                AppStrings.renewAndManage,
-                style: AppTextStyles.descriptionAppbar,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: AppStrings.proposalTitle,
+        subtitle: AppStrings.proposalSubTitle,
       ),
       body: SingleChildScrollView(
         child: Column(

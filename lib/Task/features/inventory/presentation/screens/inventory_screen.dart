@@ -1,9 +1,9 @@
 import 'package:pharmacio_flutter_mobile/Task/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/strings.dart';
-import 'package:pharmacio_flutter_mobile/Task/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/Task/core/helpers/space_helpers.dart';
+import 'package:pharmacio_flutter_mobile/Task/core/public_widgets/custom_app_bar.dart'
+    show CustomAppBar;
 import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/widget/inventory_filter.dart';
 import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/widget/inventory_item_card.dart';
 import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/widget/search_bar.dart';
@@ -17,26 +17,9 @@ class InventoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
-      appBar: AppBar(
-        toolbarHeight: 132.h,
-        backgroundColor: AppColors.backGroundAppBar,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.r)),
-        ),
-        title: Padding(
-          padding: EdgeInsets.only(left: 8.w, top: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppStrings.inventory, style: AppTextStyles.appBar),
-              verticalSpace(4),
-              Text(
-                AppStrings.trackAndManage,
-                style: AppTextStyles.descriptionAppbar,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBar(
+        title: AppStrings.inventoryTitle,
+        subtitle: AppStrings.profileSubTitle,
       ),
       body: SingleChildScrollView(
         child: Column(
