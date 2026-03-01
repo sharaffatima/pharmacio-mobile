@@ -84,4 +84,47 @@ class AppTextStyles {
     fontFamily: AppFonts.inter,
     fontSize: AppFontSize.s11,
   );
+  //propsal screen
+  static TextStyle proposalCardTitle = TextStyle(
+    fontFamily: AppFonts.inter,
+
+    color: AppColors.black,
+    fontWeight: AppFontWeight.semiBold,
+    fontSize: AppFontSize.s13,
+  );
+  static TextStyle proposalDate = TextStyle(
+    fontWeight: AppFontWeight.thin,
+    color: AppColors.black,
+    fontSize: 11.sp,
+  );
+  //profile screen
+  static TextStyle accountInformation = TextStyle(
+    fontFamily: AppFonts.inter,
+    color: AppColors.black,
+    fontWeight: AppFontWeight.semiBold,
+    fontSize: 14.sp,
+  );
+  static TextStyle userName = TextStyle(
+    fontSize: 17.sp,
+    color: AppColors.black,
+    fontFamily: AppFonts.inter,
+    fontWeight: AppFontWeight.semiBold,
+  );
+  static TextStyle userType = TextStyle(
+    color: AppColors.white,
+    fontSize: 12.sp,
+    fontFamily: AppFonts.inter,
+    fontWeight: AppFontWeight.semiBold,
+  );
+  static TextStyle labelProfile = TextStyle(
+    fontWeight: AppFontWeight.light,
+    color: AppColors.black,
+    fontSize: 12.sp,
+  );
+  static TextStyle valueProfile = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.semiBold,
+    fontSize: 12.sp,
+    fontFamily: AppFonts.inter,
+  );
 }

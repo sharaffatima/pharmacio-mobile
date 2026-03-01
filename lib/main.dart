@@ -19,7 +19,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/Task/features/Proposal/presentation/secreens/proposal_screen.dart';
 import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/screens/inventory_screen.dart';
+import 'package:pharmacio_flutter_mobile/Task/features/profile/presentation/screens/profile_screen.dart';
 
 void main() {
   runApp(const PharmacioApp());
@@ -36,7 +38,7 @@ class PharmacioApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
 
-          home: InventoryScreen(),
+          home: ProfileScreen(),
         );
       },
     );

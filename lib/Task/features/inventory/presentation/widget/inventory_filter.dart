@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/Task/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/Task/core/constants/text_style.dart';
 
 class InventoryFilter extends StatefulWidget {
@@ -39,7 +40,7 @@ class _InventoryFilterState extends State<InventoryFilter> {
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 value: selectedValue,
-                icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+                icon: Icon(Icons.keyboard_arrow_down, color: AppColors.gray),
                 style: AppTextStyles.filter,
                 onChanged: (String? newValue) {
                   setState(() {

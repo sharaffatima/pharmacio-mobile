@@ -33,8 +33,7 @@ class SearchBarWidget extends StatelessWidget {
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             isDense: true,
-            contentPadding:
-                EdgeInsets.zero, // لإزالة الحواف الداخلية الافتراضية
+
             prefixIcon: Icon(Icons.search, size: 18.w),
             hintText: AppStrings.searchTitle,
             hintStyle: AppTextStyles.searchBar,
