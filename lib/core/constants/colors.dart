@@ -11,6 +11,7 @@ class AppColors {
   static const Color black = Color(0xff000000);
   static const Color backGroundBody = Color(0xffD5FFDD);
   // Cards Color
+   static const Color forestGreen = Color(0xff049A2E);
   static const Color bluePrimary = Color(0xFF001CBC);
   static const Color greenSuccess = Color(0xFF218C00);
   static const Color orangeWarning = Color(0xFFF95B00);

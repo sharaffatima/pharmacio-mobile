@@ -4,7 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
-import 'package:pharmacio_flutter_mobile/core/helpers/space_helpers.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+// import 'package:pharmacio_flutter_mobile/core/helpers/space_helpers.dart';
 
 class InventoryItemCard extends StatelessWidget {
   final String name;
