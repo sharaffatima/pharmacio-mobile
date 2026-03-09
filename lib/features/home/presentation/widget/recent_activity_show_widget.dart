@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+// import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/screens/home_page.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/row_Action_widget.dart';

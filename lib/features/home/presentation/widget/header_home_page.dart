@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+// import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 
 class headerHomePagewidget extends StatelessWidget {
   const headerHomePagewidget({super.key});
@@ -26,9 +27,9 @@ class headerHomePagewidget extends StatelessWidget {
           SizedBox(height: 25.h),
           Text(
             'Welcome Back!',
-            style: AppTextStyles.s20w600.copyWith(
+            style: AppTextStyles.s20w700.copyWith(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
+        
             ),
           ),
           SizedBox(height: 5.h),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_application_pharmecy/features/auth/data/enum/enum_type_action.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+// import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/dash_board_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/header_home_page.dart';
@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColors,
+      backgroundColor: AppColors.backGroundBody,
       body: Column(
         children: [
           headerHomePagewidget(),

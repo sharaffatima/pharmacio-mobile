@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
     TextEditingController userNameController = TextEditingController();
     TextEditingController password = TextEditingController();
     return Scaffold(
-      backgroundColor: AppColors.primaryColors,
+      backgroundColor: AppColors.backGroundBody,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
@@ -81,7 +81,7 @@ class CustomElevatedButtom extends StatelessWidget {
         ),
         child: Text(
           'log in',
-          style: AppTextStyles.s16w500.copyWith(color: colorButton),
+          style: AppTextStyles.s15w500.copyWith(color: colorButton),
         ),
       ),
     );
@@ -157,13 +157,10 @@ class appLogoAndAppNameWidget extends StatelessWidget {
         SizedBox(height: 41.h),
         Text(
           'Pharmacio',
-          style: AppTextStyles.s20w600.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 32.sp,
-          ),
+          style: AppTextStyles.s32w500
         ),
         SizedBox(height: 12.h),
-        Text('Pharmacist Portal', style: AppTextStyles.s16w500),
+        Text('Pharmacist Portal', style: AppTextStyles.s15w500),
       ],
     );
   }

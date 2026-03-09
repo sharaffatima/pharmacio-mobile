@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacio_flutter_mobile/features/home/presentation/screens/alert_screen.dart';
 
 
 import 'routes.dart';
@@ -9,10 +10,7 @@ class AppRouter {
     switch (settings.name) {
       case Routes.loginScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            // create: (context) => getIt<LoginCubit>(),
-            child: LoginPage(),
-          ),
+          builder: (_) => AlertsPages(),
         );
 
       default:

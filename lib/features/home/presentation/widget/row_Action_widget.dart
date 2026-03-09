@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+// import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 
 class RowActionWidget extends StatelessWidget {
@@ -35,7 +36,7 @@ class RowActionWidget extends StatelessWidget {
             Text(title, style: AppTextStyles.s12w400),
              Text(
           '$dataTime ',
-          style: AppTextStyles.s12w400.copyWith(
+          style: AppTextStyles.s10w200.copyWith(
             color: const Color.fromARGB(191, 78, 78, 78),
             fontSize: 10,
             fontWeight: FontWeight.w200

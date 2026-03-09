@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+
 
 class cardQuickActionswidget extends StatelessWidget {
   const cardQuickActionswidget({

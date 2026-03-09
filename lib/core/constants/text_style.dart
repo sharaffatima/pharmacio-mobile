@@ -127,4 +127,53 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontFamily: AppFonts.inter,
   );
+    static TextStyle s32w500 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.medium,
+    fontSize: 32.sp,
+    fontFamily: AppFonts.inter,
+  );
+    static TextStyle s15w500 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.medium,
+    fontSize: 15.sp,
+    fontFamily: AppFonts.inter,
+  );
+    static TextStyle s14w500 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.medium,
+    fontSize: 14.sp,
+    fontFamily: AppFonts.inter,
+  );
+
+    static TextStyle s12w400 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.regular,
+    fontSize: 12.sp,
+    fontFamily: AppFonts.inter,
+  );
+
+    static TextStyle s14w400 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.regular,
+    fontSize: 14.sp,
+    fontFamily: AppFonts.inter,
+  );
+
+
+
+    static TextStyle s10w200 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.thin,
+    fontSize: 10.sp,
+    fontFamily: AppFonts.inter,
+  );
+
+
+    static TextStyle s20w700 = TextStyle(
+    color: AppColors.black,
+    fontWeight: AppFontWeight.bold,
+    fontSize: 20.sp,
+    fontFamily: AppFonts.inter,
+  );
 }

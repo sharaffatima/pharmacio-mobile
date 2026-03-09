@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/fonts_weight.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+// import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 
 class CardDashBourdWidget extends StatelessWidget {
@@ -28,9 +30,7 @@ class CardDashBourdWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.s12w400.copyWith(
-              fontSize: 10,
-              fontWeight: FontWeight.w200,
+            style: AppTextStyles.s10w200.copyWith(
               color: Color(0xff4e4e4e),
             ),
           ),
@@ -39,7 +39,7 @@ class CardDashBourdWidget extends StatelessWidget {
             children: [
               Text(
                 '$value',
-                style: AppTextStyles.s14w600.copyWith(color: _setColorsIcons()),
+                style: AppTextStyles.s14w500.copyWith(color: _setColorsIcons(),fontWeight: AppFontWeight.semiBold),
               ),
               Icon(_setIcons(), color: _setColorsIcons(), size: 20.sp),
             ],

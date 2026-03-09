@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_application_pharmecy/features/auth/data/enum/enum_type_action.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 
 class AlertsPages extends StatelessWidget {
@@ -13,7 +13,7 @@ class AlertsPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColors,
+      backgroundColor: AppColors.backGroundBody,
       body: Column(
         children: [
           headerAlertPage(),
@@ -60,17 +60,13 @@ class cardNotificationWidget extends StatelessWidget {
               children: [
                 Text(
                   'Critical Low Stock',
-                  style: AppTextStyles.s12w400.copyWith(
+                  style: AppTextStyles.s15w500.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Aspirin 500mg has reached critical stock level (5 units remaining)  ',
-                  style: AppTextStyles.s12w400.copyWith(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w200,
-                  ),
-                ),
+                  style: AppTextStyles.proposalDate),
                 Text(
                   '5 hours ',
                   style: AppTextStyles.s12w400.copyWith(
@@ -165,9 +161,8 @@ class headerAlertPage extends StatelessWidget {
           SizedBox(height: 25.h),
           Text(
             'Alerts',
-            style: AppTextStyles.s20w600.copyWith(
+            style: AppTextStyles.s20w700.copyWith(
               color: Colors.white,
-              fontWeight: FontWeight.w700,
             ),
           ),
           SizedBox(height: 1.h),
