@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
-import 'package:pharmacio_flutter_mobile/features/home/presentation/screens/home_page.dart';
+import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/card_quick_action_widget.dart';
 
 class scanAndUploadFileSectionWidget extends StatelessWidget {
@@ -39,6 +38,11 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
                   child: cardQuickActionswidget(
                     title: 'scan carema',
                     icon: Icons.camera_alt_outlined,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      Routes.scanScreen,
+                      arguments: 0,
+                    ),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -46,6 +50,11 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
                   child: cardQuickActionswidget(
                     title: 'upload File',
                     icon: Icons.file_upload_outlined,
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      Routes.scanScreen,
+                      arguments: 1,
+                    ),
                   ),
                 ),
               ],

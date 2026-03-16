@@ -29,7 +29,9 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  camera: ^0.11.2
   dio: ^5.9.1
+  file_picker: ^10.3.10
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
