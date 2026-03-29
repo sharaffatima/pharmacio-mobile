@@ -420,7 +420,7 @@ class _BulletLine extends StatelessWidget {
             padding: EdgeInsets.only(top: 6.h),
             child: Icon(
               Icons.circle,
-              size: 5.r,
+              size: 8.r,
               color: const Color(0xFF6A6A6A),
             ),
           ),
@@ -502,11 +502,7 @@ class _ContentCard extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              Icon(
-                Icons.tips_and_updates_outlined,
-                size: 18.r,
-                color: const Color(0xFF6A6A6A),
-              ),
+                 Text('📸'),
               SizedBox(width: 8.w),
               Text(
                 'Tips for best results:',

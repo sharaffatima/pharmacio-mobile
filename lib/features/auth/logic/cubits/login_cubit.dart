@@ -29,7 +29,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     try {
       final request = LoginRequestBody(
-        email: emailController.text,
+        username: emailController.text,
         password: passwordController.text,
       );
 
