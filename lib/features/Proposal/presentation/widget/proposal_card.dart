@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import '../../../../core/constants/text_style.dart';
 // import '../../../../core/helpers/space_helpers.dart';
@@ -32,7 +33,7 @@ class ProposalCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 22.w, right: 16.w, top: 11.h),
       padding: EdgeInsets.all(11.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.isDark ? AppColors.whiteLaight : AppColors.white,
         borderRadius: BorderRadius.circular(7.r),
       ),
       child: Column(
@@ -45,7 +46,7 @@ class ProposalCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
+                  color: Colors.blue.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Icon(
@@ -70,9 +71,11 @@ class ProposalCard extends StatelessWidget {
           ),
           Divider(height: 32.h, thickness: 0.8, color: Colors.grey.shade200),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildInfoColumn("Items", "$itemsCount items"),
+              horizontalSpace(120.w),
+
               _buildInfoColumn(
                 "Total cost",
                 "\$${totalCost.toStringAsFixed(2)}",
@@ -100,7 +103,7 @@ class ProposalCard extends StatelessWidget {
                 ? Icons.access_time
                 : status == "Approved"
                 ? Icons.check_circle_outline
-                : Icons.cancel_outlined,
+                : Icons.history_outlined,
             size: 14.sp,
             color: textColor,
           ),
@@ -124,12 +127,19 @@ class ProposalCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+          style: TextStyle(
+            color: AppColors.isDark ? AppColors.white : AppColors.white,
+            fontSize: 12.sp,
+          ),
         ),
         SizedBox(height: 4.h),
         Text(
           value,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 14.sp,
+            color: AppColors.isDark ? AppColors.gray : AppColors.black,
+          ),
         ),
       ],
     );

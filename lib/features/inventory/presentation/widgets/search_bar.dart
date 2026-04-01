@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 
 class SearchBarWidget extends StatelessWidget {
@@ -25,17 +25,19 @@ class SearchBarWidget extends StatelessWidget {
         width: 355.w,
         height: 30.h,
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: AppColors.whiteLaight,
           borderRadius: BorderRadius.circular(7.r),
         ),
         child: TextField(
+          style: TextStyle(
+            color: AppColors.isDark ? AppColors.white : AppColors.black,
+          ),
           controller: _searchController,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             isDense: true,
-
             prefixIcon: Icon(Icons.search, size: 18.w),
-            hintText: AppStrings.searchTitle,
+            hintText: "searchTitle".tr(),
             hintStyle: AppTextStyles.searchBar,
             border: InputBorder.none,
           ),

@@ -12,7 +12,9 @@ Widget buildStatCard(String value, String label, Color color) {
     decoration: BoxDecoration(
       color: AppColors.whiteLaight,
       borderRadius: BorderRadius.circular(7.r),
-      border: Border.all(color: AppColors.borderColor, width: 1.w),
+      border: Border.all(
+        color: AppColors.isDark ? Colors.transparent : AppColors.borderColor,
+      ),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,

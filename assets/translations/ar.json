@@ -1,0 +1,34 @@
+{
+  "inventoryTitle": "المخزون",
+  "inventorySubTitle": "تتبع وإدارة مستويات المخزون",
+  "proposaltitle": "الإجمالي",
+  "inStock": "متوفر",
+  "low": "منخفض",
+  "out": "غير متوفر",
+  "searchTitle": "ابحث عن عناصر...",
+  "currentStock": "المخزون الحالي:",
+  "minStock": "الحد الأدنى للمخزون:",
+  "boxes": "علب",
+  "lastUpdated": "آخر تحديث:",
+
+  "proposalTitle": "الطلبات",
+  "proposalSubTitle": "تجديد وإدارة طلبات الشراء",
+
+  "profileTitle": "الملف الشخصي والإعدادات",
+  "profileSubTitle": "إدارة معلومات حسابك",
+  "accountInformation": "معلومات الحساب",
+  "userName": "صيدلي",
+  "userType": "صيدلي"
+,
+  "allItems": "كل العناصر",
+
+  "hours": "ساعات",
+  "mins": "دقائق",
+  "days": "أيام",
+    "panadol": "بنادول أدفانس 500 ملغ",
+  "aspirin": "أسبرين 100 ملغ",
+  "amoxicillin": "أموكسيسيلين 500 ملغ",
+  "vitaminC": "فيتامين C 1000 ملغ",
+  "ibuprofen": "إيبوبروفين 400 ملغ"
+}
+

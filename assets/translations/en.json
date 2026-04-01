@@ -1,0 +1,31 @@
+{
+  "inventoryTitle": "Inventory",
+  "inventorySubTitle": "Track and manage stock levels",
+  "proposaltitle": "Total",
+  "inStock": "In stock",
+  "low": "Low",
+  "out": "Out",
+  "searchTitle": "Search items...",
+  "currentStock": "Current stock:",
+  "minStock": "Min stock :",
+  "boxes": "boxes",
+  "lastUpdated": "Last updated :",
+  "allItems": "All item",
+
+  "proposalTitle": "Proposal",
+  "proposalSubTitle": "Renew and manage purchase proposals",
+
+  "profileTitle": "Profile & Settings",
+  "profileSubTitle": "Manage your account information",
+  "accountInformation": "Account Information",
+  "userName": "John Pharmacist",
+  "userType": "Pharmacist",
+  "hours": "hours ago",
+  "mins": "minutes ago",
+  "days": "days ago",
+    "panadol": "Panadol Advance 500 mg",
+  "aspirin": "Aspirin 100 mg",
+  "amoxicillin": "Amoxicillin 500 mg",
+  "vitaminC": "Vitamin C 1000 mg",
+  "ibuprofen": "Ibuprofen 400 mg"
+}

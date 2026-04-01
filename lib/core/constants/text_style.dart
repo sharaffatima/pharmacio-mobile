@@ -7,13 +7,13 @@ import 'package:pharmacio_flutter_mobile/core/constants/fonts_weight.dart';
 
 class AppTextStyles {
   static TextStyle appBar = TextStyle(
-    color: AppColors.whiteLaight,
+    color: AppColors.neutralWhiteLaight,
     fontFamily: AppFonts.inter,
     fontWeight: AppFontWeight.extraBold,
     fontSize: AppFontSize.s24,
   );
   static TextStyle descriptionAppbar = TextStyle(
-    color: AppColors.whiteLaight,
+    color: AppColors.neutralWhiteLaight,
     fontFamily: AppFonts.inter,
     fontWeight: AppFontWeight.light,
     fontSize: AppFontSize.s16,
@@ -27,17 +27,17 @@ class AppTextStyles {
   static TextStyle labelCard = TextStyle(
     fontFamily: AppFonts.inter,
     fontSize: AppFontSize.s10,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.gray : AppColors.black,
     fontWeight: AppFontWeight.regular,
   );
   static TextStyle searchBar = TextStyle(
     fontFamily: AppFonts.inter,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontWeight: AppFontWeight.thin,
     fontSize: AppFontSize.s13,
   );
   static TextStyle filter = TextStyle(
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.gray : AppColors.black,
     fontSize: AppFontSize.s13,
     fontWeight: AppFontWeight.medium,
   );
@@ -45,7 +45,7 @@ class AppTextStyles {
     fontFamily: AppFonts.inter,
     fontSize: AppFontSize.s14,
     fontWeight: AppFontWeight.semiBold,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
   );
   static TextStyle minStock = TextStyle(
     fontFamily: AppFonts.inter,
@@ -56,7 +56,7 @@ class AppTextStyles {
   static TextStyle currentStockCount(Color color) =>
       TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700, color: color);
   static TextStyle currentStock = TextStyle(
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontSize: AppFontSize.s11,
     fontFamily: AppFonts.inter,
     fontWeight: AppFontWeight.light,
@@ -88,25 +88,25 @@ class AppTextStyles {
   static TextStyle proposalCardTitle = TextStyle(
     fontFamily: AppFonts.inter,
 
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontWeight: AppFontWeight.semiBold,
     fontSize: AppFontSize.s13,
   );
   static TextStyle proposalDate = TextStyle(
     fontWeight: AppFontWeight.thin,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontSize: 11.sp,
   );
   //profile screen
   static TextStyle accountInformation = TextStyle(
     fontFamily: AppFonts.inter,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontWeight: AppFontWeight.semiBold,
     fontSize: 14.sp,
   );
   static TextStyle userName = TextStyle(
     fontSize: 17.sp,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontFamily: AppFonts.inter,
     fontWeight: AppFontWeight.semiBold,
   );
@@ -118,59 +118,56 @@ class AppTextStyles {
   );
   static TextStyle labelProfile = TextStyle(
     fontWeight: AppFontWeight.light,
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.white : AppColors.black,
     fontSize: 12.sp,
   );
   static TextStyle valueProfile = TextStyle(
-    color: AppColors.black,
+    color: AppColors.isDark ? AppColors.gray : AppColors.black,
     fontWeight: AppFontWeight.semiBold,
     fontSize: 12.sp,
     fontFamily: AppFonts.inter,
   );
-    static TextStyle s32w500 = TextStyle(
+  static TextStyle s32w500 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.medium,
     fontSize: 32.sp,
     fontFamily: AppFonts.inter,
   );
-    static TextStyle s15w500 = TextStyle(
+  static TextStyle s15w500 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.medium,
     fontSize: 15.sp,
     fontFamily: AppFonts.inter,
   );
-    static TextStyle s14w500 = TextStyle(
+  static TextStyle s14w500 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.medium,
     fontSize: 14.sp,
     fontFamily: AppFonts.inter,
   );
 
-    static TextStyle s12w400 = TextStyle(
+  static TextStyle s12w400 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.regular,
     fontSize: 12.sp,
     fontFamily: AppFonts.inter,
   );
 
-    static TextStyle s14w400 = TextStyle(
+  static TextStyle s14w400 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.regular,
     fontSize: 14.sp,
     fontFamily: AppFonts.inter,
   );
 
-
-
-    static TextStyle s10w200 = TextStyle(
+  static TextStyle s10w200 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.thin,
     fontSize: 10.sp,
     fontFamily: AppFonts.inter,
   );
 
-
-    static TextStyle s20w700 = TextStyle(
+  static TextStyle s20w700 = TextStyle(
     color: AppColors.black,
     fontWeight: AppFontWeight.bold,
     fontSize: 20.sp,
