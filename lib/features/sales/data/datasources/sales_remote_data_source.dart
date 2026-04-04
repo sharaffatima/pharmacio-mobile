@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/api_services_impl.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/app_link_url.dart';
+import 'package:pharmacio_flutter_mobile/core/networking/error/error_handler/network_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/sales_request.dart';
@@ -23,12 +25,18 @@ class SalesRemoteDataSourceImpl implements SalesRemoteDataSource {
 
   @override
   Future<SalesResponseModel> recordSale(SalesRequestModel request) async {
-    final token = await _getToken();
-    final response = await apiServicesImpl.post(
-      AppLinkUrl.recordSale,
-      token: token,
-      body: request.toJson(),
-    );
-    return SalesResponseModel.fromJson(response);
+    try {
+      final token = await _getToken();
+      final response = await apiServicesImpl.post(
+        AppLinkUrl.recordSale,
+        token: token,
+        body: request.toJson(),
+      );
+      return SalesResponseModel.fromJson(response);
+    } on DioException catch (e) {
+      throw NetworkExceptions.getException(e);
+    } catch (e) {
+      throw NetworkExceptions.getException(e);
+    }
   }
 }

@@ -4,9 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
-import 'package:pharmacio_flutter_mobile/features/auth/presentation/screens/login_screen.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
@@ -78,26 +79,24 @@ class ChangePasswordScreen extends StatelessWidget {
                     SizedBox(height: 8.h),
                     Text(
                       'Please enter your current password and choose a new one.',
-                      style: AppTextStyles.s12w400.copyWith(
-                        color: Colors.grey,
-                      ),
+                      style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                     ),
                     SizedBox(height: 24.h),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Current Password',
                       controller: cubit.oldPasswordController,
                       hintText: 'Enter current password',
                       isPassword: true,
                     ),
                     SizedBox(height: 16.h),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'New Password',
                       controller: cubit.newPasswordController,
                       hintText: 'Enter new password',
                       isPassword: true,
                     ),
                     SizedBox(height: 16.h),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Confirm New Password',
                       controller: cubit.confirmNewPasswordController,
                       hintText: 'Re-enter new password',
@@ -110,12 +109,11 @@ class ChangePasswordScreen extends StatelessWidget {
                           loading: () => true,
                           orElse: () => false,
                         );
-                        return CustomElevatedButton(
-                          colorButton: AppColors.forestGreen,
-                          textButton: Colors.white,
+                        return AppPrimaryButton(
                           label: 'Change Password',
                           isLoading: isLoading,
-                          onTap: () => cubit.changePassword(),
+                          backgroundColor: AppColors.forestGreen,
+                          onPressed: () => cubit.changePassword(),
                         );
                       },
                     ),

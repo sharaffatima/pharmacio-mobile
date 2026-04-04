@@ -41,13 +41,12 @@ class AppRouter {
         );
 
       case Routes.homeScreen:
-        return MaterialPageRoute(
-          builder: (_) => const MainNavigationScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => MainNavigationScreen());
 
       case Routes.scanScreen:
-        final tabIndex =
-            settings.arguments is int ? settings.arguments as int : 0;
+        final tabIndex = settings.arguments is int
+            ? settings.arguments as int
+            : 0;
         return MaterialPageRoute(
           builder: (_) => BlocProvider<OffersCubit>(
             create: (_) => getIt<OffersCubit>(),
@@ -90,7 +89,9 @@ class AppRouter {
       case Routes.proposalScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<ProposalsCubit>(
-            create: (_) => getIt<ProposalsCubit>()..getProposals(),
+            create: (_) => getIt<ProposalsCubit>()
+              ..getProposals()
+              ..getAvailableOffers(),
             child: const ProposalScreen(),
           ),
         );
@@ -99,7 +100,8 @@ class AppRouter {
         final proposalId = settings.arguments as int;
         return MaterialPageRoute(
           builder: (_) => BlocProvider<ProposalsCubit>(
-            create: (_) => getIt<ProposalsCubit>()..getProposalDetail(proposalId),
+            create: (_) =>
+                getIt<ProposalsCubit>()..getProposalDetail(proposalId),
             child: ProposalDetailScreen(proposalId: proposalId),
           ),
         );

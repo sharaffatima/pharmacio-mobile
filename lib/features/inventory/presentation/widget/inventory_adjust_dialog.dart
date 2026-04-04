@@ -5,7 +5,8 @@ import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/di/dependency_injection.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
-import 'package:pharmacio_flutter_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 
 class InventoryAdjustDialog extends StatelessWidget {
@@ -85,9 +86,7 @@ class InventoryAdjustDialog extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(16.r),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
           ),
           child: Form(
             key: cubit.adjustFormKey,
@@ -106,25 +105,21 @@ class InventoryAdjustDialog extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(16),
-                Text(
-                  'Adjust Inventory',
-                  style: AppTextStyles.s20w700,
-                ),
+                Text('Adjust Inventory', style: AppTextStyles.s20w700),
                 verticalSpace(4),
                 Text(
                   productName,
-                  style: AppTextStyles.s14w400.copyWith(
-                    color: AppColors.gray,
-                  ),
+                  style: AppTextStyles.s14w400.copyWith(color: AppColors.gray),
                 ),
                 verticalSpace(20),
-                TitleAndInputWidget(
+                AppLabeledTextFormField(
                   title: 'Adjustment (use negative for decrease)',
                   controller: cubit.adjustmentController,
                   hintText: 'e.g. -5 or 10',
+                  keyboardType: TextInputType.number,
                 ),
                 verticalSpace(16),
-                TitleAndInputWidget(
+                AppLabeledTextFormField(
                   title: 'Reason',
                   controller: cubit.reasonController,
                   hintText: 'e.g. Damaged units',
@@ -136,12 +131,11 @@ class InventoryAdjustDialog extends StatelessWidget {
                       loading: () => true,
                       orElse: () => false,
                     );
-                    return CustomElevatedButton(
-                      colorButton: AppColors.forestGreen,
-                      textButton: Colors.white,
+                    return AppPrimaryButton(
                       label: 'Adjust',
                       isLoading: isLoading,
-                      onTap: () {
+                      backgroundColor: AppColors.forestGreen,
+                      onPressed: () {
                         if (cubit.adjustmentController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

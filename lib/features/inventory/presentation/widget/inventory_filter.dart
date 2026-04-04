@@ -3,15 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 
-class InventoryFilter extends StatefulWidget {
-  const InventoryFilter({super.key});
+class InventoryFilter extends StatelessWidget {
+  InventoryFilter({super.key});
 
-  @override
-  _InventoryFilterState createState() => _InventoryFilterState();
-}
-
-class _InventoryFilterState extends State<InventoryFilter> {
-  String selectedValue = 'All items';
+  final String selectedValue = 'All items';
 
   final List<String> items = [
     'All items',
@@ -42,11 +37,7 @@ class _InventoryFilterState extends State<InventoryFilter> {
                 value: selectedValue,
                 icon: Icon(Icons.keyboard_arrow_down, color: AppColors.gray),
                 style: AppTextStyles.filter,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedValue = newValue!;
-                  });
-                },
+                onChanged: (_) {},
                 items: items.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

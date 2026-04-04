@@ -4,8 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
-import 'package:pharmacio_flutter_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 
 class InventoryCreateScreen extends StatelessWidget {
@@ -29,9 +30,7 @@ class InventoryCreateScreen extends StatelessWidget {
             successCreate: (response) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                    '${response.product} added successfully!',
-                  ),
+                  content: Text('${response.product} added successfully!'),
                   backgroundColor: AppColors.greenSuccess,
                   behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
@@ -71,33 +70,32 @@ class InventoryCreateScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'New Inventory Item',
-                      style: AppTextStyles.s20w700,
-                    ),
+                    Text('New Inventory Item', style: AppTextStyles.s20w700),
                     verticalSpace(20),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Product Name',
                       controller: cubit.productNameController,
                       hintText: 'Enter product name',
                     ),
                     verticalSpace(16),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Strength',
                       controller: cubit.strengthController,
                       hintText: 'e.g. 500mg',
                     ),
                     verticalSpace(16),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Quantity on Hand',
                       controller: cubit.quantityOnHandController,
                       hintText: 'Enter quantity',
+                      keyboardType: TextInputType.number,
                     ),
                     verticalSpace(16),
-                    TitleAndInputWidget(
+                    AppLabeledTextFormField(
                       title: 'Minimum Threshold',
                       controller: cubit.minThresholdController,
                       hintText: 'Enter min threshold',
+                      keyboardType: TextInputType.number,
                     ),
                     verticalSpace(24),
                     BlocBuilder<InventoryCubit, InventoryState>(
@@ -106,12 +104,11 @@ class InventoryCreateScreen extends StatelessWidget {
                           loading: () => true,
                           orElse: () => false,
                         );
-                        return CustomElevatedButton(
-                          colorButton: AppColors.forestGreen,
-                          textButton: Colors.white,
+                        return AppPrimaryButton(
                           label: 'Add Item',
                           isLoading: isLoading,
-                          onTap: () {
+                          backgroundColor: AppColors.forestGreen,
+                          onPressed: () {
                             if (cubit.productNameController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

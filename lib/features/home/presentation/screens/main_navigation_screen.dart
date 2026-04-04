@@ -9,15 +9,10 @@ import 'package:pharmacio_flutter_mobile/features/profile/presentation/screens/p
 import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_screen.dart';
 
-class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+class MainNavigationScreen extends StatelessWidget {
+  MainNavigationScreen({super.key});
 
-  @override
-  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
-}
-
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
+  static final ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
 
   final List<Widget> _pages = [
     const HomePage(),
@@ -30,65 +25,75 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: const Color(0xff2962ff), // A blue color resembling the image
-          unselectedItemColor: const Color(0xff607d8b), // A greyish blue
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-          items: [
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Badge(
-                label: const Text('3', style: TextStyle(color: Colors.white)),
-                backgroundColor: const Color(0xfff44336), // red
-                child: const Icon(Icons.notifications_none_outlined),
+      body: ValueListenableBuilder<int>(
+        valueListenable: MainNavigationScreen._currentIndexNotifier,
+        builder: (context, currentIndex, _) => _pages[currentIndex],
+      ),
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: MainNavigationScreen._currentIndexNotifier,
+        builder: (context, currentIndex, _) => Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+                offset: const Offset(0, -2),
               ),
-              activeIcon: Badge(
-                label: const Text('3', style: TextStyle(color: Colors.white)),
-                backgroundColor: const Color(0xfff44336), 
-                child: const Icon(Icons.notifications),
+            ],
+          ),
+          child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (index) {
+              MainNavigationScreen._currentIndexNotifier.value = index;
+            },
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            selectedItemColor: const Color(0xff2962ff),
+            unselectedItemColor: const Color(0xff607d8b),
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
+            items: [
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(Icons.home),
+                label: 'Home',
               ),
-              label: 'Alerts',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.inventory_2_outlined),
-              activeIcon: Icon(Icons.inventory_2),
-              label: 'Inventory',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.insert_drive_file_outlined),
-              activeIcon: Icon(Icons.insert_drive_file),
-              label: 'Proposals',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
+              BottomNavigationBarItem(
+                icon: Badge(
+                  label: const Text('3', style: TextStyle(color: Colors.white)),
+                  backgroundColor: const Color(0xfff44336),
+                  child: const Icon(Icons.notifications_none_outlined),
+                ),
+                activeIcon: Badge(
+                  label: const Text('3', style: TextStyle(color: Colors.white)),
+                  backgroundColor: const Color(0xfff44336),
+                  child: const Icon(Icons.notifications),
+                ),
+                label: 'Alerts',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.inventory_2_outlined),
+                activeIcon: Icon(Icons.inventory_2),
+                label: 'Inventory',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.insert_drive_file_outlined),
+                activeIcon: Icon(Icons.insert_drive_file),
+                label: 'Proposals',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                activeIcon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -125,9 +130,10 @@ class ProposalWrapperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ProposalsCubit>(
-      create: (_) => getIt<ProposalsCubit>()..getProposals(),
+      create: (_) => getIt<ProposalsCubit>()
+        ..getProposals()
+        ..getAvailableOffers(),
       child: const ProposalScreen(),
     );
   }
 }
-

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/presentation/screens/login_screen.dart';
@@ -74,25 +76,22 @@ class RegisterScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Create Account',
-                        style: AppTextStyles.s20w700,
-                      ),
+                      Text('Create Account', style: AppTextStyles.s20w700),
                       SizedBox(height: 16.h),
-                      TitleAndInputWidget(
+                      AppLabeledTextFormField(
                         title: 'User name',
                         controller: cubit.usernameController,
                         hintText: 'Enter your username',
                       ),
                       SizedBox(height: 16.h),
-                      TitleAndInputWidget(
+                      AppLabeledTextFormField(
                         title: 'Password',
                         controller: cubit.passwordController,
                         hintText: 'Enter your password',
                         isPassword: true,
                       ),
                       SizedBox(height: 16.h),
-                      TitleAndInputWidget(
+                      AppLabeledTextFormField(
                         title: 'Confirm Password',
                         controller: cubit.confirmPasswordController,
                         hintText: 'Re-enter your password',
@@ -105,12 +104,11 @@ class RegisterScreen extends StatelessWidget {
                             loading: () => true,
                             orElse: () => false,
                           );
-                          return CustomElevatedButton(
-                            colorButton: AppColors.forestGreen,
-                            textButton: Colors.white,
+                          return AppPrimaryButton(
                             label: 'Register',
                             isLoading: isLoading,
-                            onTap: () => cubit.register(),
+                            backgroundColor: AppColors.forestGreen,
+                            onPressed: () => cubit.register(),
                           );
                         },
                       ),

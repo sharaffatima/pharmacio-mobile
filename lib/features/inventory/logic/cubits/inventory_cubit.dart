@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -15,7 +16,13 @@ part 'inventory_cubit.freezed.dart';
 
 class InventoryCubit extends Cubit<InventoryState> {
   final InventoryRepo _inventoryRepo;
-  InventoryCubit(this._inventoryRepo) : super(InventoryState.initial());
+  InventoryCubit(this._inventoryRepo)
+    : searchController = TextEditingController(),
+      super(InventoryState.initial()) {
+    searchController.addListener(() {
+      _searchQuery.value = searchController.text.toLowerCase();
+    });
+  }
 
   // Controllers for create form
   TextEditingController productNameController = TextEditingController();
@@ -29,6 +36,10 @@ class InventoryCubit extends Cubit<InventoryState> {
 
   GlobalKey<FormState> createFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> adjustFormKey = GlobalKey<FormState>();
+
+  final TextEditingController searchController;
+  final ValueNotifier<String> _searchQuery = ValueNotifier<String>('');
+  ValueListenable<String> get searchQueryListenable => _searchQuery;
 
   Future<void> getInventoryList() async {
     emit(InventoryState.loading());
@@ -99,6 +110,8 @@ class InventoryCubit extends Cubit<InventoryState> {
     minThresholdController.dispose();
     adjustmentController.dispose();
     reasonController.dispose();
+    searchController.dispose();
+    _searchQuery.dispose();
     return super.close();
   }
 }

@@ -5,6 +5,7 @@ import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/data/models/me/me_response.dart';
@@ -86,16 +87,11 @@ class ProfileScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             verticalSpace(16),
-            ElevatedButton(
+            AppPrimaryButton(
+              label: 'Retry',
+              backgroundColor: AppColors.forestGreen,
+              width: 140.w,
               onPressed: () => context.read<AuthCubit>().getMe(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.forestGreen,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-              ),
-              child: const Text('Retry'),
             ),
           ],
         ),
@@ -235,18 +231,12 @@ class ProfileScreen extends StatelessWidget {
           // Change Password Button
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 19.w),
-            child: ElevatedButton.icon(
+            child: AppPrimaryButton(
+              label: 'Change Password',
+              icon: Icons.lock_outline,
+              backgroundColor: AppColors.forestGreen,
+              height: 29.h,
               onPressed: () => context.pushNamed(Routes.changePasswordScreen),
-              icon: Icon(Icons.lock_outline, size: 20.sp),
-              label: const Text("Change Password"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.forestGreen,
-                foregroundColor: Colors.white,
-                minimumSize: Size(double.infinity, 29.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-              ),
             ),
           ),
 
@@ -261,29 +251,13 @@ class ProfileScreen extends StatelessWidget {
                   loading: () => true,
                   orElse: () => false,
                 );
-                return ElevatedButton.icon(
-                  onPressed: isLoading
-                      ? null
-                      : () => _showLogoutDialog(context),
-                  icon: isLoading
-                      ? SizedBox(
-                          width: 18.w,
-                          height: 18.h,
-                          child: const CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : Icon(Icons.logout, size: 20.sp),
-                  label: Text(isLoading ? "Logging out..." : "Logout"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD34343),
-                    foregroundColor: Colors.white,
-                    minimumSize: Size(double.infinity, 29.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                  ),
+                return AppPrimaryButton(
+                  label: isLoading ? 'Logging out...' : 'Logout',
+                  icon: isLoading ? null : Icons.logout,
+                  isLoading: isLoading,
+                  backgroundColor: const Color(0xFFD34343),
+                  height: 29.h,
+                  onPressed: () => _showLogoutDialog(context),
                 );
               },
             ),

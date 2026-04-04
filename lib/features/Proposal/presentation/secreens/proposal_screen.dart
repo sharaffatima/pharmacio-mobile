@@ -9,8 +9,8 @@ import 'package:pharmacio_flutter_mobile/features/Proposal/logic/states/proposal
 import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/widget/proposal_card.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/presentation/widget/inventory_filter.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
-import 'package:pharmacio_flutter_mobile/features/inventory/presentation/widget/state_card.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/stat_card.dart';
 import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/available_offers_screen.dart';
 
 class ProposalScreen extends StatelessWidget {
@@ -52,20 +52,8 @@ class ProposalScreen extends StatelessWidget {
   }
 }
 
-class _ProposalsTab extends StatefulWidget {
+class _ProposalsTab extends StatelessWidget {
   const _ProposalsTab();
-
-  @override
-  State<_ProposalsTab> createState() => _ProposalsTabState();
-}
-
-class _ProposalsTabState extends State<_ProposalsTab> {
-  @override
-  void initState() {
-    super.initState();
-    // Fetch proposals when this tab loads so they display correctly automatically
-    context.read<ProposalsCubit>().getProposals();
-  }
 
   @override
   Widget build(BuildContext context) {
