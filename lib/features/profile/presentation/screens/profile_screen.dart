@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
-import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
-// import 'package:pharmacio_flutter_mobile/core/helpers/space_helpers.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
+import 'package:pharmacio_flutter_mobile/features/auth/data/models/me/me_response.dart';
+import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,139 +17,309 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
-      appBar: CustomAppBar(
-        title: AppStrings.profileTitle,
-        subtitle: AppStrings.profileSubTitle,
+      appBar: const CustomAppBar(
+        title: 'Profile & Settings',
+        subtitle: 'Manage your account information',
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: AppColors.circelBorder, width: 1),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppStrings.accountInformation,
-                    style: AppTextStyles.accountInformation,
-                  ),
-                  verticalSpace(16),
-                  Row(
-                    children: [
-                      Container(
-                        width: 55.w,
-                        height: 55.h,
-                        decoration: BoxDecoration(
-                          color: AppColors.blue.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.circelBorder),
-                        ),
-                        child: Icon(
-                          Icons.person,
-                          size: 35.sp,
-                          color: AppColors.blue,
-                        ),
-                      ),
-                      horizontalSpace(12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppStrings.userName,
-                            style: AppTextStyles.userName,
-                          ),
-                          verticalSpace(4),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 2.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.black,
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: Text(
-                              AppStrings.userType,
-                              style: AppTextStyles.userType,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  verticalSpace(17),
-                  const Divider(color: AppColors.circelBorder),
-                  verticalSpace(14),
-
-                  DetailRowWidget(
-                    icon: Icons.email_outlined,
-                    label: "Email",
-                    value: "pharmacist@pharmacy.com",
-                  ),
-                  DetailRowWidget(
-                    icon: Icons.business_center_outlined,
-                    label: "Role",
-                    value: "pharmacist",
-                  ),
-                  DetailRowWidget(
-                    icon: Icons.shield_outlined,
-                    label: "User ID",
-                    value: "2",
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: AppColors.circelBorder),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "App Information",
-                    style: AppTextStyles.accountInformation,
-                  ),
-                  verticalSpace(16),
-                  AppInformation(label: "Version", value: "1.0.0"),
-                  AppInformation(label: "Last Updated", value: "Feb 3, 2026"),
-                ],
-              ),
-            ),
-
-            verticalSpace(13),
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 19.w),
-              child: ElevatedButton.icon(
-                onPressed: () {},
-                icon: Icon(Icons.logout, size: 20.sp),
-                label: const Text("Logout"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD34343),
-                  foregroundColor: Colors.white,
-                  minimumSize: Size(double.infinity, 29.h),
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            successLogout: (response) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(response.message),
+                  backgroundColor: AppColors.greenSuccess,
+                  behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                 ),
+              );
+              context.pushNamedAndRemoveUntil(
+                Routes.loginScreen,
+                predicate: (route) => false,
+              );
+            },
+            error: (error) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(error),
+                  backgroundColor: AppColors.redError,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        builder: (context, state) {
+          return state.maybeWhen(
+            loading: () => const Center(
+              child: CircularProgressIndicator(color: AppColors.forestGreen),
+            ),
+            successGetMe: (meResponse) =>
+                _buildProfileContent(context, meResponse),
+            error: (error) => _buildErrorState(context, error),
+            orElse: () => const Center(
+              child: CircularProgressIndicator(color: AppColors.forestGreen),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildErrorState(BuildContext context, String error) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, size: 60.sp, color: AppColors.redError),
+            verticalSpace(16),
+            Text(
+              error,
+              style: AppTextStyles.s14w500,
+              textAlign: TextAlign.center,
+            ),
+            verticalSpace(16),
+            ElevatedButton(
+              onPressed: () => context.read<AuthCubit>().getMe(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.forestGreen,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
               ),
+              child: const Text('Retry'),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildProfileContent(BuildContext context, MeResponse meResponse) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Account Information Card
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: AppColors.circelBorder, width: 1),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Account Information',
+                  style: AppTextStyles.accountInformation,
+                ),
+                verticalSpace(16),
+                Row(
+                  children: [
+                    Container(
+                      width: 55.w,
+                      height: 55.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.blue.withValues(alpha: 0.2),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.circelBorder),
+                      ),
+                      child: Icon(
+                        Icons.person,
+                        size: 35.sp,
+                        color: AppColors.blue,
+                      ),
+                    ),
+                    SizedBox(width: 12.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          meResponse.username,
+                          style: AppTextStyles.userName,
+                        ),
+                        verticalSpace(4),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 2.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.black,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            meResponse.roles.isNotEmpty
+                                ? meResponse.roles.first
+                                : 'User',
+                            style: AppTextStyles.userType,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                verticalSpace(17),
+                const Divider(color: AppColors.circelBorder),
+                verticalSpace(14),
+                DetailRowWidget(
+                  icon: Icons.email_outlined,
+                  label: "Email",
+                  value: meResponse.email.isNotEmpty
+                      ? meResponse.email
+                      : 'Not provided',
+                ),
+                DetailRowWidget(
+                  icon: Icons.business_center_outlined,
+                  label: "Role",
+                  value: meResponse.roles.isNotEmpty
+                      ? meResponse.roles.join(', ')
+                      : 'N/A',
+                ),
+                DetailRowWidget(
+                  icon: Icons.shield_outlined,
+                  label: "User ID",
+                  value: meResponse.id.toString(),
+                ),
+                if (meResponse.phoneNumber != null &&
+                    meResponse.phoneNumber!.isNotEmpty)
+                  DetailRowWidget(
+                    icon: Icons.phone_outlined,
+                    label: "Phone",
+                    value: meResponse.phoneNumber!,
+                  ),
+              ],
+            ),
+          ),
+
+          // App Information Card
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: AppColors.circelBorder),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "App Information",
+                  style: AppTextStyles.accountInformation,
+                ),
+                verticalSpace(16),
+                const AppInformation(label: "Version", value: "1.0.0"),
+                const AppInformation(
+                  label: "Last Updated",
+                  value: "Feb 3, 2026",
+                ),
+              ],
+            ),
+          ),
+
+          verticalSpace(13),
+
+          // Change Password Button
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 19.w),
+            child: ElevatedButton.icon(
+              onPressed: () => context.pushNamed(Routes.changePasswordScreen),
+              icon: Icon(Icons.lock_outline, size: 20.sp),
+              label: const Text("Change Password"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.forestGreen,
+                foregroundColor: Colors.white,
+                minimumSize: Size(double.infinity, 29.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+            ),
+          ),
+
+          verticalSpace(10),
+
+          // Logout Button
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 19.w),
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                final isLoading = state.maybeWhen(
+                  loading: () => true,
+                  orElse: () => false,
+                );
+                return ElevatedButton.icon(
+                  onPressed: isLoading
+                      ? null
+                      : () => _showLogoutDialog(context),
+                  icon: isLoading
+                      ? SizedBox(
+                          width: 18.w,
+                          height: 18.h,
+                          child: const CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Icon(Icons.logout, size: 20.sp),
+                  label: Text(isLoading ? "Logging out..." : "Logout"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFD34343),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(double.infinity, 29.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          verticalSpace(20),
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text('Cancel', style: TextStyle(color: Colors.grey[600])),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              context.read<AuthCubit>().logout();
+            },
+            child: const Text(
+              'Logout',
+              style: TextStyle(color: Color(0xFFD34343)),
+            ),
+          ),
+        ],
       ),
     );
   }

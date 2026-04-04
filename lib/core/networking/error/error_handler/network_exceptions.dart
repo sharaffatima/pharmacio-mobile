@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../entities/error_entity.dart';
 part 'network_exceptions.freezed.dart';
+
 
 @freezed
 abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
@@ -77,31 +77,19 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
   }
 
   static NetworkExceptions handleResponse(Response<dynamic>? response) {
-    ErrorEntity errorModel;
-    try {
-      final data = response?.data;
-
-      if (data is Map<String, dynamic>) {
-        errorModel = ErrorEntity.fromJson(data);
-      } else if (data is String) {
-        errorModel = ErrorEntity.fromJson(jsonDecode(data));
-      } else {
-        errorModel = ErrorEntity(message: null);
-      }
-    } catch (_) {
-      errorModel = ErrorEntity(message: null);
-    }
-
-    int statusCode = response?.statusCode ?? 0;
+    final errorMessage = _extractErrors(response?.data);
+    final statusCode = response?.statusCode ?? 0;
 
     switch (statusCode) {
       case 400:
       case 401:
-        return NetworkExceptions.unauthorizedRequest("${errorModel.message}");
+        return NetworkExceptions.unauthorizedRequest(
+            errorMessage ?? 'بيانات غير صحيحة');
       case 403:
         return const NetworkExceptions.loggingInRequired();
       case 404:
-        return NetworkExceptions.notFound("${errorModel.message}");
+        return NetworkExceptions.notFound(
+            errorMessage ?? 'الصفحة غير موجودة');
       case 405:
         return const NetworkExceptions.methodNotAllowed();
       case 409:
@@ -109,16 +97,40 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
       case 408:
         return const NetworkExceptions.requestTimeout();
       case 422:
-        return NetworkExceptions.unprocessableEntity("${response}");
+        return NetworkExceptions.unprocessableEntity(
+            errorMessage ?? 'بيانات غير صالحة');
       case 500:
         return const NetworkExceptions.internalServerError();
       case 503:
         return const NetworkExceptions.serviceUnavailable();
       default:
-        var responseCode = statusCode;
         return NetworkExceptions.defaultError(
-          "Received invalid status code: $responseCode",
-        );
+            errorMessage ?? 'Status code: $statusCode');
+    }
+  }
+
+  static String? _extractErrors(dynamic data) {
+    try {
+      Map<String, dynamic> json;
+      if (data is Map<String, dynamic>) {
+        json = data;
+      } else if (data is String) {
+        json = jsonDecode(data) as Map<String, dynamic>;
+      } else {
+        return null;
+      }
+
+      final List<String> messages = [];
+      for (final value in json.values) {
+        if (value is List) {
+          messages.addAll(value.map((e) => e.toString()));
+        } else if (value is String && value.isNotEmpty) {
+          messages.add(value);
+        }
+      }
+      return messages.isNotEmpty ? messages.join('\n') : null;
+    } catch (_) {
+      return null;
     }
   }
 

@@ -24,6 +24,8 @@ import 'package:pharmacio_flutter_mobile/core/di/dependency_injection.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/app_shared_preferences.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/app_router.dart';
 import 'package:pharmacio_flutter_mobile/pharmacio_app.dart';
+
+import 'core/helpers/my_bloc_observer.dart';
 // import 'package:pharmacio_flutter_mobile/Task/features/Proposal/presentation/secreens/proposal_screen.dart';
 // import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/screens/inventory_screen.dart';
 // import 'package:pharmacio_flutter_mobile/Task/features/profile/presentation/screens/profile_screen.dart';
@@ -56,6 +58,6 @@ void main() async {
   setupGetit();
   await ScreenUtil.ensureScreenSize();
   await AppSharedPreferences().init();
-  // Bloc.observer = MyBlocObserver();
+  Bloc.observer = MyBlocObserver();
   runApp(PharmacioMobileApp(appRouter: AppRouter()));
 }
