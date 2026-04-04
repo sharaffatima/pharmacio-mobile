@@ -32,29 +32,32 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            Row(
+            Wrap(
+              spacing: 12.w,
+              runSpacing: 12.h,
               children: [
-                Expanded(
+                SizedBox(
+                  width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
                   child: cardQuickActionswidget(
-                    title: 'scan carema',
+                    title: 'Scan Camera',
                     icon: Icons.camera_alt_outlined,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      Routes.scanScreen,
-                      arguments: 0,
-                    ),
+                    onTap: () => Navigator.pushNamed(context, Routes.scanScreen, arguments: 0),
                   ),
                 ),
-                SizedBox(width: 12.w),
-                Expanded(
+                SizedBox(
+                  width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
                   child: cardQuickActionswidget(
-                    title: 'upload File',
+                    title: 'Upload File',
                     icon: Icons.file_upload_outlined,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      Routes.scanScreen,
-                      arguments: 1,
-                    ),
+                    onTap: () => Navigator.pushNamed(context, Routes.scanScreen, arguments: 1),
+                  ),
+                ),
+                SizedBox(
+                  width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
+                  child: cardQuickActionswidget(
+                    title: 'Record Sale',
+                    icon: Icons.point_of_sale_outlined,
+                    onTap: () => Navigator.pushNamed(context, Routes.saleScreen),
                   ),
                 ),
               ],

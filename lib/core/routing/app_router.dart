@@ -13,8 +13,9 @@ import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cub
 import 'package:pharmacio_flutter_mobile/features/profile/presentation/screens/profile_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_screen.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/available_offers_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_detail_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/sales/logic/cubits/sales_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/sales/presentation/screens/sale_screen.dart';
 
 import 'routes.dart';
 
@@ -86,14 +87,6 @@ class AppRouter {
           ),
         );
 
-      case Routes.availableOffersScreen:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider<ProposalsCubit>(
-            create: (_) => getIt<ProposalsCubit>()..getAvailableOffers(),
-            child: const AvailableOffersScreen(),
-          ),
-        );
-
       case Routes.proposalScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<ProposalsCubit>(
@@ -108,6 +101,14 @@ class AppRouter {
           builder: (_) => BlocProvider<ProposalsCubit>(
             create: (_) => getIt<ProposalsCubit>()..getProposalDetail(proposalId),
             child: ProposalDetailScreen(proposalId: proposalId),
+          ),
+        );
+
+      case Routes.saleScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<SalesCubit>(
+            create: (_) => getIt<SalesCubit>(),
+            child: const SaleScreen(),
           ),
         );
 

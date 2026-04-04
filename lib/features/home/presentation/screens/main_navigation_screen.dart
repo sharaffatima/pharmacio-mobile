@@ -6,6 +6,8 @@ import 'package:pharmacio_flutter_mobile/features/home/presentation/screens/home
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/presentation/screens/inventory_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/profile/presentation/screens/profile_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -21,7 +23,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const HomePage(),
     const Scaffold(body: Center(child: Text("Alerts Screen"))),
     const InventoryWrapperScreen(),
-    const Scaffold(body: Center(child: Text("Proposals Screen"))),
+    const ProposalWrapperScreen(),
     const ProfileWrapperScreen(),
   ];
 
@@ -116,3 +118,16 @@ class ProfileWrapperScreen extends StatelessWidget {
     );
   }
 }
+
+class ProposalWrapperScreen extends StatelessWidget {
+  const ProposalWrapperScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ProposalsCubit>(
+      create: (_) => getIt<ProposalsCubit>()..getProposals(),
+      child: const ProposalScreen(),
+    );
+  }
+}
+

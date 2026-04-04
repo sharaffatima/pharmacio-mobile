@@ -18,4 +18,7 @@ class AppLinkUrl {
   static const String purchaseProposals = "/purchase-proposals/";
   static const String compareOffers = "/purchase-proposals/compare/";
   static const String generateProposal = "/purchase-proposals/generate/";
+
+  // Sales
+  static const String recordSale = "/sales/";
 }

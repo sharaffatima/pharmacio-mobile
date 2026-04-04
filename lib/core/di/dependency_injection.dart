@@ -18,6 +18,9 @@ import '../../features/offers/logic/cubits/offers_cubit.dart';
 import '../../features/Proposal/data/datasources/proposals_remote_data_source.dart';
 import '../../features/Proposal/data/repos/proposals_repo.dart';
 import '../../features/Proposal/logic/cubits/proposals_cubit.dart';
+import '../../features/sales/data/datasources/sales_remote_data_source.dart';
+import '../../features/sales/data/repos/sales_repo.dart';
+import '../../features/sales/logic/cubits/sales_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -67,6 +70,11 @@ Future<void> setupGetit() async {
   getIt.registerLazySingleton<ProposalsRemoteDataSource>(
     () => ProposalsRemoteDataSourceImpl(apiServicesImpl: getIt()),
   );
+
+  //! feature - sales
+  getIt.registerFactory<SalesCubit>(() => SalesCubit(getIt()));
+  getIt.registerLazySingleton<SalesRepo>(() => SalesRepo(networkInfo: getIt(), salesRemoteDataSource: getIt()));
+  getIt.registerLazySingleton<SalesRemoteDataSource>(() => SalesRemoteDataSourceImpl(apiServicesImpl: getIt()));
 
   //! Core
 
