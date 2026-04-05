@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/data/models/upload_offer_response.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 
@@ -60,18 +61,18 @@ class ScanScreen extends StatelessWidget {
           child: Column(
             children: [
               Header(),
-              SizedBox(height: 12.h),
+              verticalSpace(12.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
                     WarehouseField(controller: offersCubit.warehouseController),
-                    SizedBox(height: 12.h),
+                    verticalSpace(12.h),
                     SegmentedTabs(),
                   ],
                 ),
               ),
-              SizedBox(height: 12.h),
+              verticalSpace(12.h),
               Expanded(
                 child: TabBarView(
                   children: [

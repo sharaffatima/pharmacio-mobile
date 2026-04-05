@@ -26,32 +26,6 @@ import 'package:pharmacio_flutter_mobile/core/routing/app_router.dart';
 import 'package:pharmacio_flutter_mobile/pharmacio_app.dart';
 
 import 'core/helpers/my_bloc_observer.dart';
-// import 'package:pharmacio_flutter_mobile/Task/features/Proposal/presentation/secreens/proposal_screen.dart';
-// import 'package:pharmacio_flutter_mobile/Task/features/inventory/presentation/screens/inventory_screen.dart';
-// import 'package:pharmacio_flutter_mobile/Task/features/profile/presentation/screens/profile_screen.dart';
-
-// void main() {
-//   runApp(const PharmacioApp());
-// }
-
-// class PharmacioApp extends StatelessWidget {
-//   const PharmacioApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScreenUtilInit(
-//       designSize: const Size(393, 852),
-//       builder: (context, child) {
-//         return MaterialApp(
-//           debugShowCheckedModeBanner: false,
-
-//           home: ProfileScreen(),
-//         );
-//       },
-//     );
-//   }
-// }
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
@@ -92,14 +93,14 @@ class _UploadContentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Upload File', style: AppTextStyles.s14w500),
-          SizedBox(height: 4.h),
+          verticalSpace(4.h),
           Text(
             'Upload PDF, Excel, or Image files',
             style: AppTextStyles.s12w400.copyWith(
               color: const Color(0xFF6A6A6A),
             ),
           ),
-          SizedBox(height: 14.h),
+          verticalSpace(14.h),
           _UploadOptionCard(
             icon: Icons.image_outlined,
             iconColor: const Color(0xFF2B66FF),
@@ -107,7 +108,7 @@ class _UploadContentCard extends StatelessWidget {
             subtitle: 'JPG, PNG, etc.',
             onTap: () => pickFile(extensions: const ['jpg', 'jpeg', 'png']),
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12.h),
           _UploadOptionCard(
             icon: Icons.picture_as_pdf_outlined,
             iconColor: const Color(0xFFE53935),
@@ -115,7 +116,7 @@ class _UploadContentCard extends StatelessWidget {
             subtitle: 'PDF documents',
             onTap: () => pickFile(extensions: const ['pdf']),
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12.h),
           _UploadOptionCard(
             icon: Icons.table_chart_outlined,
             iconColor: const Color(0xFF0F9D58),
@@ -132,7 +133,7 @@ class _UploadContentCard extends StatelessWidget {
 
               return Column(
                 children: [
-                  SizedBox(height: 14.h),
+                  verticalSpace(14.h),
                   ...selectedFiles.map(
                     (file) => Padding(
                       padding: EdgeInsets.only(bottom: 8.h),
@@ -157,7 +158,7 @@ class _UploadContentCard extends StatelessWidget {
                               size: 18.r,
                               color: AppColors.greenGood,
                             ),
-                            SizedBox(width: 10.w),
+                            horizontalSpace(10.w),
                             Expanded(
                               child: Text(
                                 'Selected: ${file.name}',
@@ -184,7 +185,7 @@ class _UploadContentCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  verticalSpace(16.h),
                   BlocBuilder<OffersCubit, OffersState>(
                     builder: (context, state) {
                       final isLoading = state is OffersLoading;
@@ -202,7 +203,7 @@ class _UploadContentCard extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 16.h),
+          verticalSpace(16.h),
           Row(
             children: [
               Icon(
@@ -210,7 +211,7 @@ class _UploadContentCard extends StatelessWidget {
                 size: 18.r,
                 color: const Color(0xFF6A6A6A),
               ),
-              SizedBox(width: 8.w),
+              horizontalSpace(8.w),
               Text(
                 'Supported formats:',
                 style: AppTextStyles.s12w400.copyWith(
@@ -220,11 +221,11 @@ class _UploadContentCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10.h),
+          verticalSpace(10.h),
           _BulletLine(label: 'Images:', value: 'JPG, PNG, JPEG'),
           _BulletLine(label: 'Documents:', value: 'PDF'),
           _BulletLine(label: 'Spreadsheets:', value: 'XLSX, XLS, CSV'),
-          SizedBox(height: 10.h),
+          verticalSpace(10.h),
           Text(
             'Maximum file size: 10 MB',
             style: AppTextStyles.s12w400.copyWith(
@@ -277,7 +278,7 @@ class _UploadOptionCard extends StatelessWidget {
                 ),
                 child: Icon(icon, color: iconColor, size: 20.r),
               ),
-              SizedBox(width: 12.w),
+              horizontalSpace(12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,7 +289,7 @@ class _UploadOptionCard extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(height: 2.h),
+                    verticalSpace(2.h),
                     Text(
                       subtitle,
                       style: AppTextStyles.s12w400.copyWith(
@@ -327,7 +328,7 @@ class _BulletLine extends StatelessWidget {
               color: const Color(0xFF6A6A6A),
             ),
           ),
-          SizedBox(width: 10.w),
+          horizontalSpace(10.w),
           Expanded(
             child: RichText(
               text: TextSpan(

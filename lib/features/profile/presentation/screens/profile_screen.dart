@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/core/logic/cubits/language_cubit.dart';
+import 'package:pharmacio_flutter_mobile/core/logic/cubits/theme_cubit.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
@@ -17,10 +20,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backGroundBody,
-      appBar: const CustomAppBar(
-        title: 'Profile & Settings',
-        subtitle: 'Manage your account information',
+      backgroundColor: AppColors.background,
+      appBar: CustomAppBar(
+        title: AppStrings.profileTitle,
+        subtitle: AppStrings.profileSubTitle,
       ),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -45,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(error),
-                  backgroundColor: AppColors.redError,
+                  backgroundColor: AppColors.danger,
                   behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.r),
@@ -88,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             verticalSpace(16),
             AppPrimaryButton(
-              label: 'Retry',
+              label: AppStrings.retry,
               backgroundColor: AppColors.forestGreen,
               width: 140.w,
               onPressed: () => context.read<AuthCubit>().getMe(),
@@ -109,15 +112,15 @@ class ProfileScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(color: AppColors.circelBorder, width: 1),
+              border: Border.all(color: AppColors.border, width: 1),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Account Information',
+                  AppStrings.accountInformation,
                   style: AppTextStyles.accountInformation,
                 ),
                 verticalSpace(16),
@@ -129,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: AppColors.blue.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.circelBorder),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Icon(
                         Icons.person,
@@ -137,7 +140,7 @@ class ProfileScreen extends StatelessWidget {
                         color: AppColors.blue,
                       ),
                     ),
-                    SizedBox(width: 12.w),
+                    horizontalSpace(12.w),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -158,7 +161,7 @@ class ProfileScreen extends StatelessWidget {
                           child: Text(
                             meResponse.roles.isNotEmpty
                                 ? meResponse.roles.first
-                                : 'User',
+                                : AppStrings.user,
                             style: AppTextStyles.userType,
                           ),
                         ),
@@ -167,37 +170,100 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
                 verticalSpace(17),
-                const Divider(color: AppColors.circelBorder),
+                Divider(color: AppColors.border),
                 verticalSpace(14),
                 DetailRowWidget(
                   icon: Icons.email_outlined,
-                  label: "Email",
+                  label: AppStrings.email,
                   value: meResponse.email.isNotEmpty
                       ? meResponse.email
-                      : 'Not provided',
+                      : AppStrings.notProvided,
                 ),
                 DetailRowWidget(
                   icon: Icons.business_center_outlined,
-                  label: "Role",
+                  label: AppStrings.role,
                   value: meResponse.roles.isNotEmpty
                       ? meResponse.roles.join(', ')
-                      : 'N/A',
+                      : AppStrings.notAvailable,
                 ),
                 DetailRowWidget(
                   icon: Icons.shield_outlined,
-                  label: "User ID",
+                  label: AppStrings.userId,
                   value: meResponse.id.toString(),
                 ),
                 if (meResponse.phoneNumber != null &&
                     meResponse.phoneNumber!.isNotEmpty)
                   DetailRowWidget(
                     icon: Icons.phone_outlined,
-                    label: "Phone",
+                    label: AppStrings.phone,
                     value: meResponse.phoneNumber!,
                   ),
               ],
             ),
           ),
+
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: AppColors.border),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.settingsTitle,
+                  style: AppTextStyles.accountInformation,
+                ),
+                verticalSpace(8),
+                BlocBuilder<LanguageCubit, String>(
+                  builder: (context, currentLanguage) {
+                    return SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        AppStrings.language,
+                        style: TextStyle(color: AppColors.textPrimary),
+                      ),
+                      subtitle: Text(
+                        currentLanguage == 'ar'
+                            ? AppStrings.arabic
+                            : AppStrings.english,
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                      value: currentLanguage == 'ar',
+                      onChanged: (_) {
+                        context.read<LanguageCubit>().toggleLanguage();
+                      },
+                    );
+                  },
+                ),
+                BlocBuilder<ThemeCubit, bool>(
+                  builder: (context, isDarkMode) {
+                    return SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        AppStrings.themeMode,
+                        style: TextStyle(color: AppColors.textPrimary),
+                      ),
+                      subtitle: Text(
+                        isDarkMode ? AppStrings.on : AppStrings.off,
+                        style: TextStyle(color: AppColors.textSecondary),
+                      ),
+                      value: isDarkMode,
+                      onChanged: (_) {
+                        context.read<ThemeCubit>().toggleTheme();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+
+          verticalSpace(13),
 
           // App Information Card
           Container(
@@ -205,22 +271,25 @@ class ProfileScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 20.w),
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(color: AppColors.circelBorder),
+              border: Border.all(color: AppColors.border),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "App Information",
+                  AppStrings.appInformation,
                   style: AppTextStyles.accountInformation,
                 ),
                 verticalSpace(16),
-                const AppInformation(label: "Version", value: "1.0.0"),
-                const AppInformation(
-                  label: "Last Updated",
-                  value: "Feb 3, 2026",
+                AppInformation(
+                  label: AppStrings.version,
+                  value: AppStrings.appVersionValue,
+                ),
+                AppInformation(
+                  label: AppStrings.profileLastUpdated,
+                  value: AppStrings.profileLastUpdatedValue,
                 ),
               ],
             ),
@@ -232,7 +301,7 @@ class ProfileScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 19.w),
             child: AppPrimaryButton(
-              label: 'Change Password',
+              label: AppStrings.changePassword,
               icon: Icons.lock_outline,
               backgroundColor: AppColors.forestGreen,
               height: 29.h,
@@ -252,10 +321,12 @@ class ProfileScreen extends StatelessWidget {
                   orElse: () => false,
                 );
                 return AppPrimaryButton(
-                  label: isLoading ? 'Logging out...' : 'Logout',
+                  label: isLoading
+                      ? AppStrings.logoutLoading
+                      : AppStrings.logout,
                   icon: isLoading ? null : Icons.logout,
                   isLoading: isLoading,
-                  backgroundColor: const Color(0xFFD34343),
+                  backgroundColor: AppColors.danger,
                   height: 29.h,
                   onPressed: () => _showLogoutDialog(context),
                 );
@@ -273,24 +344,34 @@ class ProfileScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        backgroundColor: AppColors.surface,
+        title: Text(
+          AppStrings.logoutConfirmTitle,
+          style: TextStyle(color: AppColors.textPrimary),
+        ),
+        content: Text(
+          AppStrings.logoutConfirmMessage,
+          style: TextStyle(color: AppColors.textPrimary),
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text('Cancel', style: TextStyle(color: Colors.grey[600])),
+            child: Text(
+              AppStrings.cancel,
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(dialogContext).pop();
               context.read<AuthCubit>().logout();
             },
-            child: const Text(
-              'Logout',
-              style: TextStyle(color: Color(0xFFD34343)),
+            child: Text(
+              AppStrings.logout,
+              style: TextStyle(color: AppColors.danger),
             ),
           ),
         ],
@@ -317,8 +398,8 @@ class DetailRowWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         children: [
-          Icon(icon, color: Colors.grey, size: 20.sp),
-          SizedBox(width: 12.w),
+          Icon(icon, color: AppColors.textSecondary, size: 20.sp),
+          horizontalSpace(12.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -347,11 +428,15 @@ class AppInformation extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(color: Colors.grey, fontSize: 14.sp),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
           ),
           Text(
             value,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14.sp,
+              color: AppColors.textPrimary,
+            ),
           ),
         ],
       ),

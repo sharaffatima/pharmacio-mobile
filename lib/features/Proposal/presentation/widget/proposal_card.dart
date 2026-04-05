@@ -126,7 +126,7 @@ class ProposalCard extends StatelessWidget {
           label,
           style: TextStyle(color: Colors.grey, fontSize: 12.sp),
         ),
-        SizedBox(height: 4.h),
+        verticalSpace(4.h),
         Text(
           value,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.sp),

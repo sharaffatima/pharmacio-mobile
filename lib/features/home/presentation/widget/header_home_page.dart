@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 
 class headerHomePagewidget extends StatelessWidget {
@@ -24,20 +23,13 @@ class headerHomePagewidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 25.h),
+          verticalSpace(25.h),
           Text(
             'Welcome Back!',
-            style: AppTextStyles.s20w700.copyWith(
-              color: Colors.white,
-        
-            ),
+            style: AppTextStyles.s20w700.copyWith(color: Colors.white),
           ),
-          SizedBox(height: 5.h),
-          Text(
-            'john pharmacist',
-            style: AppTextStyles.s12w400.copyWith(color: Color(0xfff7f7f7)),
-          ),
-          SizedBox(height: 11.h),
+
+          verticalSpace(11.h),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
@@ -52,7 +44,7 @@ class headerHomePagewidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 25.h),
+          verticalSpace(25.h),
         ],
       ),
     );

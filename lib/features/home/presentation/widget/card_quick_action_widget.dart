@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 class cardQuickActionswidget extends StatelessWidget {
   const cardQuickActionswidget({
@@ -34,7 +35,7 @@ class cardQuickActionswidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, size: 20),
-              SizedBox(height: 8.h),
+              verticalSpace(8.h),
               Text(title, style: AppTextStyles.s12w400),
             ],
           ),

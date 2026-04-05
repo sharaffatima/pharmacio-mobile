@@ -22,7 +22,7 @@ class ProposalScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         backgroundColor: AppColors.backGroundBody,
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
           title: AppStrings.proposalTitle,
           subtitle: AppStrings.proposalSubTitle,
         ),
@@ -30,13 +30,13 @@ class ProposalScreen extends StatelessWidget {
           children: [
             Container(
               color: AppColors.backGroundBody,
-              child: const TabBar(
+              child: TabBar(
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.black,
                 indicatorColor: Colors.black,
                 tabs: [
-                  Tab(text: "Available Offers"),
-                  Tab(text: "Proposals"),
+                  Tab(text: AppStrings.availableOffers),
+                  Tab(text: AppStrings.proposals),
                 ],
               ),
             ),
@@ -70,19 +70,35 @@ class _ProposalsTab extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: buildStatCard("0", "Total", AppColors.bluePrimary),
+                  child: buildStatCard(
+                    "0",
+                    AppStrings.proposaltitle,
+                    AppColors.bluePrimary,
+                  ),
                 ),
-                SizedBox(width: 7.w),
+                horizontalSpace(7.w),
                 Expanded(
-                  child: buildStatCard("0", "Pending", AppColors.orangeWarning),
+                  child: buildStatCard(
+                    "0",
+                    AppStrings.pending,
+                    AppColors.orangeWarning,
+                  ),
                 ),
-                SizedBox(width: 7.w),
+                horizontalSpace(7.w),
                 Expanded(
-                  child: buildStatCard("0", "Approved", AppColors.greenSuccess),
+                  child: buildStatCard(
+                    "0",
+                    AppStrings.approved,
+                    AppColors.greenSuccess,
+                  ),
                 ),
-                SizedBox(width: 7.w),
+                horizontalSpace(7.w),
                 Expanded(
-                  child: buildStatCard("0", "Rejected", AppColors.redError),
+                  child: buildStatCard(
+                    "0",
+                    AppStrings.rejected,
+                    AppColors.redError,
+                  ),
                 ),
               ],
             ),
@@ -96,10 +112,10 @@ class _ProposalsTab extends StatelessWidget {
                 proposalsSuccess: (response) {
                   final proposals = response.results ?? [];
                   if (proposals.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Padding(
                         padding: EdgeInsets.all(24.0),
-                        child: Text('No proposals found.'),
+                        child: Text(AppStrings.noProposalsFound),
                       ),
                     );
                   }
@@ -118,9 +134,9 @@ class _ProposalsTab extends StatelessWidget {
                           );
                         },
                         child: ProposalCard(
-                          title: 'Proposal #${item.id}',
-                          date: 'N/A', // Update with actual fields
-                          status: 'Pending',
+                          title: '${AppStrings.proposalPrefix} #${item.id}',
+                          date: AppStrings.notAvailable,
+                          status: AppStrings.pending,
                           itemsCount: 0,
                           totalCost: 0.0,
                           textColor: AppColors.orangeWarning,

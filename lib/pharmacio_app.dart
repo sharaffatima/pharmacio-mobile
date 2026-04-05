@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/shared_pref_keys.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/app_shared_preferences.dart';
+import 'package:pharmacio_flutter_mobile/core/logic/cubits/language_cubit.dart';
+import 'package:pharmacio_flutter_mobile/core/logic/cubits/theme_cubit.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/app_router.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 
@@ -15,8 +19,9 @@ class PharmacioMobileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check if user is already logged in
-    final accessToken =
-        AppSharedPreferences().getString(AppSharedPrefKeys.accessToken);
+    final accessToken = AppSharedPreferences().getString(
+      AppSharedPrefKeys.accessToken,
+    );
     final isLoggedIn = accessToken != null && accessToken.isNotEmpty;
 
     return ScreenUtilInit(
@@ -24,15 +29,53 @@ class PharmacioMobileApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Pharmacio Pharmacist Mobile App',
-          onGenerateRoute: appRouter.generateRoute,
-          initialRoute:
-              isLoggedIn ? Routes.homeScreen : Routes.loginScreen,
-          theme: ThemeData(
-            primaryColor: AppColors.forestGreen,
-            scaffoldBackgroundColor: AppColors.white,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<LanguageCubit>(
+              create: (_) => LanguageCubit()..loadInitialLanguage(),
+            ),
+            BlocProvider<ThemeCubit>(
+              create: (_) => ThemeCubit()..loadInitialTheme(),
+            ),
+          ],
+          child: BlocBuilder<LanguageCubit, String>(
+            builder: (context, currentLanguage) {
+              AppStrings.currentLanguage = currentLanguage;
+              return BlocBuilder<ThemeCubit, bool>(
+                builder: (context, isDark) {
+                  AppColors.isDarkMode = isDark;
+                  return Directionality(
+                    textDirection: currentLanguage == 'ar'
+                        ? TextDirection.rtl
+                        : TextDirection.ltr,
+                    child: MaterialApp(
+                      debugShowCheckedModeBanner: false,
+                      title: AppStrings.appTitle,
+                      onGenerateRoute: appRouter.generateRoute,
+                      initialRoute: isLoggedIn
+                          ? Routes.homeScreen
+                          : Routes.loginScreen,
+                      theme: ThemeData(
+                        brightness: isDark ? Brightness.dark : Brightness.light,
+                        primaryColor: AppColors.forestGreen,
+                        scaffoldBackgroundColor: AppColors.background,
+                        cardColor: AppColors.surface,
+                        dividerColor: AppColors.border,
+                        textTheme:
+                            ThemeData(
+                              brightness: isDark
+                                  ? Brightness.dark
+                                  : Brightness.light,
+                            ).textTheme.apply(
+                              bodyColor: AppColors.textPrimary,
+                              displayColor: AppColors.textPrimary,
+                            ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         );
       },

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
@@ -76,33 +77,33 @@ class ChangePasswordScreen extends StatelessWidget {
                       'Update Password',
                       style: AppTextStyles.accountInformation,
                     ),
-                    SizedBox(height: 8.h),
+                    verticalSpace(8.h),
                     Text(
                       'Please enter your current password and choose a new one.',
                       style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                     ),
-                    SizedBox(height: 24.h),
+                    verticalSpace(24.h),
                     AppLabeledTextFormField(
                       title: 'Current Password',
                       controller: cubit.oldPasswordController,
                       hintText: 'Enter current password',
                       isPassword: true,
                     ),
-                    SizedBox(height: 16.h),
+                    verticalSpace(16.h),
                     AppLabeledTextFormField(
                       title: 'New Password',
                       controller: cubit.newPasswordController,
                       hintText: 'Enter new password',
                       isPassword: true,
                     ),
-                    SizedBox(height: 16.h),
+                    verticalSpace(16.h),
                     AppLabeledTextFormField(
                       title: 'Confirm New Password',
                       controller: cubit.confirmNewPasswordController,
                       hintText: 'Re-enter new password',
                       isPassword: true,
                     ),
-                    SizedBox(height: 24.h),
+                    verticalSpace(24.h),
                     BlocBuilder<AuthCubit, AuthState>(
                       builder: (context, state) {
                         final isLoading = state.maybeWhen(

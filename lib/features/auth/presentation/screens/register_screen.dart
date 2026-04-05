@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
@@ -61,9 +62,9 @@ class RegisterScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: ListView(
             children: [
-              SizedBox(height: 50.h),
+              verticalSpace(50.h),
               const AppLogoAndAppNameWidget(),
-              SizedBox(height: 30.h),
+              verticalSpace(30.h),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 27.h),
                 width: 358.w,
@@ -77,27 +78,27 @@ class RegisterScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Create Account', style: AppTextStyles.s20w700),
-                      SizedBox(height: 16.h),
+                      verticalSpace(16.h),
                       AppLabeledTextFormField(
                         title: 'User name',
                         controller: cubit.usernameController,
                         hintText: 'Enter your username',
                       ),
-                      SizedBox(height: 16.h),
+                      verticalSpace(16.h),
                       AppLabeledTextFormField(
                         title: 'Password',
                         controller: cubit.passwordController,
                         hintText: 'Enter your password',
                         isPassword: true,
                       ),
-                      SizedBox(height: 16.h),
+                      verticalSpace(16.h),
                       AppLabeledTextFormField(
                         title: 'Confirm Password',
                         controller: cubit.confirmPasswordController,
                         hintText: 'Re-enter your password',
                         isPassword: true,
                       ),
-                      SizedBox(height: 22.h),
+                      verticalSpace(22.h),
                       BlocBuilder<AuthCubit, AuthState>(
                         builder: (context, state) {
                           final isLoading = state.maybeWhen(
@@ -116,7 +117,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 12.h),
+              verticalSpace(12.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -140,7 +141,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 50.h),
+              verticalSpace(50.h),
             ],
           ),
         ),

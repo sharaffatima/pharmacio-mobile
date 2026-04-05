@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 class RowActionWidget extends StatelessWidget {
   const RowActionWidget({
@@ -17,7 +18,7 @@ class RowActionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 8.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         children: [
           Container(
@@ -30,18 +31,21 @@ class RowActionWidget extends StatelessWidget {
             ),
             child: Icon(_setIcons(), color: _setColorsIcons(), size: 16),
           ),
-          SizedBox(width: 10.w,),
-          Column(crossAxisAlignment: CrossAxisAlignment.start,
+          horizontalSpace(10.w),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text(title, style: AppTextStyles.s12w400),
-             Text(
-          '$dataTime ',
-          style: AppTextStyles.s10w200.copyWith(
-            color: const Color.fromARGB(191, 78, 78, 78),
-            fontSize: 10,
-            fontWeight: FontWeight.w200
-          ),)
-          ],)
+              Text(title, style: AppTextStyles.s12w400),
+              Text(
+                '$dataTime ',
+                style: AppTextStyles.s10w200.copyWith(
+                  color: const Color.fromARGB(191, 78, 78, 78),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w200,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

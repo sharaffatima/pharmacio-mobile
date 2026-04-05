@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 132.h,
-      backgroundColor: AppColors.backGroundAppBar,
+      backgroundColor: AppColors.appBarBackground,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.r)),
       ),

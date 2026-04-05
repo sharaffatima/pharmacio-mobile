@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
@@ -50,7 +51,7 @@ class RecentUploadsSection extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12.h),
+          verticalSpace(12.h),
           Expanded(
             child: ListView.builder(
               itemCount: uploads.length,
@@ -77,7 +78,7 @@ class RecentUploadsSection extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(height: 4.h),
+                      verticalSpace(4.h),
                       Row(
                         children: [
                           _StatusBadge(status: upload.status),

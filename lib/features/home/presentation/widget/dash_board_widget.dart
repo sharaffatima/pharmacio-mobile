@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/card_dash_board.dart';
 
 class dashBourdWidget extends StatelessWidget {
@@ -20,7 +20,7 @@ class dashBourdWidget extends StatelessWidget {
                 value: 12,
               ),
             ),
-            SizedBox(width: 12.w),
+            horizontalSpace(12.w),
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.stock,
@@ -30,7 +30,7 @@ class dashBourdWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 12.h),
+        verticalSpace(12.h),
         Row(
           children: [
             Expanded(
@@ -40,7 +40,7 @@ class dashBourdWidget extends StatelessWidget {
                 value: 5,
               ),
             ),
-            SizedBox(width: 12.w),
+            horizontalSpace(12.w),
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.inventory,

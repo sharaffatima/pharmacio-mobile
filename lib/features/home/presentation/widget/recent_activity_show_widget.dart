@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/row_Action_widget.dart';
 
 class recentActivityShowWidget extends StatelessWidget {
@@ -25,7 +26,7 @@ class recentActivityShowWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Recent Activity', style: AppTextStyles.s14w400),
-          SizedBox(height: 12.h),
+          verticalSpace(12.h),
           Column(
             children: [
               RowActionWidget(

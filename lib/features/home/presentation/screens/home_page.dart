@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_application_pharmecy/features/auth/data/enum/enum_type_action.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/dash_board_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/header_home_page.dart';
@@ -22,22 +23,18 @@ class HomePage extends StatelessWidget {
           headerHomePagewidget(),
           Expanded(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    scanAndUploadFileSectionWidget(),
-                    SizedBox(height: 18.h),
-
-                    dashBourdWidget(),
-
-                    SizedBox(height: 18.h),
-                    recentActivityShowWidget(),
-                    SizedBox(height: 18.h),
-                  ],
-                ),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  scanAndUploadFileSectionWidget(),
+                  verticalSpace(18.h),
+                  dashBourdWidget(),
+                  verticalSpace(18.h),
+                  recentActivityShowWidget(),
+                  verticalSpace(18.h),
+                ],
               ),
             ),
           ),
@@ -46,8 +43,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
- 
-
-
-

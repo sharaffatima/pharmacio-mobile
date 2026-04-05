@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
@@ -46,78 +47,92 @@ class LoginPage extends StatelessWidget {
             },
           );
         },
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 10.h,
-            children: [
-              const Spacer(flex: 2),
-              const AppLogoAndAppNameWidget(),
-              const Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 27.h),
-                width: 358.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  color: Colors.white,
-                ),
-                child: Form(
-                  key: cubit.formKey,
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      AppLabeledTextFormField(
-                        title: 'User name',
-                        controller: cubit.usernameController,
-                        hintText: 'Enter your username',
+                      const AppLogoAndAppNameWidget(),
+                      verticalSpace(24.h),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 27.h,
+                        ),
+                        width: 358.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          color: Colors.white,
+                        ),
+                        child: Form(
+                          key: cubit.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppLabeledTextFormField(
+                                title: 'User name',
+                                controller: cubit.usernameController,
+                                hintText: 'Enter your username',
+                              ),
+                              verticalSpace(16.h),
+                              AppLabeledTextFormField(
+                                title: 'Password',
+                                controller: cubit.passwordController,
+                                hintText: 'Enter your password',
+                                isPassword: true,
+                              ),
+                              verticalSpace(22.h),
+                              BlocBuilder<AuthCubit, AuthState>(
+                                builder: (context, state) {
+                                  final isLoading = state.maybeWhen(
+                                    loading: () => true,
+                                    orElse: () => false,
+                                  );
+                                  return AppPrimaryButton(
+                                    label: 'Log in',
+                                    isLoading: isLoading,
+                                    backgroundColor: Colors.black,
+                                    onPressed: () => cubit.login(),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 16.h),
-                      AppLabeledTextFormField(
-                        title: 'Password',
-                        controller: cubit.passwordController,
-                        hintText: 'Enter your password',
-                        isPassword: true,
+                      verticalSpace(12.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account? ",
+                            style: AppTextStyles.s14w400,
+                          ),
+                          GestureDetector(
+                            onTap: () => context.pushNamed(Routes.registerScreen),
+                            child: Text(
+                              'Register',
+                              style: AppTextStyles.s14w500.copyWith(
+                                color: AppColors.forestGreen,
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.forestGreen,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 22.h),
-                      BlocBuilder<AuthCubit, AuthState>(
-                        builder: (context, state) {
-                          final isLoading = state.maybeWhen(
-                            loading: () => true,
-                            orElse: () => false,
-                          );
-                          return AppPrimaryButton(
-                            label: 'Log in',
-                            isLoading: isLoading,
-                            backgroundColor: Colors.black,
-                            onPressed: () => cubit.login(),
-                          );
-                        },
-                      ),
+                      verticalSpace(12.h),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 12.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have an account? ", style: AppTextStyles.s14w400),
-                  GestureDetector(
-                    onTap: () => context.pushNamed(Routes.registerScreen),
-                    child: Text(
-                      'Register',
-                      style: AppTextStyles.s14w500.copyWith(
-                        color: AppColors.forestGreen,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.forestGreen,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(flex: 4),
-            ],
+              );
+            },
           ),
         ),
       ),
@@ -140,9 +155,9 @@ class AppLogoAndAppNameWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(36.r),
           ),
         ),
-        SizedBox(height: 41.h),
+        verticalSpace(41.h),
         Text('Pharmacio', style: AppTextStyles.s32w500),
-        SizedBox(height: 12.h),
+        verticalSpace(12.h),
         Text('Pharmacist Portal', style: AppTextStyles.s15w500),
       ],
     );

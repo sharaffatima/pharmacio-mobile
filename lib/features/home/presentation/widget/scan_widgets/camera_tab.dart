@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
@@ -59,7 +60,7 @@ class _CameraContentCard extends StatelessWidget {
               ],
             ),
             if (capturedPath != null) ...[
-              SizedBox(height: 16.h),
+              verticalSpace(16.h),
               BlocBuilder<OffersCubit, OffersState>(
                 builder: (context, state) {
                   final isLoading = state is OffersLoading;
@@ -124,16 +125,16 @@ class _ContentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: AppTextStyles.s14w500),
-          SizedBox(height: 4.h),
+          verticalSpace(4.h),
           Text(
             subtitle,
             style: AppTextStyles.s12w400.copyWith(
               color: const Color(0xFF6A6A6A),
             ),
           ),
-          SizedBox(height: 14.h),
+          verticalSpace(14.h),
           _Placeholder(icon: placeholderIcon, previewPath: previewPath),
-          SizedBox(height: 12.h),
+          verticalSpace(12.h),
           AppPrimaryButton(
             icon: actionIcon,
             label: actionLabel,
@@ -141,11 +142,11 @@ class _ContentCard extends StatelessWidget {
             backgroundColor: const Color(0xFF070B14),
             onPressed: onPrimaryAction ?? () {},
           ),
-          SizedBox(height: 16.h),
+          verticalSpace(16.h),
           Row(
             children: [
               const Text('📸'),
-              SizedBox(width: 8.w),
+              horizontalSpace(8.w),
               Text(
                 'Tips for best results:',
                 style: AppTextStyles.s12w400.copyWith(
@@ -155,7 +156,7 @@ class _ContentCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          verticalSpace(8.h),
           ...tips.map(
             (t) => Padding(
               padding: EdgeInsets.only(bottom: 6.h),
@@ -170,7 +171,7 @@ class _ContentCard extends StatelessWidget {
                       color: const Color(0xFF6A6A6A),
                     ),
                   ),
-                  SizedBox(width: 10.w),
+                  horizontalSpace(10.w),
                   Expanded(
                     child: Text(
                       t,
