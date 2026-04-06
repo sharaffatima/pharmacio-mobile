@@ -1,7 +1,7 @@
 part of '../cubits/inventory_cubit.dart';
 
 @freezed
-class InventoryState with _$InventoryState {
+abstract class InventoryState with _$InventoryState {
   const factory InventoryState.initial() = _Initial;
   const factory InventoryState.loading() = InventoryLoading;
   const factory InventoryState.successList(

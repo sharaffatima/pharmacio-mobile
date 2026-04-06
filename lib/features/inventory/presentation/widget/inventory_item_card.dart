@@ -28,15 +28,15 @@ class InventoryItemCard extends StatelessWidget {
     final Widget statusIcon;
 
     if (currentStock == 0) {
-      statusColor = Colors.red;
+      statusColor = AppColors.redError;
       statusLabel = "Out of Stock";
       statusIcon = Icon(Icons.warning_amber, color: statusColor, size: 18.sp);
     } else if (currentStock < minStock) {
-      statusColor = Colors.orange;
+      statusColor = AppColors.orangeWarning;
       statusLabel = "Low Stock";
       statusIcon = Icon(Icons.trending_down, color: statusColor, size: 18.sp);
     } else {
-      statusColor = Colors.green;
+      statusColor = AppColors.greenSuccess;
       statusLabel = "In Stock";
       statusIcon = SvgPicture.asset(
         "assets/icons/inventory.svg",
@@ -54,8 +54,9 @@ class InventoryItemCard extends StatelessWidget {
       padding: EdgeInsets.all(12.w),
       margin: EdgeInsets.symmetric(horizontal: 22.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.whiteLaight,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(7.r),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +97,7 @@ class InventoryItemCard extends StatelessWidget {
               value: progress,
 
               minHeight: 8.h,
-              backgroundColor: Colors.grey[200],
+              backgroundColor: AppColors.surfaceSoft,
               valueColor: AlwaysStoppedAnimation<Color>(statusColor),
             ),
           ),

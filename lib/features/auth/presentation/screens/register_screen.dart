@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/presentation/screens/login_screen.dart';
@@ -26,14 +28,13 @@ class RegisterScreen extends StatelessWidget {
             loading: () {},
             successLogin: (_) {},
             successRegister: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(response.message),
-                  backgroundColor: AppColors.greenSuccess,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: response.message,
+                backgroundColor: AppColors.greenSuccess,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
               context.pushNamedAndRemoveUntil(
@@ -45,14 +46,13 @@ class RegisterScreen extends StatelessWidget {
             successGetMe: (_) {},
             successChangePassword: (_) {},
             error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.redError,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: error,
+                backgroundColor: AppColors.redError,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
             },
@@ -70,32 +70,35 @@ class RegisterScreen extends StatelessWidget {
                 width: 358.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
-                  color: Colors.white,
+                  color: AppColors.surface,
                 ),
                 child: Form(
                   key: cubit.formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Create Account', style: AppTextStyles.s20w700),
-                      verticalSpace(16.h),
-                      AppLabeledTextFormField(
-                        title: 'User name',
-                        controller: cubit.usernameController,
-                        hintText: 'Enter your username',
+                      Text(
+                        AppStrings.createAccount,
+                        style: AppTextStyles.s20w700,
                       ),
                       verticalSpace(16.h),
                       AppLabeledTextFormField(
-                        title: 'Password',
+                        title: AppStrings.userName,
+                        controller: cubit.usernameController,
+                        hintText: AppStrings.enterUserName,
+                      ),
+                      verticalSpace(16.h),
+                      AppLabeledTextFormField(
+                        title: AppStrings.password,
                         controller: cubit.passwordController,
-                        hintText: 'Enter your password',
+                        hintText: AppStrings.enterPassword,
                         isPassword: true,
                       ),
                       verticalSpace(16.h),
                       AppLabeledTextFormField(
-                        title: 'Confirm Password',
+                        title: AppStrings.confirmPassword,
                         controller: cubit.confirmPasswordController,
-                        hintText: 'Re-enter your password',
+                        hintText: AppStrings.reEnterPassword,
                         isPassword: true,
                       ),
                       verticalSpace(22.h),
@@ -106,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
                             orElse: () => false,
                           );
                           return AppPrimaryButton(
-                            label: 'Register',
+                            label: AppStrings.register,
                             isLoading: isLoading,
                             backgroundColor: AppColors.forestGreen,
                             onPressed: () => cubit.register(),
@@ -121,17 +124,14 @@ class RegisterScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Already have an account? ',
-                    style: AppTextStyles.s14w400,
-                  ),
+                  Text(AppStrings.haveAccount, style: AppTextStyles.s14w400),
                   GestureDetector(
                     onTap: () => context.pushNamedAndRemoveUntil(
                       Routes.loginScreen,
                       predicate: (route) => false,
                     ),
                     child: Text(
-                      'Login',
+                      AppStrings.login,
                       style: AppTextStyles.s14w500.copyWith(
                         color: AppColors.forestGreen,
                         decoration: TextDecoration.underline,

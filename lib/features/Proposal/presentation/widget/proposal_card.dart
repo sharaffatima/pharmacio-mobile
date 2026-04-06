@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import '../../../../core/constants/text_style.dart';
 // import '../../../../core/helpers/space_helpers.dart';
@@ -32,8 +34,9 @@ class ProposalCard extends StatelessWidget {
       margin: EdgeInsets.only(left: 22.w, right: 16.w, top: 11.h),
       padding: EdgeInsets.all(11.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(7.r),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,12 +48,12 @@ class ProposalCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
+                  color: AppColors.bluePrimary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: Icon(
                   Icons.description_rounded,
-                  color: Colors.blue,
+                  color: AppColors.bluePrimary,
                   size: 22.sp,
                 ),
               ),
@@ -68,13 +71,16 @@ class ProposalCard extends StatelessWidget {
               _buildStatusTag(),
             ],
           ),
-          Divider(height: 32.h, thickness: 0.8, color: Colors.grey.shade200),
+          Divider(height: 32.h, thickness: 0.8, color: AppColors.border),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildInfoColumn("Items", "$itemsCount items"),
               _buildInfoColumn(
-                "Total cost",
+                AppStrings.items,
+                '$itemsCount ${AppStrings.itemsSuffix}',
+              ),
+              _buildInfoColumn(
+                AppStrings.totalCost,
                 "\$${totalCost.toStringAsFixed(2)}",
               ),
             ],
@@ -96,9 +102,9 @@ class ProposalCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            status == "Pending"
+            status == AppStrings.pending
                 ? Icons.access_time
-                : status == "Approved"
+                : status == AppStrings.approved
                 ? Icons.check_circle_outline
                 : Icons.cancel_outlined,
             size: 14.sp,
@@ -124,7 +130,7 @@ class ProposalCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+          style: TextStyle(color: AppColors.textSecondary, fontSize: 12.sp),
         ),
         verticalSpace(4.h),
         Text(

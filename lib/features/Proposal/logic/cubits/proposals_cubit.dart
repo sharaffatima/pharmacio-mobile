@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../core/networking/error/error_handler/network_exceptions.dart';
+import '../../data/models/available_offers_response.dart';
+import '../../data/models/proposal_placeholders.dart';
 import '../../data/repos/proposals_repo.dart';
 import '../states/proposals_state.dart';
 
@@ -13,6 +15,8 @@ class ProposalsCubit extends Cubit<ProposalsState> {
       super(const ProposalsState.initial());
 
   final ValueNotifier<Set<int>> selectedOfferIds;
+  AvailableOffersResponse? cachedAvailableOffers;
+  ProposalListResponse? cachedProposals;
 
   void toggleOfferSelection(int id, bool selected) {
     final current = Set<int>.from(selectedOfferIds.value);
@@ -32,6 +36,7 @@ class ProposalsCubit extends Cubit<ProposalsState> {
     emit(const ProposalsState.availableOffersLoading());
     try {
       final response = await proposalsRepo.getAvailableOffers();
+      cachedAvailableOffers = response;
       emit(ProposalsState.availableOffersSuccess(response));
     } catch (e) {
       final exception = NetworkExceptions.getException(e);
@@ -85,6 +90,7 @@ class ProposalsCubit extends Cubit<ProposalsState> {
     emit(const ProposalsState.proposalsLoading());
     try {
       final response = await proposalsRepo.getProposals();
+      cachedProposals = response;
       emit(ProposalsState.proposalsSuccess(response));
     } catch (e) {
       final exception = NetworkExceptions.getException(e);

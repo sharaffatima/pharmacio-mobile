@@ -7,12 +7,12 @@ part 'register_response.g.dart';
 @JsonSerializable(explicitToJson: true)
 class RegisterResponse {
   final User user;
-  final Token token;
+  final Token tokens;
   final String message;
 
   RegisterResponse({
     required this.user,
-    required this.token,
+    required this.tokens,
     required this.message,
   });
 

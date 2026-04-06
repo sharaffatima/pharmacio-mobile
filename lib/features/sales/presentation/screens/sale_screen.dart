@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/di/dependency_injection.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_outlined_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/logic/cubits/sales_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/logic/states/sales_state.dart';
@@ -22,28 +24,26 @@ class SaleScreen extends StatelessWidget {
       create: (context) => getIt<InventoryCubit>()..getInventoryList(),
       child: Scaffold(
         backgroundColor: AppColors.backGroundBody,
-        appBar: const CustomAppBar(
-          title: 'Record Sale',
-          subtitle: 'Create a new sale record',
+        appBar: CustomAppBar(
+          title: AppStrings.recordSale,
+          subtitle: AppStrings.recordSaleSubtitle,
         ),
         body: BlocConsumer<SalesCubit, SalesState>(
           listener: (context, state) {
             state.maybeWhen(
               success: (response) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Sale recorded successfully!'),
-                    backgroundColor: AppColors.greenSuccess,
-                  ),
+                showAppSnackBar(
+                  context,
+                  message: AppStrings.saleSuccess,
+                  backgroundColor: AppColors.greenSuccess,
                 );
                 Navigator.pop(context); // Go back after success
               },
               error: (message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(message),
-                    backgroundColor: AppColors.redError,
-                  ),
+                showAppSnackBar(
+                  context,
+                  message: message,
+                  backgroundColor: AppColors.redError,
                 );
               },
               orElse: () {},
@@ -61,9 +61,10 @@ class SaleScreen extends StatelessWidget {
                     AppOutlinedTextFormField(
                       controller: salesCubit.quantityController,
                       keyboardType: TextInputType.number,
-                      labelText: 'Quantity Sold',
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Required' : null,
+                      labelText: AppStrings.quantitySold,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                     verticalSpace(16),
                     AppOutlinedTextFormField(
@@ -71,16 +72,18 @@ class SaleScreen extends StatelessWidget {
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
-                      labelText: 'Unit Price',
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Required' : null,
+                      labelText: AppStrings.unitPrice,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                     verticalSpace(16),
                     AppOutlinedTextFormField(
                       controller: salesCubit.dateController,
-                      labelText: 'Sold At (ISO 8601)',
-                      validator: (val) =>
-                          val == null || val.isEmpty ? 'Required' : null,
+                      labelText: AppStrings.soldAtIso,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                     verticalSpace(24),
                     SaleSubmitButton(salesCubit: salesCubit),

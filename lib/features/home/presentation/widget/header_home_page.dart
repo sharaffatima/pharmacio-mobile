@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 
-class headerHomePagewidget extends StatelessWidget {
-  const headerHomePagewidget({super.key});
+class HeaderHomePagewidget extends StatelessWidget {
+  const HeaderHomePagewidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class headerHomePagewidget extends StatelessWidget {
       padding: EdgeInsets.all(12),
       // height: MediaQuery.sizeOf(context).height * 0.2,
       decoration: BoxDecoration(
-        color: Color(0xff24A448),
+        color: AppColors.appBarBackground,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(12.r),
           bottomRight: Radius.circular(12.r),
@@ -25,21 +27,21 @@ class headerHomePagewidget extends StatelessWidget {
         children: [
           verticalSpace(25.h),
           Text(
-            'Welcome Back!',
-            style: AppTextStyles.s20w700.copyWith(color: Colors.white),
+            AppStrings.welcomeBack,
+            style: AppTextStyles.s20w700.copyWith(color: AppColors.white),
           ),
 
           verticalSpace(11.h),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: Color(0xff0A932A),
+              color: AppColors.forestGreen.withValues(alpha: 0.78),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              'pharmacist',
+              AppStrings.pharmacist,
               style: AppTextStyles.s12w400.copyWith(
-                color: Colors.white,
+                color: AppColors.white,
                 fontSize: 10,
               ),
             ),

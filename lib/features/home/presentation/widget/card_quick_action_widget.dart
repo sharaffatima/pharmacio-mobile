@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
-class cardQuickActionswidget extends StatelessWidget {
-  const cardQuickActionswidget({
+class CardQuickActionswidget extends StatelessWidget {
+  const CardQuickActionswidget({
     super.key,
     required this.icon,
     required this.title,
@@ -26,15 +27,12 @@ class cardQuickActionswidget extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(
-              color: const Color.fromARGB(81, 158, 158, 158),
-              width: 0.3,
-            ),
+            border: Border.all(color: AppColors.border, width: 0.3),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 20),
+              Icon(icon, size: 20, color: AppColors.textPrimary),
               verticalSpace(8.h),
               Text(title, style: AppTextStyles.s12w400),
             ],

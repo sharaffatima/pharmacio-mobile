@@ -9,13 +9,13 @@ part of 'register_response.dart';
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
-      token: Token.fromJson(json['token'] as Map<String, dynamic>),
+      tokens: Token.fromJson(json['tokens'] as Map<String, dynamic>),
       message: json['message'] as String,
     );
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
     <String, dynamic>{
       'user': instance.user.toJson(),
-      'token': instance.token.toJson(),
+      'tokens': instance.tokens.toJson(),
       'message': instance.message,
     };

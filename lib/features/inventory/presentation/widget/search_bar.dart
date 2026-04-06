@@ -25,8 +25,9 @@ class SearchBarWidget extends StatelessWidget {
         width: 355.w,
         height: 30.h,
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(7.r),
+          border: Border.all(color: AppColors.border),
         ),
         child: TextField(
           controller: _searchController,

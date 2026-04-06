@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
@@ -23,11 +24,11 @@ class RecentUploadsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.black.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -40,14 +41,16 @@ class RecentUploadsSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recent Uploads',
+                AppStrings.recentUploads,
                 style: AppTextStyles.s14w500.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '${uploads.length} items',
-                style: AppTextStyles.s12w400.copyWith(color: AppColors.gray),
+                '${uploads.length} ${AppStrings.itemsCountSuffix}',
+                style: AppTextStyles.s12w400.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -65,7 +68,7 @@ class RecentUploadsSection extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.offWhite,
                     borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: const Color(0xFFE9E9E9)),
+                    border: Border.all(color: AppColors.border),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +108,7 @@ class RecentUploadsSection extends StatelessWidget {
                             padding: EdgeInsets.zero,
                           ),
                           child: Text(
-                            'Check Status',
+                            AppStrings.checkStatus,
                             style: AppTextStyles.s10w200.copyWith(
                               color: AppColors.forestGreen,
                               fontWeight: FontWeight.bold,

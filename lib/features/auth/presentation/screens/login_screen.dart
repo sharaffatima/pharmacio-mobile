@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
+
+import '../../../../core/constants/images.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -34,14 +38,13 @@ class LoginPage extends StatelessWidget {
             successGetMe: (_) {},
             successChangePassword: (_) {},
             error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.redError,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: error,
+                backgroundColor: AppColors.redError,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
             },
@@ -68,7 +71,7 @@ class LoginPage extends StatelessWidget {
                         width: 358.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.r),
-                          color: Colors.white,
+                          color: AppColors.surface,
                         ),
                         child: Form(
                           key: cubit.formKey,
@@ -76,15 +79,15 @@ class LoginPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppLabeledTextFormField(
-                                title: 'User name',
+                                title: AppStrings.userName,
                                 controller: cubit.usernameController,
-                                hintText: 'Enter your username',
+                                hintText: AppStrings.enterUserName,
                               ),
                               verticalSpace(16.h),
                               AppLabeledTextFormField(
-                                title: 'Password',
+                                title: AppStrings.password,
                                 controller: cubit.passwordController,
-                                hintText: 'Enter your password',
+                                hintText: AppStrings.enterPassword,
                                 isPassword: true,
                               ),
                               verticalSpace(22.h),
@@ -95,9 +98,9 @@ class LoginPage extends StatelessWidget {
                                     orElse: () => false,
                                   );
                                   return AppPrimaryButton(
-                                    label: 'Log in',
+                                    label: AppStrings.login,
                                     isLoading: isLoading,
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: AppColors.forestGreen,
                                     onPressed: () => cubit.login(),
                                   );
                                 },
@@ -111,13 +114,14 @@ class LoginPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't have an account? ",
+                            AppStrings.haveNoAccount,
                             style: AppTextStyles.s14w400,
                           ),
                           GestureDetector(
-                            onTap: () => context.pushNamed(Routes.registerScreen),
+                            onTap: () =>
+                                context.pushNamed(Routes.registerScreen),
                             child: Text(
-                              'Register',
+                              AppStrings.register,
                               style: AppTextStyles.s14w500.copyWith(
                                 color: AppColors.forestGreen,
                                 decoration: TextDecoration.underline,
@@ -148,17 +152,17 @@ class AppLogoAndAppNameWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 105.w,
+          width: 70.w,
           height: 65.h,
           decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(36.r),
+            color: AppColors.backGroundBody,
+            borderRadius: BorderRadius.circular(8.r),
           ),
+          child: Image.asset(AppImages.appLogo, width: 40.w, height: 40.h),
         ),
-        verticalSpace(41.h),
-        Text('Pharmacio', style: AppTextStyles.s32w500),
+
         verticalSpace(12.h),
-        Text('Pharmacist Portal', style: AppTextStyles.s15w500),
+        Text(AppStrings.pharmacistPortal, style: AppTextStyles.s15w500),
       ],
     );
   }

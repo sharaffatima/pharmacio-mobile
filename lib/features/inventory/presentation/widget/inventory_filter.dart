@@ -22,15 +22,20 @@ class InventoryFilter extends StatelessWidget {
       child: Row(
         spacing: 5.w,
         children: [
-          Icon(Icons.filter_alt_outlined, color: Colors.grey, size: 24),
+          Icon(
+            Icons.filter_alt_outlined,
+            color: AppColors.textSecondary,
+            size: 24,
+          ),
 
           Container(
             height: 34.h,
             width: 153.w,
             padding: EdgeInsets.only(left: 9.w),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(7.r),
+              border: Border.all(color: AppColors.border),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(

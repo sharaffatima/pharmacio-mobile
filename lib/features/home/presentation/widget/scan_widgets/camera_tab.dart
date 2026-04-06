@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
@@ -38,10 +39,10 @@ class _CameraContentCard extends StatelessWidget {
         return Column(
           children: [
             _ContentCard(
-              title: 'Camera Scan',
-              subtitle: 'Scan documents using your device camera',
+              title: AppStrings.cameraScan,
+              subtitle: AppStrings.cameraScanSubtitle,
               actionIcon: Icons.camera_alt_outlined,
-              actionLabel: 'Start Camera',
+              actionLabel: AppStrings.startCamera,
               placeholderIcon: Icons.camera_alt_outlined,
               previewPath: capturedPath,
               onPrimaryAction: () async {
@@ -52,11 +53,11 @@ class _CameraContentCard extends StatelessWidget {
                   offersCubit.setCapturedPath(path);
                 }
               },
-              tips: const [
-                'Ensure good lighting',
-                'Hold camera steady',
-                'Capture entire document in frame',
-                'Avoid shadows and glare',
+              tips: [
+                AppStrings.tipGoodLighting,
+                AppStrings.tipHoldSteady,
+                AppStrings.tipCaptureWholeDocument,
+                AppStrings.tipAvoidShadows,
               ],
             ),
             if (capturedPath != null) ...[
@@ -66,7 +67,9 @@ class _CameraContentCard extends StatelessWidget {
                   final isLoading = state is OffersLoading;
                   return AppPrimaryButton(
                     icon: Icons.cloud_upload_outlined,
-                    label: isLoading ? 'Uploading...' : 'Confirm and Upload',
+                    label: isLoading
+                        ? AppStrings.uploading
+                        : AppStrings.confirmAndUpload,
                     isLoading: isLoading,
                     height: 44.h,
                     backgroundColor: AppColors.forestGreen,
@@ -117,9 +120,9 @@ class _ContentCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: const Color(0xFFE9E9E9), width: 1),
+        border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +132,7 @@ class _ContentCard extends StatelessWidget {
           Text(
             subtitle,
             style: AppTextStyles.s12w400.copyWith(
-              color: const Color(0xFF6A6A6A),
+              color: AppColors.textSecondary,
             ),
           ),
           verticalSpace(14.h),
@@ -139,7 +142,7 @@ class _ContentCard extends StatelessWidget {
             icon: actionIcon,
             label: actionLabel,
             height: 44.h,
-            backgroundColor: const Color(0xFF070B14),
+            backgroundColor: AppColors.textPrimary,
             onPressed: onPrimaryAction ?? () {},
           ),
           verticalSpace(16.h),
@@ -148,10 +151,10 @@ class _ContentCard extends StatelessWidget {
               const Text('📸'),
               horizontalSpace(8.w),
               Text(
-                'Tips for best results:',
+                AppStrings.tipsForBestResults,
                 style: AppTextStyles.s12w400.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF4E4E4E),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],
@@ -168,7 +171,7 @@ class _ContentCard extends StatelessWidget {
                     child: Icon(
                       Icons.circle,
                       size: 5.r,
-                      color: const Color(0xFF6A6A6A),
+                      color: AppColors.iconMuted,
                     ),
                   ),
                   horizontalSpace(10.w),
@@ -176,7 +179,7 @@ class _ContentCard extends StatelessWidget {
                     child: Text(
                       t,
                       style: AppTextStyles.s12w400.copyWith(
-                        color: const Color(0xFF6A6A6A),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ),
@@ -198,15 +201,24 @@ class _Placeholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gradientColors = AppColors.isDarkMode
+        ? [
+            AppColors.surfaceSoft.withValues(alpha: 0.95),
+            AppColors.surface.withValues(alpha: 0.98),
+          ]
+        : [
+            AppColors.navSelected.withValues(alpha: 0.16),
+            AppColors.navSelected.withValues(alpha: 0.08),
+          ];
     return Container(
       width: double.infinity,
       height: 210.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.r),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF0D1626), Color(0xFF0A101C)],
+          colors: gradientColors,
         ),
       ),
       clipBehavior: Clip.antiAlias,
@@ -215,11 +227,11 @@ class _Placeholder extends StatelessWidget {
               File(previewPath!),
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Center(
-                child: Icon(icon, size: 54.r, color: const Color(0xFF7F8AA0)),
+                child: Icon(icon, size: 54.r, color: AppColors.iconMuted),
               ),
             )
           : Center(
-              child: Icon(icon, size: 54.r, color: const Color(0xFF7F8AA0)),
+              child: Icon(icon, size: 54.r, color: AppColors.iconMuted),
             ),
     );
   }

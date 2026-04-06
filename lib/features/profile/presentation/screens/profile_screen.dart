@@ -10,6 +10,9 @@ import 'package:pharmacio_flutter_mobile/core/logic/cubits/language_cubit.dart';
 import 'package:pharmacio_flutter_mobile/core/logic/cubits/theme_cubit.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/retry_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/data/models/me/me_response.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
@@ -29,14 +32,13 @@ class ProfileScreen extends StatelessWidget {
         listener: (context, state) {
           state.whenOrNull(
             successLogout: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(response.message),
-                  backgroundColor: AppColors.greenSuccess,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: response.message,
+                backgroundColor: AppColors.greenSuccess,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
               context.pushNamedAndRemoveUntil(
@@ -45,14 +47,13 @@ class ProfileScreen extends StatelessWidget {
               );
             },
             error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.danger,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: error,
+                backgroundColor: AppColors.danger,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
             },
@@ -60,15 +61,11 @@ class ProfileScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return state.maybeWhen(
-            loading: () => const Center(
-              child: CircularProgressIndicator(color: AppColors.forestGreen),
-            ),
+            loading: () => const LoadingWidget(),
             successGetMe: (meResponse) =>
                 _buildProfileContent(context, meResponse),
             error: (error) => _buildErrorState(context, error),
-            orElse: () => const Center(
-              child: CircularProgressIndicator(color: AppColors.forestGreen),
-            ),
+            orElse: () => const LoadingWidget(),
           );
         },
       ),
@@ -90,12 +87,7 @@ class ProfileScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             verticalSpace(16),
-            AppPrimaryButton(
-              label: AppStrings.retry,
-              backgroundColor: AppColors.forestGreen,
-              width: 140.w,
-              onPressed: () => context.read<AuthCubit>().getMe(),
-            ),
+            RetryWidget(onPressed: () => context.read<AuthCubit>().getMe()),
           ],
         ),
       ),
@@ -130,14 +122,14 @@ class ProfileScreen extends StatelessWidget {
                       width: 55.w,
                       height: 55.h,
                       decoration: BoxDecoration(
-                        color: AppColors.blue.withValues(alpha: 0.2),
+                        color: AppColors.navSelected.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
                         border: Border.all(color: AppColors.border),
                       ),
                       child: Icon(
                         Icons.person,
                         size: 35.sp,
-                        color: AppColors.blue,
+                        color: AppColors.navSelected,
                       ),
                     ),
                     horizontalSpace(12.w),
@@ -155,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                             vertical: 2.h,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.black,
+                            color: AppColors.forestGreen,
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/fonts_weight.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
@@ -23,7 +24,7 @@ class CardDashBourdWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.r),
-        color: Colors.white,
+        color: AppColors.surface,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +32,7 @@ class CardDashBourdWidget extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.s10w200.copyWith(
-              color: Color(0xff4e4e4e),
+              color: AppColors.textSecondary,
             ),
           ),
           Row(
@@ -39,7 +40,10 @@ class CardDashBourdWidget extends StatelessWidget {
             children: [
               Text(
                 '$value',
-                style: AppTextStyles.s14w500.copyWith(color: _setColorsIcons(),fontWeight: AppFontWeight.semiBold),
+                style: AppTextStyles.s14w500.copyWith(
+                  color: _setColorsIcons(),
+                  fontWeight: AppFontWeight.semiBold,
+                ),
               ),
               Icon(_setIcons(), color: _setColorsIcons(), size: 20.sp),
             ],
@@ -52,16 +56,16 @@ class CardDashBourdWidget extends StatelessWidget {
   Color? _setColorsIcons() {
     switch (type) {
       case EnumTypeAction.proposal:
-        return Colors.blue;
+        return AppColors.bluePrimary;
 
       case EnumTypeAction.alert:
-        return Colors.red;
+        return AppColors.redError;
 
       case EnumTypeAction.inventory:
-        return Colors.green;
+        return AppColors.greenSuccess;
 
       case EnumTypeAction.stock:
-        return Colors.red;
+        return AppColors.orangeWarning;
     }
   }
 

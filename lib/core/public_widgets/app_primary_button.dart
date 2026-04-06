@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 
 class AppPrimaryButton extends StatelessWidget {
@@ -11,7 +12,7 @@ class AppPrimaryButton extends StatelessWidget {
     this.width,
     this.height,
     this.backgroundColor,
-    this.textColor = Colors.white,
+    this.textColor = AppColors.white,
     this.icon,
     this.borderRadius,
   });
@@ -37,9 +38,8 @@ class AppPrimaryButton extends StatelessWidget {
         onPressed: disabled ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
-          disabledBackgroundColor: (backgroundColor ?? Colors.black).withValues(
-            alpha: 0.6,
-          ),
+          disabledBackgroundColor: (backgroundColor ?? AppColors.textPrimary)
+              .withValues(alpha: 0.6),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
           ),

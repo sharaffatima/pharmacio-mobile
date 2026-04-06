@@ -9,7 +9,7 @@ import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/dash_board_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/header_home_page.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/recent_activity_show_widget.dart';
-import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/scan_and_upLoading_Section.dart';
+import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/scan_and_uploading_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: AppColors.backGroundBody,
       body: Column(
         children: [
-          headerHomePagewidget(),
+          HeaderHomePagewidget(),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
@@ -28,11 +28,11 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  scanAndUploadFileSectionWidget(),
+                  ScanAndUploadFileSectionWidget(),
                   verticalSpace(18.h),
-                  dashBourdWidget(),
+                  DashBourdWidget(),
                   verticalSpace(18.h),
-                  recentActivityShowWidget(),
+                  RecentActivityShowWidget(),
                   verticalSpace(18.h),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
@@ -14,14 +15,14 @@ class AlertsPages extends StatelessWidget {
       backgroundColor: AppColors.backGroundBody,
       body: Column(
         children: [
-          headerAlertPage(),
+          HeaderAlertPage(),
           verticalSpace(12.h),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: ListView.separated(
                 itemBuilder: (context, index) =>
-                    cardNotificationWidget(type: EnumTypeAction.stock),
+                    CardNotificationWidget(type: EnumTypeAction.stock),
                 separatorBuilder: (context, _) => verticalSpace(10.h),
                 itemCount: 4,
               ),
@@ -33,8 +34,8 @@ class AlertsPages extends StatelessWidget {
   }
 }
 
-class cardNotificationWidget extends StatelessWidget {
-  const cardNotificationWidget({super.key, required this.type});
+class CardNotificationWidget extends StatelessWidget {
+  const CardNotificationWidget({super.key, required this.type});
 
   final EnumTypeAction type;
 
@@ -44,8 +45,9 @@ class cardNotificationWidget extends StatelessWidget {
       padding: EdgeInsets.all(16.r),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,19 +59,19 @@ class cardNotificationWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Critical Low Stock',
+                  AppStrings.criticalLowStock,
                   style: AppTextStyles.s15w500.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  'Aspirin 500mg has reached critical stock level (5 units remaining)  ',
+                  AppStrings.criticalLowStockMessage,
                   style: AppTextStyles.proposalDate,
                 ),
                 Text(
-                  '5 hours ',
+                  AppStrings.fiveHoursAgo,
                   style: AppTextStyles.s12w400.copyWith(
-                    color: const Color.fromARGB(191, 78, 78, 78),
+                    color: AppColors.textSecondary,
                     fontSize: 8,
                     fontWeight: FontWeight.w100,
                   ),
@@ -84,13 +86,13 @@ class cardNotificationWidget extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: AppColors.redError,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  'warning',
+                  AppStrings.warning,
                   style: AppTextStyles.s12w400.copyWith(
-                    color: Colors.white,
+                    color: AppColors.white,
                     fontSize: 8,
                     fontWeight: FontWeight.w100,
                   ),
@@ -99,15 +101,12 @@ class cardNotificationWidget extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: const Color.fromARGB(221, 219, 218, 218),
-                    width: 0.3,
-                  ),
+                  color: AppColors.surface,
+                  border: Border.all(color: AppColors.border, width: 0.3),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  'Acknowledge',
+                  AppStrings.acknowledge,
                   style: AppTextStyles.s12w400.copyWith(
                     fontSize: 8,
                     fontWeight: FontWeight.w100,
@@ -124,19 +123,19 @@ class cardNotificationWidget extends StatelessWidget {
   Color? _setColorsIcons() {
     switch (type) {
       case EnumTypeAction.proposal:
-        return Colors.blue;
+        return AppColors.bluePrimary;
       case EnumTypeAction.alert:
-        return Colors.red;
+        return AppColors.redError;
       case EnumTypeAction.inventory:
-        return Colors.green;
+        return AppColors.greenSuccess;
       case EnumTypeAction.stock:
-        return Colors.deepOrange;
+        return AppColors.orangeWarning;
     }
   }
 }
 
-class headerAlertPage extends StatelessWidget {
-  const headerAlertPage({super.key});
+class HeaderAlertPage extends StatelessWidget {
+  const HeaderAlertPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +143,7 @@ class headerAlertPage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xff24A448),
+        color: AppColors.appBarBackground,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(12.r),
           bottomRight: Radius.circular(12.r),
@@ -155,14 +154,14 @@ class headerAlertPage extends StatelessWidget {
         children: [
           verticalSpace(25.h),
           Text(
-            'Alerts',
-            style: AppTextStyles.s20w700.copyWith(color: Colors.white),
+            AppStrings.alertsTitle,
+            style: AppTextStyles.s20w700.copyWith(color: AppColors.white),
           ),
           verticalSpace(1.h),
           Text(
-            'Monitor system alerts and notifications',
+            AppStrings.alertsSubtitle,
             style: AppTextStyles.s12w400.copyWith(
-              color: const Color(0xfff7f7f7),
+              color: AppColors.white.withValues(alpha: 0.92),
             ),
           ),
           verticalSpace(15.h),

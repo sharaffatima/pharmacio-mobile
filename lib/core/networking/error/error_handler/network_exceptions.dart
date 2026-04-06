@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'network_exceptions.freezed.dart';
 
-
 @freezed
 abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
   const factory NetworkExceptions.requestCancelled() = RequestCancelled;
@@ -84,12 +83,14 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
       case 400:
       case 401:
         return NetworkExceptions.unauthorizedRequest(
-            errorMessage ?? 'بيانات غير صحيحة');
+          errorMessage ?? 'بيانات غير صحيحة',
+        );
       case 403:
-        return const NetworkExceptions.loggingInRequired();
+        return NetworkExceptions.unauthorizedRequest(
+          errorMessage ?? 'ليس لديك صلاحية لتنفيذ هذا الإجراء',
+        );
       case 404:
-        return NetworkExceptions.notFound(
-            errorMessage ?? 'الصفحة غير موجودة');
+        return NetworkExceptions.notFound(errorMessage ?? 'الصفحة غير موجودة');
       case 405:
         return const NetworkExceptions.methodNotAllowed();
       case 409:
@@ -98,14 +99,16 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
         return const NetworkExceptions.requestTimeout();
       case 422:
         return NetworkExceptions.unprocessableEntity(
-            errorMessage ?? 'بيانات غير صالحة');
+          errorMessage ?? 'بيانات غير صالحة',
+        );
       case 500:
         return const NetworkExceptions.internalServerError();
       case 503:
         return const NetworkExceptions.serviceUnavailable();
       default:
         return NetworkExceptions.defaultError(
-            errorMessage ?? 'Status code: $statusCode');
+          errorMessage ?? 'Status code: $statusCode',
+        );
     }
   }
 

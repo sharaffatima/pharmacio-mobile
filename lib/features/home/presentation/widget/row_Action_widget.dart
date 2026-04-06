@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
@@ -26,8 +27,7 @@ class RowActionWidget extends StatelessWidget {
             height: 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.r),
-              color: _SetColorsBack(),
-              // color: const Color.fromARGB(67, 68, 137, 255),
+              color: _setColorsBack(),
             ),
             child: Icon(_setIcons(), color: _setColorsIcons(), size: 16),
           ),
@@ -39,7 +39,7 @@ class RowActionWidget extends StatelessWidget {
               Text(
                 '$dataTime ',
                 style: AppTextStyles.s10w200.copyWith(
-                  color: const Color.fromARGB(191, 78, 78, 78),
+                  color: AppColors.textSecondary,
                   fontSize: 10,
                   fontWeight: FontWeight.w200,
                 ),
@@ -49,60 +49,36 @@ class RowActionWidget extends StatelessWidget {
         ],
       ),
     );
-    // return ListTile(
-    //   titleAlignment: ListTileTitleAlignment.center,
-    //   // isThreeLine: true,
-    //   leading: Container(
-    //     width: 30,
-    //     height: 30,
-    //     decoration: BoxDecoration(
-    //       borderRadius: BorderRadius.circular(5.r),
-    //       color: _SetColorsBack(),
-    //       // color: const Color.fromARGB(67, 68, 137, 255),
-    //     ),
-    //     child: Icon(_setIcons(), color: _setColorsIcons(), size: 18),
-    //   ),
-
-    //   title: Text(title, style: AppTextStyles.s12w400),
-    //   subtitle: Text(
-    //     '12 hours',
-    //     style: AppTextStyles.s12w400.copyWith(
-    //       color: const Color.fromARGB(191, 78, 78, 78),
-    //       fontSize: 10,
-    //     ),
-    //   ),
-    // );
   }
 
-  Color? _SetColorsBack() {
+  Color? _setColorsBack() {
     switch (type) {
       case EnumTypeAction.proposal:
-        return const Color.fromARGB(67, 68, 137, 255);
+        return AppColors.bluePrimary.withValues(alpha: 0.20);
 
       case EnumTypeAction.alert:
-        return const Color.fromARGB(47, 244, 67, 54);
+        return AppColors.redError.withValues(alpha: 0.18);
 
       case EnumTypeAction.inventory:
-        return const Color.fromARGB(62, 76, 175, 79);
+        return AppColors.greenSuccess.withValues(alpha: 0.20);
       case EnumTypeAction.stock:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        return AppColors.orangeWarning.withValues(alpha: 0.20);
     }
   }
 
   Color? _setColorsIcons() {
     switch (type) {
       case EnumTypeAction.proposal:
-        return Colors.blue;
+        return AppColors.bluePrimary;
 
       case EnumTypeAction.alert:
-        return Colors.red;
+        return AppColors.redError;
 
       case EnumTypeAction.inventory:
-        return Colors.green;
+        return AppColors.greenSuccess;
 
       case EnumTypeAction.stock:
-        return Colors.deepOrange;
+        return AppColors.orangeWarning;
     }
   }
 

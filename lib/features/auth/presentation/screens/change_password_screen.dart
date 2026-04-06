@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
@@ -18,9 +20,9 @@ class ChangePasswordScreen extends StatelessWidget {
     final cubit = context.read<AuthCubit>();
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
-      appBar: const CustomAppBar(
-        title: 'Change Password',
-        subtitle: 'Update your account password',
+      appBar: CustomAppBar(
+        title: AppStrings.changePasswordTitle,
+        subtitle: AppStrings.changePasswordSubtitle,
       ),
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -32,27 +34,25 @@ class ChangePasswordScreen extends StatelessWidget {
             successLogout: (_) {},
             successGetMe: (_) {},
             successChangePassword: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(response.message),
-                  backgroundColor: AppColors.greenSuccess,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: response.message,
+                backgroundColor: AppColors.greenSuccess,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
               context.pop();
             },
             error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.redError,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: error,
+                backgroundColor: AppColors.redError,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
             },
@@ -64,9 +64,9 @@ class ChangePasswordScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(16.w),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: AppColors.circelBorder, width: 1),
+                border: Border.all(color: AppColors.border, width: 1),
               ),
               child: Form(
                 key: cubit.formKey,
@@ -74,33 +74,35 @@ class ChangePasswordScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Update Password',
+                      AppStrings.updatePassword,
                       style: AppTextStyles.accountInformation,
                     ),
                     verticalSpace(8.h),
                     Text(
-                      'Please enter your current password and choose a new one.',
-                      style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                      AppStrings.passwordUpdateHint,
+                      style: AppTextStyles.s12w400.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                     verticalSpace(24.h),
                     AppLabeledTextFormField(
-                      title: 'Current Password',
+                      title: AppStrings.currentPassword,
                       controller: cubit.oldPasswordController,
-                      hintText: 'Enter current password',
+                      hintText: AppStrings.enterCurrentPassword,
                       isPassword: true,
                     ),
                     verticalSpace(16.h),
                     AppLabeledTextFormField(
-                      title: 'New Password',
+                      title: AppStrings.newPassword,
                       controller: cubit.newPasswordController,
-                      hintText: 'Enter new password',
+                      hintText: AppStrings.enterNewPassword,
                       isPassword: true,
                     ),
                     verticalSpace(16.h),
                     AppLabeledTextFormField(
-                      title: 'Confirm New Password',
+                      title: AppStrings.confirmNewPassword,
                       controller: cubit.confirmNewPasswordController,
-                      hintText: 'Re-enter new password',
+                      hintText: AppStrings.reEnterNewPassword,
                       isPassword: true,
                     ),
                     verticalSpace(24.h),
@@ -111,7 +113,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           orElse: () => false,
                         );
                         return AppPrimaryButton(
-                          label: 'Change Password',
+                          label: AppStrings.changePasswordTitle,
                           isLoading: isLoading,
                           backgroundColor: AppColors.forestGreen,
                           onPressed: () => cubit.changePassword(),

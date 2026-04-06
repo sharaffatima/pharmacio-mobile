@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/retry_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 
 class CameraCaptureScreen extends StatelessWidget {
@@ -21,13 +26,14 @@ class CameraCaptureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final offersCubit = context.read<OffersCubit>();
     offersCubit.initCamera();
+    final cameraBackground = AppColors.cameraBackground;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: cameraBackground,
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        title: const Text('Camera'),
+        backgroundColor: cameraBackground,
+        foregroundColor: AppColors.white,
+        title: Text(AppStrings.camera),
       ),
       body: Stack(
         children: [
@@ -38,10 +44,20 @@ class CameraCaptureScreen extends StatelessWidget {
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.all(16.r),
-                    child: Text(
-                      error,
-                      style: TextStyle(color: Colors.white, fontSize: 14.sp),
-                      textAlign: TextAlign.center,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          error,
+                          style: TextStyle(
+                            color: AppColors.white,
+                            fontSize: 14.sp,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        verticalSpace(12),
+                        RetryWidget(onPressed: offersCubit.initCamera),
+                      ],
                     ),
                   ),
                 );
@@ -54,16 +70,14 @@ class CameraCaptureScreen extends StatelessWidget {
                     valueListenable: offersCubit.cameraInitFuture,
                     builder: (context, initFuture, ___) {
                       if (controller == null || initFuture == null) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const LoadingWidget();
                       }
 
                       return FutureBuilder<void>(
                         future: initFuture,
                         builder: (context, snap) {
                           if (snap.connectionState != ConnectionState.done) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return const LoadingWidget();
                           }
                           return Center(
                             child: AspectRatio(
@@ -93,8 +107,9 @@ class CameraCaptureScreen extends StatelessWidget {
                     }
                   } catch (e) {
                     if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Capture failed: $e')),
+                    showAppSnackBar(
+                      context,
+                      message: '${AppStrings.captureFailedPrefix}$e',
                     );
                   }
                 },
@@ -103,8 +118,8 @@ class CameraCaptureScreen extends StatelessWidget {
                   height: 72.r,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.15),
-                    border: Border.all(color: Colors.white, width: 3),
+                    color: AppColors.white.withValues(alpha: 0.15),
+                    border: Border.all(color: AppColors.white, width: 3),
                   ),
                   child: Center(
                     child: Container(

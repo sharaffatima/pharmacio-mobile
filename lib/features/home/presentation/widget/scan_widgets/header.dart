@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
@@ -26,10 +27,10 @@ class Header extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Scan / Upload', style: AppTextStyles.appBar),
+              Text(AppStrings.scanUploadTitle, style: AppTextStyles.appBar),
               verticalSpace(6.h),
               Text(
-                'Upload offers via camera or files',
+                AppStrings.scanUploadSubtitle,
                 style: AppTextStyles.descriptionAppbar,
               ),
             ],

@@ -9,9 +9,9 @@ Widget buildStatCard(String value, String label, Color color) {
     width: 83.w,
     height: 70.h,
     decoration: BoxDecoration(
-      color: AppColors.whiteLaight,
+      color: AppColors.surface,
       borderRadius: BorderRadius.circular(7.r),
-      border: Border.all(color: AppColors.borderColor, width: 1.w),
+      border: Border.all(color: AppColors.border, width: 1.w),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,

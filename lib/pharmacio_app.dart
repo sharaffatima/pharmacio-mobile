@@ -18,7 +18,6 @@ class PharmacioMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Check if user is already logged in
     final accessToken = AppSharedPreferences().getString(
       AppSharedPrefKeys.accessToken,
     );
@@ -44,6 +43,20 @@ class PharmacioMobileApp extends StatelessWidget {
               return BlocBuilder<ThemeCubit, bool>(
                 builder: (context, isDark) {
                   AppColors.isDarkMode = isDark;
+                  final baseTheme = ThemeData(
+                    brightness: isDark ? Brightness.dark : Brightness.light,
+                    useMaterial3: true,
+                  );
+                  final colorScheme =
+                      ColorScheme.fromSeed(
+                        seedColor: AppColors.forestGreen,
+                        brightness: isDark ? Brightness.dark : Brightness.light,
+                      ).copyWith(
+                        surface: AppColors.surface,
+                        onSurface: AppColors.textPrimary,
+                        outline: AppColors.border,
+                      );
+
                   return Directionality(
                     textDirection: currentLanguage == 'ar'
                         ? TextDirection.rtl
@@ -55,21 +68,46 @@ class PharmacioMobileApp extends StatelessWidget {
                       initialRoute: isLoggedIn
                           ? Routes.homeScreen
                           : Routes.loginScreen,
-                      theme: ThemeData(
-                        brightness: isDark ? Brightness.dark : Brightness.light,
+                      theme: baseTheme.copyWith(
+                        colorScheme: colorScheme,
                         primaryColor: AppColors.forestGreen,
                         scaffoldBackgroundColor: AppColors.background,
                         cardColor: AppColors.surface,
                         dividerColor: AppColors.border,
-                        textTheme:
-                            ThemeData(
-                              brightness: isDark
-                                  ? Brightness.dark
-                                  : Brightness.light,
-                            ).textTheme.apply(
-                              bodyColor: AppColors.textPrimary,
-                              displayColor: AppColors.textPrimary,
+                        appBarTheme: AppBarTheme(
+                          backgroundColor: AppColors.appBarBackground,
+                          foregroundColor: AppColors.white,
+                          elevation: 0,
+                        ),
+                        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                          backgroundColor: AppColors.navBackground,
+                          selectedItemColor: AppColors.navSelected,
+                          unselectedItemColor: AppColors.navUnselected,
+                        ),
+                        inputDecorationTheme: InputDecorationTheme(
+                          filled: true,
+                          fillColor: AppColors.surfaceSoft,
+                          hintStyle: TextStyle(color: AppColors.textSecondary),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: AppColors.border),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: AppColors.border),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.forestGreen,
+                              width: 1.3,
                             ),
+                          ),
+                        ),
+                        textTheme: baseTheme.textTheme.apply(
+                          bodyColor: AppColors.textPrimary,
+                          displayColor: AppColors.textPrimary,
+                        ),
                       ),
                     ),
                   );

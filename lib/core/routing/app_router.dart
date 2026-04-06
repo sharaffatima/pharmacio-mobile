@@ -11,9 +11,9 @@ import 'package:pharmacio_flutter_mobile/features/inventory/presentation/screens
 import 'package:pharmacio_flutter_mobile/features/inventory/presentation/screens/inventory_create_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/profile/presentation/screens/profile_screen.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_screen.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/presentation/secreens/proposal_detail_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/logic/cubits/proposals_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/presentation/secreens/proposal_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/presentation/secreens/proposal_detail_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/logic/cubits/sales_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/presentation/screens/sale_screen.dart';
 

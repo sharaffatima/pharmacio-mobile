@@ -6,8 +6,9 @@ import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
-import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/retry_widget.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/stat_card.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
@@ -35,15 +36,13 @@ class InventoryScreen extends StatelessWidget {
           }
         },
         backgroundColor: AppColors.forestGreen,
-        child: Icon(Icons.add, color: Colors.white, size: 28.sp),
+        child: Icon(Icons.add, color: AppColors.white, size: 28.sp),
       ),
       body: BlocBuilder<InventoryCubit, InventoryState>(
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
-            loading: () => const Center(
-              child: CircularProgressIndicator(color: AppColors.forestGreen),
-            ),
+            loading: () => const LoadingWidget(),
             successList: (response) {
               final items = response.results;
 
@@ -81,22 +80,22 @@ class InventoryScreen extends StatelessWidget {
                           children: [
                             buildStatCard(
                               "$total",
-                              "Total",
+                              AppStrings.proposaltitle,
                               AppColors.bluePrimary,
                             ),
                             buildStatCard(
                               "$inStock",
-                              "In stock",
+                              AppStrings.inStock,
                               AppColors.greenSuccess,
                             ),
                             buildStatCard(
                               "$low",
-                              "Low",
+                              AppStrings.low,
                               AppColors.orangeWarning,
                             ),
                             buildStatCard(
                               "$outOfStock",
-                              "Out",
+                              AppStrings.out,
                               AppColors.redError,
                             ),
                           ],
@@ -111,7 +110,7 @@ class InventoryScreen extends StatelessWidget {
                           padding: EdgeInsets.only(top: 40.h),
                           child: Center(
                             child: Text(
-                              'No items found',
+                              AppStrings.noItemsFound,
                               style: AppTextStyles.s14w400.copyWith(
                                 color: AppColors.gray,
                               ),
@@ -136,7 +135,7 @@ class InventoryScreen extends StatelessWidget {
                               name: item.product,
                               minStock: minStock,
                               currentStock: currentStock,
-                              lastUpdated: 'Recently',
+                              lastUpdated: AppStrings.recently,
                             );
                           },
                         ),
@@ -165,10 +164,7 @@ class InventoryScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   verticalSpace(16),
-                  AppPrimaryButton(
-                    label: 'Retry',
-                    backgroundColor: AppColors.forestGreen,
-                    width: 120.w,
+                  RetryWidget(
                     onPressed: () {
                       context.read<InventoryCubit>().getInventoryList();
                     },

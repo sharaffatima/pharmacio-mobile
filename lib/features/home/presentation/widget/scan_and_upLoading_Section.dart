@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 // import 'package:pharmacio_flutter_mobile/core/constants/text_styles.dart';
 import 'package:pharmacio_flutter_mobile/core/routing/routes.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/card_quick_action_widget.dart';
 
-class scanAndUploadFileSectionWidget extends StatelessWidget {
-  const scanAndUploadFileSectionWidget({super.key});
+class ScanAndUploadFileSectionWidget extends StatelessWidget {
+  const ScanAndUploadFileSectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +19,18 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
       // width: 368.w,
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 27.h),
       decoration: BoxDecoration(
-        color: Colors.white,
-        // border: Border.all(color: const Color.fromARGB(81, 158, 158, 158)),
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Quick Actions', style: AppTextStyles.s14w500),
+            Text(AppStrings.quickActions, style: AppTextStyles.s14w500),
             Text(
-              'Fast scan or upload offers',
+              AppStrings.quickActionsSubtitle,
               style: AppTextStyles.s12w400.copyWith(
-                color: const Color(0xff4e4e4e),
+                color: AppColors.textSecondary,
               ),
             ),
             verticalSpace(16.h),
@@ -39,8 +40,8 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
               children: [
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
-                  child: cardQuickActionswidget(
-                    title: 'Scan Camera',
+                  child: CardQuickActionswidget(
+                    title: AppStrings.scanCamera,
                     icon: Icons.camera_alt_outlined,
                     onTap: () => Navigator.pushNamed(
                       context,
@@ -51,8 +52,8 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
                 ),
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
-                  child: cardQuickActionswidget(
-                    title: 'Upload File',
+                  child: CardQuickActionswidget(
+                    title: AppStrings.uploadFile,
                     icon: Icons.file_upload_outlined,
                     onTap: () => Navigator.pushNamed(
                       context,
@@ -63,8 +64,8 @@ class scanAndUploadFileSectionWidget extends StatelessWidget {
                 ),
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
-                  child: cardQuickActionswidget(
-                    title: 'Record Sale',
+                  child: CardQuickActionswidget(
+                    title: AppStrings.recordSale,
                     icon: Icons.point_of_sale_outlined,
                     onTap: () =>
                         Navigator.pushNamed(context, Routes.saleScreen),

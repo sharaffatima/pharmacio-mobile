@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/data/models/upload_offer_response.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 
@@ -31,29 +33,26 @@ class ScanScreen extends StatelessWidget {
           listener: (context, state) {
             state.whenOrNull(
               uploadSuccess: (response) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(response.message),
-                    backgroundColor: AppColors.greenGood,
-                  ),
+                showAppSnackBar(
+                  context,
+                  message: response.message,
+                  backgroundColor: AppColors.greenGood,
                 );
               },
               statusSuccess: (statusResponse) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Status: ${statusResponse.status}'),
-                    backgroundColor: statusResponse.status == 'failed'
-                        ? AppColors.redError
-                        : AppColors.greenGood,
-                  ),
+                showAppSnackBar(
+                  context,
+                  message: '${AppStrings.statusPrefix}${statusResponse.status}',
+                  backgroundColor: statusResponse.status == 'failed'
+                      ? AppColors.redError
+                      : AppColors.greenGood,
                 );
               },
               error: (error) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(error),
-                    backgroundColor: AppColors.redError,
-                  ),
+                showAppSnackBar(
+                  context,
+                  message: error,
+                  backgroundColor: AppColors.redError,
                 );
               },
             );

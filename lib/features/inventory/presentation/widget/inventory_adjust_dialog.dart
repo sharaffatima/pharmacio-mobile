@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/di/dependency_injection.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 
 class InventoryAdjustDialog extends StatelessWidget {
@@ -49,30 +51,27 @@ class InventoryAdjustDialog extends StatelessWidget {
           successList: (_) {},
           successCreate: (_) {},
           successAdjust: (response) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
+            showAppSnackBar(
+              context,
+              message:
                   '${response.product}: ${response.previousQuantity} → ${response.quantity}',
-                ),
-                backgroundColor: AppColors.greenSuccess,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
+              backgroundColor: AppColors.greenSuccess,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.r),
               ),
             );
             cubit.clearAdjustForm();
             Navigator.of(context).pop(true);
           },
           error: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(error),
-                backgroundColor: AppColors.redError,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
+            showAppSnackBar(
+              context,
+              message: error,
+              backgroundColor: AppColors.redError,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.r),
               ),
             );
           },
@@ -85,8 +84,9 @@ class InventoryAdjustDialog extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Form(
             key: cubit.adjustFormKey,
@@ -105,7 +105,7 @@ class InventoryAdjustDialog extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(16),
-                Text('Adjust Inventory', style: AppTextStyles.s20w700),
+                Text(AppStrings.adjustInventory, style: AppTextStyles.s20w700),
                 verticalSpace(4),
                 Text(
                   productName,
@@ -113,16 +113,16 @@ class InventoryAdjustDialog extends StatelessWidget {
                 ),
                 verticalSpace(20),
                 AppLabeledTextFormField(
-                  title: 'Adjustment (use negative for decrease)',
+                  title: AppStrings.adjustmentLabel,
                   controller: cubit.adjustmentController,
-                  hintText: 'e.g. -5 or 10',
+                  hintText: AppStrings.adjustmentHint,
                   keyboardType: TextInputType.number,
                 ),
                 verticalSpace(16),
                 AppLabeledTextFormField(
-                  title: 'Reason',
+                  title: AppStrings.reason,
                   controller: cubit.reasonController,
-                  hintText: 'e.g. Damaged units',
+                  hintText: AppStrings.reasonHint,
                 ),
                 verticalSpace(24),
                 BlocBuilder<InventoryCubit, InventoryState>(
@@ -132,21 +132,18 @@ class InventoryAdjustDialog extends StatelessWidget {
                       orElse: () => false,
                     );
                     return AppPrimaryButton(
-                      label: 'Adjust',
+                      label: AppStrings.adjustInventory,
                       isLoading: isLoading,
                       backgroundColor: AppColors.forestGreen,
                       onPressed: () {
                         if (cubit.adjustmentController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text(
-                                'Adjustment value is required',
-                              ),
-                              backgroundColor: AppColors.redError,
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
+                          showAppSnackBar(
+                            context,
+                            message: AppStrings.adjustmentRequired,
+                            backgroundColor: AppColors.redError,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
                             ),
                           );
                           return;

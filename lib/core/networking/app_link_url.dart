@@ -21,4 +21,8 @@ class AppLinkUrl {
 
   // Sales
   static const String recordSale = "/sales/";
+
+  // Notifications
+  static const String notifications = "/notifications/";
+  static const String notificationsMe = "/notifications/me/";
 }

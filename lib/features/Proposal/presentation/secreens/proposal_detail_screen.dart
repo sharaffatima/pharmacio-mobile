@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/logic/states/proposals_state.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/logic/cubits/proposals_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/logic/states/proposals_state.dart';
 
 class ProposalDetailScreen extends StatelessWidget {
   final int proposalId;
@@ -25,40 +28,35 @@ class ProposalDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
       appBar: CustomAppBar(
-        title: 'Proposal Details',
-        subtitle: 'ID: $proposalId',
+        title: AppStrings.proposalDetails,
+        subtitle: '${AppStrings.idPrefix}$proposalId',
       ),
       body: BlocConsumer<ProposalsCubit, ProposalsState>(
         listener: (context, state) {
           state.maybeWhen(
             approveSuccess: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Proposal Approved: \${response.message ?? ""}',
-                  ),
-                  backgroundColor: AppColors.greenSuccess,
-                ),
+              showAppSnackBar(
+                context,
+                message:
+                    '${AppStrings.proposalApprovedPrefix}${response.message ?? ""}',
+                backgroundColor: AppColors.greenSuccess,
               );
               Navigator.pop(context);
             },
             rejectSuccess: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Proposal Rejected: \${response.message ?? ""}',
-                  ),
-                  backgroundColor: AppColors.orangeWarning,
-                ),
+              showAppSnackBar(
+                context,
+                message:
+                    '${AppStrings.proposalRejectedPrefix}${response.message ?? ""}',
+                backgroundColor: AppColors.orangeWarning,
               );
               Navigator.pop(context);
             },
             error: (message) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(message),
-                  backgroundColor: AppColors.redError,
-                ),
+              showAppSnackBar(
+                context,
+                message: message,
+                backgroundColor: AppColors.redError,
               );
             },
             orElse: () {},
@@ -66,10 +64,8 @@ class ProposalDetailScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return state.maybeWhen(
-            proposalDetailLoading: () =>
-                const Center(child: CircularProgressIndicator()),
-            actionLoading: () =>
-                const Center(child: CircularProgressIndicator()),
+            proposalDetailLoading: () => const LoadingWidget(),
+            actionLoading: () => const LoadingWidget(),
             proposalDetailSuccess: (response) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -83,14 +79,14 @@ class ProposalDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Proposal ID: \${response.id}',
+                              '${AppStrings.proposalId}: \${response.id}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                             ),
                             verticalSpace(8),
-                            const Text('No further details available yet.'),
+                            Text(AppStrings.noProposalDetailsYet),
                           ],
                         ),
                       ),
@@ -100,7 +96,7 @@ class ProposalDetailScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AppPrimaryButton(
-                            label: 'Reject',
+                            label: AppStrings.reject,
                             backgroundColor: AppColors.redError,
                             onPressed: () => _rejectProposal(context),
                           ),
@@ -108,7 +104,7 @@ class ProposalDetailScreen extends StatelessWidget {
                         horizontalSpace(16),
                         Expanded(
                           child: AppPrimaryButton(
-                            label: 'Approve',
+                            label: AppStrings.approve,
                             backgroundColor: AppColors.greenSuccess,
                             onPressed: () => _approveProposal(context),
                           ),
@@ -120,7 +116,7 @@ class ProposalDetailScreen extends StatelessWidget {
                 ),
               );
             },
-            orElse: () => const Center(child: CircularProgressIndicator()),
+            orElse: () => const LoadingWidget(),
           );
         },
       ),

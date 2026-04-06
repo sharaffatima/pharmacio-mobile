@@ -12,11 +12,17 @@ part of 'inventory_cubit.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$InventoryState {
+mixin _$InventoryState implements DiagnosticableTreeMixin {
 
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -28,7 +34,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState()';
 }
 
@@ -204,7 +210,7 @@ return error(_that.error);case _:
 /// @nodoc
 
 
-class _Initial implements InventoryState {
+class _Initial with DiagnosticableTreeMixin implements InventoryState {
   const _Initial();
   
 
@@ -212,6 +218,12 @@ class _Initial implements InventoryState {
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.initial'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -223,7 +235,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.initial()';
 }
 
@@ -236,7 +248,7 @@ String toString() {
 /// @nodoc
 
 
-class InventoryLoading implements InventoryState {
+class InventoryLoading with DiagnosticableTreeMixin implements InventoryState {
   const InventoryLoading();
   
 
@@ -244,6 +256,12 @@ class InventoryLoading implements InventoryState {
 
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.loading'))
+    ;
+}
 
 @override
 bool operator ==(Object other) {
@@ -255,7 +273,7 @@ bool operator ==(Object other) {
 int get hashCode => runtimeType.hashCode;
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.loading()';
 }
 
@@ -268,7 +286,7 @@ String toString() {
 /// @nodoc
 
 
-class SuccessInventoryList implements InventoryState {
+class SuccessInventoryList with DiagnosticableTreeMixin implements InventoryState {
   const SuccessInventoryList(this.inventoryListResponse);
   
 
@@ -281,6 +299,12 @@ class SuccessInventoryList implements InventoryState {
 $SuccessInventoryListCopyWith<SuccessInventoryList> get copyWith => _$SuccessInventoryListCopyWithImpl<SuccessInventoryList>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.successList'))
+    ..add(DiagnosticsProperty('inventoryListResponse', inventoryListResponse));
+}
 
 @override
 bool operator ==(Object other) {
@@ -292,7 +316,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,inventoryListResponse);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.successList(inventoryListResponse: $inventoryListResponse)';
 }
 
@@ -334,7 +358,7 @@ as InventoryListResponse,
 /// @nodoc
 
 
-class SuccessInventoryCreate implements InventoryState {
+class SuccessInventoryCreate with DiagnosticableTreeMixin implements InventoryState {
   const SuccessInventoryCreate(this.inventoryCreateResponse);
   
 
@@ -347,6 +371,12 @@ class SuccessInventoryCreate implements InventoryState {
 $SuccessInventoryCreateCopyWith<SuccessInventoryCreate> get copyWith => _$SuccessInventoryCreateCopyWithImpl<SuccessInventoryCreate>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.successCreate'))
+    ..add(DiagnosticsProperty('inventoryCreateResponse', inventoryCreateResponse));
+}
 
 @override
 bool operator ==(Object other) {
@@ -358,7 +388,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,inventoryCreateResponse);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.successCreate(inventoryCreateResponse: $inventoryCreateResponse)';
 }
 
@@ -400,7 +430,7 @@ as InventoryCreateResponse,
 /// @nodoc
 
 
-class SuccessInventoryAdjust implements InventoryState {
+class SuccessInventoryAdjust with DiagnosticableTreeMixin implements InventoryState {
   const SuccessInventoryAdjust(this.inventoryAdjustResponse);
   
 
@@ -413,6 +443,12 @@ class SuccessInventoryAdjust implements InventoryState {
 $SuccessInventoryAdjustCopyWith<SuccessInventoryAdjust> get copyWith => _$SuccessInventoryAdjustCopyWithImpl<SuccessInventoryAdjust>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.successAdjust'))
+    ..add(DiagnosticsProperty('inventoryAdjustResponse', inventoryAdjustResponse));
+}
 
 @override
 bool operator ==(Object other) {
@@ -424,7 +460,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,inventoryAdjustResponse);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.successAdjust(inventoryAdjustResponse: $inventoryAdjustResponse)';
 }
 
@@ -466,7 +502,7 @@ as InventoryAdjustResponse,
 /// @nodoc
 
 
-class InventoryError implements InventoryState {
+class InventoryError with DiagnosticableTreeMixin implements InventoryState {
   const InventoryError({required this.error});
   
 
@@ -479,6 +515,12 @@ class InventoryError implements InventoryState {
 $InventoryErrorCopyWith<InventoryError> get copyWith => _$InventoryErrorCopyWithImpl<InventoryError>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'InventoryState.error'))
+    ..add(DiagnosticsProperty('error', error));
+}
 
 @override
 bool operator ==(Object other) {
@@ -490,7 +532,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,error);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'InventoryState.error(error: $error)';
 }
 

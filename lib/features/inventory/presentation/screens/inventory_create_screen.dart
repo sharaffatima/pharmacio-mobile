@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/text_style.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_labeled_text_form_field.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/custom_app_bar.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 
 class InventoryCreateScreen extends StatelessWidget {
@@ -18,8 +20,8 @@ class InventoryCreateScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
       appBar: CustomAppBar(
-        title: 'Add Item',
-        subtitle: 'Add a new inventory item',
+        title: AppStrings.addItem,
+        subtitle: AppStrings.addItemSubtitle,
       ),
       body: BlocListener<InventoryCubit, InventoryState>(
         listener: (context, state) {
@@ -28,14 +30,14 @@ class InventoryCreateScreen extends StatelessWidget {
             loading: () {},
             successList: (_) {},
             successCreate: (response) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${response.product} added successfully!'),
-                  backgroundColor: AppColors.greenSuccess,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message:
+                    '${response.product}${AppStrings.addedSuccessfullySuffix}',
+                backgroundColor: AppColors.greenSuccess,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
               cubit.clearCreateForm();
@@ -43,14 +45,13 @@ class InventoryCreateScreen extends StatelessWidget {
             },
             successAdjust: (_) {},
             error: (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.redError,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+              showAppSnackBar(
+                context,
+                message: error,
+                backgroundColor: AppColors.redError,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               );
             },
@@ -62,39 +63,43 @@ class InventoryCreateScreen extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(8.r),
+                border: Border.all(color: AppColors.border),
               ),
               child: Form(
                 key: cubit.createFormKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('New Inventory Item', style: AppTextStyles.s20w700),
+                    Text(
+                      AppStrings.newInventoryItem,
+                      style: AppTextStyles.s20w700,
+                    ),
                     verticalSpace(20),
                     AppLabeledTextFormField(
-                      title: 'Product Name',
+                      title: AppStrings.productName,
                       controller: cubit.productNameController,
-                      hintText: 'Enter product name',
+                      hintText: AppStrings.enterProductName,
                     ),
                     verticalSpace(16),
                     AppLabeledTextFormField(
-                      title: 'Strength',
+                      title: AppStrings.strength,
                       controller: cubit.strengthController,
-                      hintText: 'e.g. 500mg',
+                      hintText: AppStrings.strengthExample,
                     ),
                     verticalSpace(16),
                     AppLabeledTextFormField(
-                      title: 'Quantity on Hand',
+                      title: AppStrings.quantityOnHand,
                       controller: cubit.quantityOnHandController,
-                      hintText: 'Enter quantity',
+                      hintText: AppStrings.enterQuantity,
                       keyboardType: TextInputType.number,
                     ),
                     verticalSpace(16),
                     AppLabeledTextFormField(
-                      title: 'Minimum Threshold',
+                      title: AppStrings.minThreshold,
                       controller: cubit.minThresholdController,
-                      hintText: 'Enter min threshold',
+                      hintText: AppStrings.enterMinThreshold,
                       keyboardType: TextInputType.number,
                     ),
                     verticalSpace(24),
@@ -105,21 +110,18 @@ class InventoryCreateScreen extends StatelessWidget {
                           orElse: () => false,
                         );
                         return AppPrimaryButton(
-                          label: 'Add Item',
+                          label: AppStrings.addItem,
                           isLoading: isLoading,
                           backgroundColor: AppColors.forestGreen,
                           onPressed: () {
                             if (cubit.productNameController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: const Text(
-                                    'Product name is required',
-                                  ),
-                                  backgroundColor: AppColors.redError,
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
+                              showAppSnackBar(
+                                context,
+                                message: AppStrings.productRequired,
+                                backgroundColor: AppColors.redError,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
                                 ),
                               );
                               return;

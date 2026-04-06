@@ -2,11 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
 import '../../../../../core/public_widgets/app_primary_button.dart';
+import '../../../../../core/public_widgets/snack_bar_widget.dart';
 import '../../../../offers/logic/cubits/offers_cubit.dart';
 
 class UploadTab extends StatelessWidget {
@@ -42,19 +44,14 @@ class _UploadContentCard extends StatelessWidget {
         );
       } on Error catch (_) {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'File picking is not available on this platform/build.',
-            ),
-          ),
-        );
+        showAppSnackBar(context, message: AppStrings.filePickingNotAvailable);
         return;
       } catch (e) {
         if (!context.mounted) return;
-        ScaffoldMessenger.of(
+        showAppSnackBar(
           context,
-        ).showSnackBar(SnackBar(content: Text('Failed to pick file: $e')));
+          message: '${AppStrings.failedToPickFilePrefix}$e',
+        );
         return;
       }
 
@@ -62,8 +59,9 @@ class _UploadContentCard extends StatelessWidget {
       if (result == null || result.files.isEmpty) return;
 
       offersCubit.addSelectedFiles(result.files);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${result.files.length} files added')),
+      showAppSnackBar(
+        context,
+        message: '${result.files.length}${AppStrings.filesAddedSuffix}',
       );
     }
 
@@ -85,43 +83,43 @@ class _UploadContentCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: const Color(0xFFE9E9E9), width: 1),
+        border: Border.all(color: AppColors.border, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Upload File', style: AppTextStyles.s14w500),
+          Text(AppStrings.uploadFile, style: AppTextStyles.s14w500),
           verticalSpace(4.h),
           Text(
-            'Upload PDF, Excel, or Image files',
+            AppStrings.uploadFileSubtitle,
             style: AppTextStyles.s12w400.copyWith(
-              color: const Color(0xFF6A6A6A),
+              color: AppColors.textSecondary,
             ),
           ),
           verticalSpace(14.h),
           _UploadOptionCard(
             icon: Icons.image_outlined,
-            iconColor: const Color(0xFF2B66FF),
-            title: 'Upload Image',
-            subtitle: 'JPG, PNG, etc.',
+            iconColor: AppColors.bluePrimary,
+            title: AppStrings.uploadImage,
+            subtitle: AppStrings.imageFormats,
             onTap: () => pickFile(extensions: const ['jpg', 'jpeg', 'png']),
           ),
           verticalSpace(12.h),
           _UploadOptionCard(
             icon: Icons.picture_as_pdf_outlined,
-            iconColor: const Color(0xFFE53935),
-            title: 'Upload PDF',
-            subtitle: 'PDF documents',
+            iconColor: AppColors.redError,
+            title: AppStrings.uploadPdf,
+            subtitle: AppStrings.pdfDocuments,
             onTap: () => pickFile(extensions: const ['pdf']),
           ),
           verticalSpace(12.h),
           _UploadOptionCard(
             icon: Icons.table_chart_outlined,
-            iconColor: const Color(0xFF0F9D58),
-            title: 'Upload Excel',
-            subtitle: 'XLSX, XLS, CSV',
+            iconColor: AppColors.greenSuccess,
+            title: AppStrings.uploadExcel,
+            subtitle: AppStrings.spreadsheetFormats,
             onTap: () => pickFile(extensions: const ['xlsx', 'xls', 'csv']),
           ),
           ValueListenableBuilder<List<PlatformFile>>(
@@ -146,10 +144,7 @@ class _UploadContentCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.offWhite,
                           borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(
-                            color: const Color(0xFFE3E3E3),
-                            width: 1,
-                          ),
+                          border: Border.all(color: AppColors.border, width: 1),
                         ),
                         child: Row(
                           children: [
@@ -161,10 +156,10 @@ class _UploadContentCard extends StatelessWidget {
                             horizontalSpace(10.w),
                             Expanded(
                               child: Text(
-                                'Selected: ${file.name}',
+                                '${AppStrings.selectedPrefix}${file.name}',
                                 style: AppTextStyles.s12w400.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF4E4E4E),
+                                  color: AppColors.textPrimary,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -174,7 +169,7 @@ class _UploadContentCard extends StatelessWidget {
                               icon: Icon(
                                 Icons.close,
                                 size: 16.r,
-                                color: Colors.red,
+                                color: AppColors.redError,
                               ),
                               onPressed: () {
                                 offersCubit.removeSelectedFile(file);
@@ -191,7 +186,9 @@ class _UploadContentCard extends StatelessWidget {
                       final isLoading = state is OffersLoading;
                       return AppPrimaryButton(
                         icon: Icons.cloud_upload_outlined,
-                        label: isLoading ? 'Uploading...' : 'Upload All Files',
+                        label: isLoading
+                            ? AppStrings.uploading
+                            : AppStrings.uploadAllFiles,
                         isLoading: isLoading,
                         height: 44.h,
                         backgroundColor: AppColors.forestGreen,
@@ -209,27 +206,27 @@ class _UploadContentCard extends StatelessWidget {
               Icon(
                 Icons.description_outlined,
                 size: 18.r,
-                color: const Color(0xFF6A6A6A),
+                color: AppColors.textSecondary,
               ),
               horizontalSpace(8.w),
               Text(
-                'Supported formats:',
+                AppStrings.supportedFormats,
                 style: AppTextStyles.s12w400.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF4E4E4E),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],
           ),
           verticalSpace(10.h),
-          _BulletLine(label: 'Images:', value: 'JPG, PNG, JPEG'),
-          _BulletLine(label: 'Documents:', value: 'PDF'),
-          _BulletLine(label: 'Spreadsheets:', value: 'XLSX, XLS, CSV'),
+          _BulletLine(label: AppStrings.images, value: 'JPG, PNG, JPEG'),
+          _BulletLine(label: AppStrings.documents, value: 'PDF'),
+          _BulletLine(label: AppStrings.spreadsheets, value: 'XLSX, XLS, CSV'),
           verticalSpace(10.h),
           Text(
-            'Maximum file size: 10 MB',
+            AppStrings.maxFileSize,
             style: AppTextStyles.s12w400.copyWith(
-              color: const Color(0xFF4E4E4E),
+              color: AppColors.textSecondary,
             ),
           ),
         ],
@@ -263,9 +260,9 @@ class _UploadOptionCard extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: const Color(0xFFE3E3E3), width: 1),
+            border: Border.all(color: AppColors.border, width: 1),
           ),
           child: Row(
             children: [
@@ -293,7 +290,7 @@ class _UploadOptionCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: AppTextStyles.s12w400.copyWith(
-                        color: const Color(0xFF6A6A6A),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -322,25 +319,21 @@ class _BulletLine extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 6.h),
-            child: Icon(
-              Icons.circle,
-              size: 8.r,
-              color: const Color(0xFF6A6A6A),
-            ),
+            child: Icon(Icons.circle, size: 8.r, color: AppColors.iconMuted),
           ),
           horizontalSpace(10.w),
           Expanded(
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.s12w400.copyWith(
-                  color: const Color(0xFF6A6A6A),
+                  color: AppColors.textSecondary,
                 ),
                 children: [
                   TextSpan(
                     text: '$label ',
                     style: AppTextStyles.s12w400.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xFF6A6A6A),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                   TextSpan(text: value),

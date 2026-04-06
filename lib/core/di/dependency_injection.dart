@@ -15,9 +15,12 @@ import '../../features/inventory/logic/cubits/inventory_cubit.dart';
 import '../../features/offers/data/datasources/offers_remote_data_source.dart';
 import '../../features/offers/data/repos/offers_repo.dart';
 import '../../features/offers/logic/cubits/offers_cubit.dart';
-import '../../features/Proposal/data/datasources/proposals_remote_data_source.dart';
-import '../../features/Proposal/data/repos/proposals_repo.dart';
-import '../../features/Proposal/logic/cubits/proposals_cubit.dart';
+import '../../features/notifications/data/datasources/notifications_remote_data_source.dart';
+import '../../features/notifications/data/repos/notifications_repo.dart';
+import '../../features/notifications/logic/cubits/notifications_cubit.dart';
+import '../../features/proposal/data/datasources/proposals_remote_data_source.dart';
+import '../../features/proposal/data/repos/proposals_repo.dart';
+import '../../features/proposal/logic/cubits/proposals_cubit.dart';
 import '../../features/sales/data/datasources/sales_remote_data_source.dart';
 import '../../features/sales/data/repos/sales_repo.dart';
 import '../../features/sales/logic/cubits/sales_cubit.dart';
@@ -71,10 +74,26 @@ Future<void> setupGetit() async {
     () => ProposalsRemoteDataSourceImpl(apiServicesImpl: getIt()),
   );
 
+  //! feature - notifications
+  getIt.registerFactory<NotificationsCubit>(() => NotificationsCubit(getIt()));
+  getIt.registerLazySingleton<NotificationsRepo>(
+    () => NotificationsRepo(
+      networkInfo: getIt(),
+      notificationsRemoteDataSource: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<NotificationsRemoteDataSource>(
+    () => NotificationsRemoteDataSourceImpl(apiServicesImpl: getIt()),
+  );
+
   //! feature - sales
   getIt.registerFactory<SalesCubit>(() => SalesCubit(getIt()));
-  getIt.registerLazySingleton<SalesRepo>(() => SalesRepo(networkInfo: getIt(), salesRemoteDataSource: getIt()));
-  getIt.registerLazySingleton<SalesRemoteDataSource>(() => SalesRemoteDataSourceImpl(apiServicesImpl: getIt()));
+  getIt.registerLazySingleton<SalesRepo>(
+    () => SalesRepo(networkInfo: getIt(), salesRemoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton<SalesRemoteDataSource>(
+    () => SalesRemoteDataSourceImpl(apiServicesImpl: getIt()),
+  );
 
   //! Core
 

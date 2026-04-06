@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
@@ -23,23 +24,23 @@ class SegmentedTabs extends StatelessWidget {
         indicatorPadding: EdgeInsets.zero,
         labelPadding: EdgeInsets.zero,
         indicator: BoxDecoration(
-          color: AppColors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(999),
         ),
-        labelColor: AppColors.black,
-        unselectedLabelColor: const Color(0xFF5A5A5A),
+        labelColor: AppColors.textPrimary,
+        unselectedLabelColor: AppColors.iconMuted,
         labelStyle: AppTextStyles.s12w400.copyWith(fontWeight: FontWeight.w600),
         unselectedLabelStyle: AppTextStyles.s12w400.copyWith(
           fontWeight: FontWeight.w600,
         ),
-        tabs: const [
+        tabs: [
           Tab(
             icon: Icon(Icons.camera_alt_outlined, size: 18),
-            text: 'Camera Scan',
+            text: AppStrings.cameraScan,
           ),
           Tab(
             icon: Icon(Icons.file_upload_outlined, size: 18),
-            text: 'Upload File',
+            text: AppStrings.uploadFile,
           ),
         ],
       ),

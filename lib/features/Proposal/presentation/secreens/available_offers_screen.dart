@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/core/public_widgets/app_primary_button.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/logic/cubits/proposals_cubit.dart';
-import 'package:pharmacio_flutter_mobile/features/Proposal/logic/states/proposals_state.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart';
+import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/logic/cubits/proposals_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/logic/states/proposals_state.dart';
 
 class AvailableOffersTab extends StatelessWidget {
   const AvailableOffersTab({super.key});
@@ -17,92 +20,104 @@ class AvailableOffersTab extends StatelessWidget {
       listener: (context, state) {
         state.maybeWhen(
           error: (message) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  message,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                backgroundColor: AppColors.redError,
-              ),
+            showAppSnackBar(
+              context,
+              message: message,
+              backgroundColor: AppColors.redError,
+              textStyle: const TextStyle(color: AppColors.white),
             );
           },
           generateSuccess: (response) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Proposal generated successfully!'),
-                backgroundColor: AppColors.greenSuccess,
-              ),
+            showAppSnackBar(
+              context,
+              message: AppStrings.proposalGeneratedSuccess,
+              backgroundColor: AppColors.greenSuccess,
             );
             cubit.clearSelection();
           },
           compareSuccess: (response) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Comparison successful!'),
-                backgroundColor: AppColors.greenSuccess,
-              ),
+            showAppSnackBar(
+              context,
+              message: AppStrings.comparisonSuccess,
+              backgroundColor: AppColors.greenSuccess,
             );
           },
           orElse: () {},
         );
       },
       builder: (context, state) {
-        return state.maybeWhen(
-          availableOffersLoading: () =>
-              const Center(child: CircularProgressIndicator()),
-          actionLoading: () => const Center(child: CircularProgressIndicator()),
-          availableOffersSuccess: (response) {
-            final offers = response.results;
-            if (offers.isEmpty) {
-              return const Center(child: Text('No available offers.'));
-            }
-            return ValueListenableBuilder<Set<int>>(
-              valueListenable: cubit.selectedOfferIds,
-              builder: (context, selectedOfferIds, _) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: offers.length,
-                        itemBuilder: (context, index) {
-                          final offer = offers[index];
-                          final isSelected = selectedOfferIds.contains(
-                            offer.id,
-                          );
-                          return Card(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            child: CheckboxListTile(
-                              activeColor: AppColors.bluePrimary,
-                              title: Text(
-                                offer.originalFilename,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: Text(
-                                'Items: \${offer.itemsCount} | Score: \${offer.confidenceScore}',
-                              ),
-                              value: isSelected,
-                              onChanged: (val) => cubit.toggleOfferSelection(
-                                offer.id,
-                                val ?? false,
+        final response = state.maybeWhen(
+          availableOffersSuccess: (response) => response,
+          orElse: () => cubit.cachedAvailableOffers,
+        );
+
+        if (response != null) {
+          final offers = response.results;
+          if (offers.isEmpty) {
+            return Center(child: Text(AppStrings.noAvailableOffers));
+          }
+
+          return ValueListenableBuilder<Set<int>>(
+            valueListenable: cubit.selectedOfferIds,
+            builder: (context, selectedOfferIds, _) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: offers.length,
+                      itemBuilder: (context, index) {
+                        final offer = offers[index];
+                        final isSelected = selectedOfferIds.contains(offer.id);
+                        return Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          color: AppColors.surface,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(color: AppColors.border),
+                          ),
+                          child: CheckboxListTile(
+                            activeColor: AppColors.bluePrimary,
+                            title: Text(
+                              offer.originalFilename,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          );
-                        },
-                      ),
+                            subtitle: Text(
+                              AppStrings.itemsAndScoreLabel
+                                  .replaceAll(
+                                    '{items}',
+                                    offer.itemsCount.toString(),
+                                  )
+                                  .replaceAll(
+                                    '{score}',
+                                    offer.confidenceScore.toString(),
+                                  ),
+                            ),
+                            value: isSelected,
+                            onChanged: (val) => cubit.toggleOfferSelection(
+                              offer.id,
+                              val ?? false,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    _buildActionButtons(selectedOfferIds, cubit),
-                  ],
-                );
-              },
-            );
-          },
-          orElse: () => const Center(child: CircularProgressIndicator()),
+                  ),
+                  _buildActionButtons(selectedOfferIds, cubit),
+                ],
+              );
+            },
+          );
+        }
+
+        return state.maybeWhen(
+          availableOffersLoading: () => const LoadingWidget(),
+          actionLoading: () => const LoadingWidget(),
+          orElse: () => const LoadingWidget(),
         );
       },
     );
@@ -112,10 +127,10 @@ class AvailableOffersTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: AppColors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, -5),
           ),
@@ -125,7 +140,7 @@ class AvailableOffersTab extends StatelessWidget {
         children: [
           Expanded(
             child: AppPrimaryButton(
-              label: 'Compare',
+              label: AppStrings.compare,
               backgroundColor: AppColors.orangeWarning,
               onPressed: selectedOfferIds.length >= 2
                   ? () => cubit.compareOffers(selectedOfferIds.toList())
@@ -135,7 +150,7 @@ class AvailableOffersTab extends StatelessWidget {
           horizontalSpace(16),
           Expanded(
             child: AppPrimaryButton(
-              label: 'Generate Proposal',
+              label: AppStrings.generateProposal,
               backgroundColor: AppColors.bluePrimary,
               onPressed: selectedOfferIds.isNotEmpty
                   ? () => cubit.generateProposal(selectedOfferIds.toList())

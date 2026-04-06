@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/card_dash_board.dart';
 
-class dashBourdWidget extends StatelessWidget {
-  const dashBourdWidget({super.key});
+class DashBourdWidget extends StatelessWidget {
+  const DashBourdWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class dashBourdWidget extends StatelessWidget {
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.alert,
-                title: 'low stock',
+                title: AppStrings.lowStockLabel,
                 value: 12,
               ),
             ),
@@ -24,7 +25,7 @@ class dashBourdWidget extends StatelessWidget {
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.stock,
-                title: 'Activity Alerts',
+                title: AppStrings.activityAlerts,
                 value: 3,
               ),
             ),
@@ -36,7 +37,7 @@ class dashBourdWidget extends StatelessWidget {
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.proposal,
-                title: 'Proposal',
+                title: AppStrings.proposalTitle,
                 value: 5,
               ),
             ),
@@ -44,7 +45,7 @@ class dashBourdWidget extends StatelessWidget {
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.inventory,
-                title: 'Inventory',
+                title: AppStrings.inventoryTitle,
                 value: 1247,
               ),
             ),

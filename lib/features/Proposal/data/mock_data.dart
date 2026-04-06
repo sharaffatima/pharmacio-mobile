@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:pharmacio_flutter_mobile/features/Proposal/data/mock_data_model.dart';
+import 'package:pharmacio_flutter_mobile/features/proposal/data/mock_data_model.dart';
 
 final List<ProposalModel> proposals = [
   ProposalModel(
