@@ -4,6 +4,7 @@ import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/di/dependency_injection.dart';
 import 'package:pharmacio_flutter_mobile/features/auth/logic/cubits/auth_cubit.dart';
+import 'package:pharmacio_flutter_mobile/features/home/logic/cubits/home_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/screens/home_page.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/logic/cubits/inventory_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/inventory/presentation/screens/inventory_screen.dart';
@@ -20,7 +21,7 @@ class MainNavigationScreen extends StatelessWidget {
   static final ValueNotifier<int> _unreadCountNotifier = ValueNotifier<int>(0);
 
   final List<Widget> _pages = [
-    const HomePage(),
+    const HomeWrapperScreen(),
     const AlertsWrapperScreen(),
     const InventoryWrapperScreen(),
     const ProposalWrapperScreen(),
@@ -106,6 +107,18 @@ class MainNavigationScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class HomeWrapperScreen extends StatelessWidget {
+  const HomeWrapperScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<HomeCubit>(
+      create: (_) => getIt<HomeCubit>()..loadHomeDashboard(),
+      child: const HomePage(),
     );
   }
 }

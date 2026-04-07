@@ -25,4 +25,7 @@ class AppLinkUrl {
   // Notifications
   static const String notifications = "/notifications/";
   static const String notificationsMe = "/notifications/me/";
+  static const String dashboardStats = "/notifications/dashboard/stats/";
+  static const String dashboardRecentActivity =
+      "/notifications/dashboard/recent-activity/";
 }

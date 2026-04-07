@@ -9,6 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/data/datasources/auth_remote_data_source.dart';
 import '../../features/auth/data/repos/auth_repo.dart';
 import '../../features/auth/logic/cubits/auth_cubit.dart';
+import '../../features/home/data/datasources/home_remote_data_source.dart';
+import '../../features/home/data/repos/home_repo.dart';
+import '../../features/home/logic/cubits/home_cubit.dart';
 import '../../features/inventory/data/dataSources/inventory_remote_data_source.dart';
 import '../../features/inventory/data/repos/inventory_repo.dart';
 import '../../features/inventory/logic/cubits/inventory_cubit.dart';
@@ -39,6 +42,19 @@ Future<void> setupGetit() async {
   //data source
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(apiServicesImpl: getIt()),
+  );
+
+  //! feature - home
+
+  //cubit
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+  //repo
+  getIt.registerLazySingleton<HomeRepo>(
+    () => HomeRepo(networkInfo: getIt(), homeRemoteDataSource: getIt()),
+  );
+  //data source
+  getIt.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(apiServicesImpl: getIt()),
   );
 
   //! feature - inventory

@@ -3,22 +3,39 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/extentions.dart';
 import 'package:pharmacio_flutter_mobile/core/helpers/spacing.dart';
+import 'package:pharmacio_flutter_mobile/features/home/data/models/dashboard_stats_response.dart';
 import 'package:pharmacio_flutter_mobile/features/home/presentation/widget/card_dash_board.dart';
 
 class DashBourdWidget extends StatelessWidget {
-  const DashBourdWidget({super.key});
+  const DashBourdWidget({
+    super.key,
+    required this.dashboardStats,
+    required this.isLoading,
+  });
+
+  final DashboardStatsResponse? dashboardStats;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    final lowStockValue = dashboardStats?.lowStock ?? 0;
+    final activityAlertsValue = dashboardStats?.activityAlerts ?? 0;
+    final proposalsValue = dashboardStats?.proposals ?? 0;
+    final inventoryValue = dashboardStats?.inventory ?? 0;
+
     return Column(
       children: [
+        if (isLoading) ...[
+          const LinearProgressIndicator(minHeight: 2),
+          verticalSpace(10.h),
+        ],
         Row(
           children: [
             Expanded(
               child: CardDashBourdWidget(
                 type: EnumTypeAction.alert,
                 title: AppStrings.lowStockLabel,
-                value: 12,
+                value: lowStockValue,
               ),
             ),
             horizontalSpace(12.w),
@@ -26,7 +43,7 @@ class DashBourdWidget extends StatelessWidget {
               child: CardDashBourdWidget(
                 type: EnumTypeAction.stock,
                 title: AppStrings.activityAlerts,
-                value: 3,
+                value: activityAlertsValue,
               ),
             ),
           ],
@@ -38,7 +55,7 @@ class DashBourdWidget extends StatelessWidget {
               child: CardDashBourdWidget(
                 type: EnumTypeAction.proposal,
                 title: AppStrings.proposalTitle,
-                value: 5,
+                value: proposalsValue,
               ),
             ),
             horizontalSpace(12.w),
@@ -46,7 +63,7 @@ class DashBourdWidget extends StatelessWidget {
               child: CardDashBourdWidget(
                 type: EnumTypeAction.inventory,
                 title: AppStrings.inventoryTitle,
-                value: 1247,
+                value: inventoryValue,
               ),
             ),
           ],
