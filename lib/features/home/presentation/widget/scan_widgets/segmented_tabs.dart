@@ -34,10 +34,13 @@ class SegmentedTabs extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
         tabs: [
+          /*
+          // Temporarily disabled for future releases.
           Tab(
             icon: Icon(Icons.camera_alt_outlined, size: 18),
             text: AppStrings.cameraScan,
           ),
+          */
           Tab(
             icon: Icon(Icons.file_upload_outlined, size: 18),
             text: AppStrings.uploadFile,

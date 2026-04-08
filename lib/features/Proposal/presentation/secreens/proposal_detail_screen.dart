@@ -23,6 +23,11 @@ class ProposalDetailScreen extends StatelessWidget {
     context.read<ProposalsCubit>().rejectProposal(proposalId);
   }
 
+  double _toDouble(String? value) {
+    if (value == null) return 0;
+    return double.tryParse(value) ?? 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +43,7 @@ class ProposalDetailScreen extends StatelessWidget {
               showAppSnackBar(
                 context,
                 message:
-                    '${AppStrings.proposalApprovedPrefix}${response.message ?? ""}',
+                    '${AppStrings.proposalApprovedPrefix}${response.status ?? AppStrings.approved}',
                 backgroundColor: AppColors.greenSuccess,
               );
               Navigator.pop(context);
@@ -47,7 +52,7 @@ class ProposalDetailScreen extends StatelessWidget {
               showAppSnackBar(
                 context,
                 message:
-                    '${AppStrings.proposalRejectedPrefix}${response.message ?? ""}',
+                    '${AppStrings.proposalRejectedPrefix}${response.status ?? AppStrings.rejected}',
                 backgroundColor: AppColors.orangeWarning,
               );
               Navigator.pop(context);
@@ -67,6 +72,10 @@ class ProposalDetailScreen extends StatelessWidget {
             proposalDetailLoading: () => const LoadingWidget(),
             actionLoading: () => const LoadingWidget(),
             proposalDetailSuccess: (response) {
+              final items = response.items ?? const [];
+              final currentStatus = (response.status ?? '').toLowerCase();
+              final canTakeAction = currentStatus == 'pending';
+
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -79,38 +88,78 @@ class ProposalDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${AppStrings.proposalId}: \${response.id}',
+                              '${AppStrings.proposalId}: ${response.id ?? AppStrings.notAvailable}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                             ),
                             verticalSpace(8),
-                            Text(AppStrings.noProposalDetailsYet),
+                            Text(
+                              '${AppStrings.statusPrefix}${response.status ?? AppStrings.notAvailable}',
+                            ),
+                            verticalSpace(6),
+                            Text(
+                              '${AppStrings.totalCost}: ${response.totalCost ?? AppStrings.notAvailable}',
+                            ),
+                            verticalSpace(6),
+                            Text(
+                              '${AppStrings.items}: ${items.length} ${AppStrings.itemsSuffix}',
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppPrimaryButton(
-                            label: AppStrings.reject,
-                            backgroundColor: AppColors.redError,
-                            onPressed: () => _rejectProposal(context),
-                          ),
-                        ),
-                        horizontalSpace(16),
-                        Expanded(
-                          child: AppPrimaryButton(
-                            label: AppStrings.approve,
-                            backgroundColor: AppColors.greenSuccess,
-                            onPressed: () => _approveProposal(context),
-                          ),
-                        ),
-                      ],
+                    verticalSpace(12),
+                    Expanded(
+                      child: items.isEmpty
+                          ? Center(child: Text(AppStrings.noProposalDetailsYet))
+                          : ListView.separated(
+                              itemCount: items.length,
+                              separatorBuilder: (_, __) => verticalSpace(8),
+                              itemBuilder: (context, index) {
+                                final item = items[index];
+                                final quantity = item.proposedQuantity ?? 0;
+                                return Card(
+                                  child: ListTile(
+                                    title: Text(
+                                      item.productName ??
+                                          AppStrings.notAvailable,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      '${item.company ?? ''} | Qty: $quantity',
+                                    ),
+                                    trailing: Text(
+                                      '\$${_toDouble(item.lineTotal).toStringAsFixed(2)}',
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                     ),
+                    if (canTakeAction)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AppPrimaryButton(
+                              label: AppStrings.reject,
+                              backgroundColor: AppColors.redError,
+                              onPressed: () => _rejectProposal(context),
+                            ),
+                          ),
+                          horizontalSpace(16),
+                          Expanded(
+                            child: AppPrimaryButton(
+                              label: AppStrings.approve,
+                              backgroundColor: AppColors.greenSuccess,
+                              onPressed: () => _approveProposal(context),
+                            ),
+                          ),
+                        ],
+                      ),
                     verticalSpace(24),
                   ],
                 ),

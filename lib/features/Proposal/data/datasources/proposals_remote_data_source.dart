@@ -59,7 +59,7 @@ class ProposalsRemoteDataSourceImpl implements ProposalsRemoteDataSource {
         token: token,
         body: {'ocr_result_ids': ocrResultIds},
       );
-      return CompareResponse.fromJson(response);
+      return CompareResponse.fromDynamic(response);
     } on DioException catch (e) {
       throw NetworkExceptions.getException(e);
     } catch (e) {

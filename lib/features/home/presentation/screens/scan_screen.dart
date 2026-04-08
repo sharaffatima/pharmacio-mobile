@@ -8,7 +8,7 @@ import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.da
 import 'package:pharmacio_flutter_mobile/features/offers/data/models/upload_offer_response.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 
-import '../widget/scan_widgets/camera_tab.dart';
+// import '../widget/scan_widgets/camera_tab.dart';
 import '../widget/scan_widgets/header.dart';
 import '../widget/scan_widgets/recent_uploads_section.dart';
 import '../widget/scan_widgets/segmented_tabs.dart';
@@ -25,8 +25,8 @@ class ScanScreen extends StatelessWidget {
     final offersCubit = context.read<OffersCubit>();
 
     return DefaultTabController(
-      length: 2,
-      initialIndex: initialTabIndex.clamp(0, 1),
+      length: 1,
+      initialIndex: initialTabIndex.clamp(0, 0),
       child: Scaffold(
         backgroundColor: AppColors.backGroundBody,
         body: BlocListener<OffersCubit, OffersState>(
@@ -75,9 +75,12 @@ class ScanScreen extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
+                    /*
+                    // Temporarily disabled for future releases.
                     CameraTab(
                       wareHouseName: offersCubit.warehouseController.text,
                     ),
+                    */
                     UploadTab(
                       wareHouseName: offersCubit.warehouseController.text,
                     ),

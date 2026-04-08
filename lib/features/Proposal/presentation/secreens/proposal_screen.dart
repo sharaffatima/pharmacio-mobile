@@ -57,6 +57,47 @@ class ProposalScreen extends StatelessWidget {
 class _ProposalsTab extends StatelessWidget {
   const _ProposalsTab();
 
+  double _toDouble(String? value) {
+    if (value == null) return 0;
+    return double.tryParse(value) ?? 0;
+  }
+
+  String _localizedStatus(String? status) {
+    switch ((status ?? '').toLowerCase()) {
+      case 'approved':
+        return AppStrings.approved;
+      case 'rejected':
+        return AppStrings.rejected;
+      case 'pending':
+      default:
+        return AppStrings.pending;
+    }
+  }
+
+  ({Color text, Color border, Color background}) _statusColors(String? status) {
+    switch ((status ?? '').toLowerCase()) {
+      case 'approved':
+        return (
+          text: AppColors.greenSuccess,
+          border: AppColors.greenSuccess,
+          background: AppColors.greenSuccess.withValues(alpha: 0.1),
+        );
+      case 'rejected':
+        return (
+          text: AppColors.redError,
+          border: AppColors.redError,
+          background: AppColors.redError.withValues(alpha: 0.1),
+        );
+      case 'pending':
+      default:
+        return (
+          text: AppColors.orangeWarning,
+          border: AppColors.orangeWarning,
+          background: AppColors.orangeWarning.withValues(alpha: 0.1),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -131,25 +172,31 @@ class _ProposalsTab extends StatelessWidget {
                   itemCount: proposals.length,
                   itemBuilder: (context, index) {
                     final item = proposals[index];
+                    final id = item.id;
+                    final localizedStatus = _localizedStatus(item.status);
+                    final colors = _statusColors(item.status);
                     return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          Routes.proposalDetailScreen,
-                          arguments: item.id,
-                        );
-                      },
+                      onTap: id == null
+                          ? null
+                          : () {
+                              Navigator.pushNamed(
+                                context,
+                                Routes.proposalDetailScreen,
+                                arguments: id,
+                              );
+                            },
                       child: ProposalCard(
-                        title: '${AppStrings.proposalPrefix} #${item.id}',
-                        date: AppStrings.notAvailable,
-                        status: AppStrings.pending,
-                        itemsCount: 0,
-                        totalCost: 0.0,
-                        textColor: AppColors.orangeWarning,
-                        borderColor: AppColors.orangeWarning,
-                        backgroundColor: AppColors.orangeWarning.withValues(
-                          alpha: 0.1,
-                        ),
+                        title:
+                            '${AppStrings.proposalPrefix} #${id ?? AppStrings.notAvailable}',
+                        date:
+                            item.createdAt?.split('T').first ??
+                            AppStrings.notAvailable,
+                        status: localizedStatus,
+                        itemsCount: item.items?.length ?? 0,
+                        totalCost: _toDouble(item.totalCost),
+                        textColor: colors.text,
+                        borderColor: colors.border,
+                        backgroundColor: colors.background,
                       ),
                     );
                   },

@@ -17,6 +17,8 @@ class ProposalsCubit extends Cubit<ProposalsState> {
   final ValueNotifier<Set<int>> selectedOfferIds;
   AvailableOffersResponse? cachedAvailableOffers;
   ProposalListResponse? cachedProposals;
+  CompareResponse? cachedCompareResponse;
+  List<int> lastComparedOfferIds = const [];
 
   void toggleOfferSelection(int id, bool selected) {
     final current = Set<int>.from(selectedOfferIds.value);
@@ -58,6 +60,8 @@ class ProposalsCubit extends Cubit<ProposalsState> {
       final response = await proposalsRepo.compareOffers(
         ocrResultIds: ocrResultIds,
       );
+      cachedCompareResponse = response;
+      lastComparedOfferIds = List<int>.from(ocrResultIds);
       emit(ProposalsState.compareSuccess(response));
     } catch (e) {
       final exception = NetworkExceptions.getException(e);

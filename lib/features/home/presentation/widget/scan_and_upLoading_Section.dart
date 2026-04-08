@@ -38,6 +38,8 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
               spacing: 12.w,
               runSpacing: 12.h,
               children: [
+                /*
+                // Temporarily disabled for future releases.
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
                   child: CardQuickActionswidget(
@@ -50,6 +52,7 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                */
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
                   child: CardQuickActionswidget(
@@ -58,7 +61,7 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
                     onTap: () => Navigator.pushNamed(
                       context,
                       Routes.scanScreen,
-                      arguments: 1,
+                      arguments: 0,
                     ),
                   ),
                 ),

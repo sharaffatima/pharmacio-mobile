@@ -32,12 +32,12 @@ class _UploadContentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final offersCubit = context.read<OffersCubit>();
 
-    Future<void> pickFile({required List<String> extensions}) async {
+    Future<void> pickFile() async {
       FilePickerResult? result;
       try {
         result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
-          allowedExtensions: extensions,
+          allowedExtensions: const ['pdf'],
           allowMultiple: true,
           withData: false,
           withReadStream: false,
@@ -99,29 +99,34 @@ class _UploadContentCard extends StatelessWidget {
             ),
           ),
           verticalSpace(14.h),
+          /*
+          // Temporarily disabled for future releases. Only PDF uploads are allowed now.
           _UploadOptionCard(
             icon: Icons.image_outlined,
             iconColor: AppColors.bluePrimary,
             title: AppStrings.uploadImage,
             subtitle: AppStrings.imageFormats,
-            onTap: () => pickFile(extensions: const ['jpg', 'jpeg', 'png']),
+            onTap: () => pickFile(),
           ),
           verticalSpace(12.h),
+          */
           _UploadOptionCard(
             icon: Icons.picture_as_pdf_outlined,
             iconColor: AppColors.redError,
             title: AppStrings.uploadPdf,
             subtitle: AppStrings.pdfDocuments,
-            onTap: () => pickFile(extensions: const ['pdf']),
+            onTap: pickFile,
           ),
+          /*
           verticalSpace(12.h),
           _UploadOptionCard(
             icon: Icons.table_chart_outlined,
             iconColor: AppColors.greenSuccess,
             title: AppStrings.uploadExcel,
             subtitle: AppStrings.spreadsheetFormats,
-            onTap: () => pickFile(extensions: const ['xlsx', 'xls', 'csv']),
+            onTap: () => pickFile(),
           ),
+          */
           ValueListenableBuilder<List<PlatformFile>>(
             valueListenable: offersCubit.selectedFiles,
             builder: (context, selectedFiles, _) {
@@ -219,9 +224,9 @@ class _UploadContentCard extends StatelessWidget {
             ],
           ),
           verticalSpace(10.h),
-          _BulletLine(label: AppStrings.images, value: 'JPG, PNG, JPEG'),
+          // _BulletLine(label: AppStrings.images, value: 'JPG, PNG, JPEG'),
           _BulletLine(label: AppStrings.documents, value: 'PDF'),
-          _BulletLine(label: AppStrings.spreadsheets, value: 'XLSX, XLS, CSV'),
+          // _BulletLine(label: AppStrings.spreadsheets, value: 'XLSX, XLS, CSV'),
           verticalSpace(10.h),
           Text(
             AppStrings.maxFileSize,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/colors.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
@@ -8,6 +9,8 @@ import 'package:pharmacio_flutter_mobile/core/public_widgets/loading_widget.dart
 import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.dart';
 import 'package:pharmacio_flutter_mobile/features/proposal/logic/cubits/proposals_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/proposal/logic/states/proposals_state.dart';
+
+import 'compare_results_screen.dart';
 
 class AvailableOffersTab extends StatelessWidget {
   const AvailableOffersTab({super.key});
@@ -36,10 +39,17 @@ class AvailableOffersTab extends StatelessWidget {
             cubit.clearSelection();
           },
           compareSuccess: (response) {
-            showAppSnackBar(
-              context,
-              message: AppStrings.comparisonSuccess,
-              backgroundColor: AppColors.greenSuccess,
+            final selectedIds = List<int>.from(cubit.selectedOfferIds.value);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => BlocProvider.value(
+                  value: cubit,
+                  child: CompareResultsScreen(
+                    compareResponse: response,
+                    ocrResultIds: selectedIds,
+                  ),
+                ),
+              ),
             );
           },
           orElse: () {},
@@ -52,7 +62,7 @@ class AvailableOffersTab extends StatelessWidget {
         );
 
         if (response != null) {
-          final offers = response.results;
+          final offers = response.results ?? const [];
           if (offers.isEmpty) {
             return Center(child: Text(AppStrings.noAvailableOffers));
           }
@@ -67,7 +77,10 @@ class AvailableOffersTab extends StatelessWidget {
                       itemCount: offers.length,
                       itemBuilder: (context, index) {
                         final offer = offers[index];
-                        final isSelected = selectedOfferIds.contains(offer.id);
+                        final offerId = offer.id;
+                        final isSelected =
+                            offerId != null &&
+                            selectedOfferIds.contains(offerId);
                         return Card(
                           margin: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -81,7 +94,7 @@ class AvailableOffersTab extends StatelessWidget {
                           child: CheckboxListTile(
                             activeColor: AppColors.bluePrimary,
                             title: Text(
-                              offer.originalFilename,
+                              offer.originalFilename ?? AppStrings.notAvailable,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -90,18 +103,21 @@ class AvailableOffersTab extends StatelessWidget {
                               AppStrings.itemsAndScoreLabel
                                   .replaceAll(
                                     '{items}',
-                                    offer.itemsCount.toString(),
+                                    (offer.itemsCount ?? 0).toString(),
                                   )
                                   .replaceAll(
                                     '{score}',
-                                    offer.confidenceScore.toString(),
+                                    (offer.confidenceScore ?? 0)
+                                        .toStringAsFixed(2),
                                   ),
                             ),
                             value: isSelected,
-                            onChanged: (val) => cubit.toggleOfferSelection(
-                              offer.id,
-                              val ?? false,
-                            ),
+                            onChanged: offerId == null
+                                ? null
+                                : (val) => cubit.toggleOfferSelection(
+                                    offerId,
+                                    val ?? false,
+                                  ),
                           ),
                         );
                       },
@@ -124,6 +140,11 @@ class AvailableOffersTab extends StatelessWidget {
   }
 
   Widget _buildActionButtons(Set<int> selectedOfferIds, ProposalsCubit cubit) {
+    final comparedIds = cubit.lastComparedOfferIds;
+    final canGenerateForComparedIds =
+        comparedIds.isNotEmpty &&
+        setEquals(selectedOfferIds, comparedIds.toSet());
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -152,8 +173,8 @@ class AvailableOffersTab extends StatelessWidget {
             child: AppPrimaryButton(
               label: AppStrings.generateProposal,
               backgroundColor: AppColors.bluePrimary,
-              onPressed: selectedOfferIds.isNotEmpty
-                  ? () => cubit.generateProposal(selectedOfferIds.toList())
+              onPressed: canGenerateForComparedIds
+                  ? () => cubit.generateProposal(comparedIds)
                   : null,
             ),
           ),

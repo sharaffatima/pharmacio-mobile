@@ -61,6 +61,8 @@ class _CameraContentCard extends StatelessWidget {
               ],
             ),
             if (capturedPath != null) ...[
+              /*
+              // Temporarily disabled for future releases.
               verticalSpace(16.h),
               BlocBuilder<OffersCubit, OffersState>(
                 builder: (context, state) {
@@ -86,6 +88,7 @@ class _CameraContentCard extends StatelessWidget {
                   );
                 },
               ),
+              */
             ],
           ],
         );
