@@ -49,7 +49,7 @@ class InventoryItemCard extends StatelessWidget {
     if (progress > 1.0) progress = 1.0;
 
     return Container(
-      height: 127.h,
+      constraints: BoxConstraints(minHeight: 127.h),
       width: 355.w,
       padding: EdgeInsets.all(12.w),
       margin: EdgeInsets.symmetric(horizontal: 22.w, vertical: 8.h),

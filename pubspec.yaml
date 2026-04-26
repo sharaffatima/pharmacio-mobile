@@ -51,6 +51,7 @@ dev_dependencies:
   build_runner: ^2.11.0
   freezed: ^3.2.5
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
 
@@ -93,3 +94,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/images/pharmacio_logo.png
+  remove_alpha_ios: true

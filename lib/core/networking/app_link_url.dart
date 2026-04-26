@@ -1,5 +1,5 @@
 class AppLinkUrl {
-  static const String baseUrl = "http://10.0.2.2:8000/api/v1";
+  static const String baseUrl = "https://api.35.228.22.79.nip.io//api/v1";
   static const String login = "/auth/login/";
   static const String register = "/auth/register/";
   static const String logout = "/auth/logout/";
