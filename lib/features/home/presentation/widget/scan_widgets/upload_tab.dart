@@ -11,22 +11,28 @@ import '../../../../../core/public_widgets/app_primary_button.dart';
 import '../../../../../core/public_widgets/snack_bar_widget.dart';
 import '../../../../offers/logic/cubits/offers_cubit.dart';
 
-class UploadTab extends StatelessWidget {
+class UploadTabs extends StatelessWidget {
   final String wareHouseName;
-  const UploadTab({super.key, required this.wareHouseName});
+  final GlobalKey<FormState> form;
+  const UploadTabs({
+    super.key,
+    required this.wareHouseName,
+    required this.form,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
-      child: _UploadContentCard(wareHouseName: wareHouseName),
+      child: _UploadContentCard(wareHouseName: wareHouseName, form: form),
     );
   }
 }
 
 class _UploadContentCard extends StatelessWidget {
   final String wareHouseName;
-  const _UploadContentCard({required this.wareHouseName});
+  final GlobalKey<FormState> form;
+  const _UploadContentCard({required this.wareHouseName, required this.form});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class _UploadContentCard extends StatelessWidget {
       try {
         result = await FilePicker.platform.pickFiles(
           type: FileType.custom,
-          allowedExtensions: const ['pdf'],
+          allowedExtensions: const ['pdf', 'xls', 'xlsx'],
           allowMultiple: true,
           withData: false,
           withReadStream: false,
@@ -110,7 +116,7 @@ class _UploadContentCard extends StatelessWidget {
           ),
           verticalSpace(12.h),
           */
-          _UploadOptionCard(
+          _UploadOptionCards(
             icon: Icons.picture_as_pdf_outlined,
             iconColor: AppColors.redError,
             title: AppStrings.uploadPdf,
@@ -197,7 +203,11 @@ class _UploadContentCard extends StatelessWidget {
                         isLoading: isLoading,
                         height: 44.h,
                         backgroundColor: AppColors.forestGreen,
-                        onPressed: () => uploadFiles(selectedFiles),
+                        onPressed: () {
+                          if (form.currentState!.validate()) {
+                            uploadFiles(selectedFiles);
+                          }
+                        },
                       );
                     },
                   ),
@@ -240,8 +250,8 @@ class _UploadContentCard extends StatelessWidget {
   }
 }
 
-class _UploadOptionCard extends StatelessWidget {
-  const _UploadOptionCard({
+class _UploadOptionCards extends StatelessWidget {
+  const _UploadOptionCards({
     required this.icon,
     required this.iconColor,
     required this.title,

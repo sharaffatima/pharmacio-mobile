@@ -161,9 +161,9 @@ class AvailableOffersTab extends StatelessWidget {
         children: [
           Expanded(
             child: AppPrimaryButton(
-              label: AppStrings.compare,
+              label: AppStrings.extraction,
               backgroundColor: AppColors.orangeWarning,
-              onPressed: selectedOfferIds.length >= 2
+              onPressed: selectedOfferIds.length >= 1
                   ? () => cubit.compareOffers(selectedOfferIds.toList())
                   : null,
             ),

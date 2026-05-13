@@ -14,7 +14,7 @@ class AppColors {
   static Color get textSecondary =>
       isDarkMode ? const Color(0xFFB8C2CC) : const Color(0xFF616161);
   static Color get border =>
-      isDarkMode ? const Color(0xFF37424D) : const Color(0xFFC3C3C3);
+      isDarkMode ? const Color(0xFF37424D) : const Color.fromARGB(142, 195, 195, 195);
   static Color get appBarBackground =>
       isDarkMode ? const Color(0xFF0D5D23) : backGroundAppBar;
   static Color get cameraBackground =>
@@ -27,6 +27,7 @@ class AppColors {
       isDarkMode ? const Color(0xFF7EB4FF) : const Color(0xFF2962FF);
   static Color get navUnselected =>
       isDarkMode ? const Color(0xFF94A3B8) : const Color(0xFF607D8B);
+  static Color get greenTextColors => const Color.fromARGB(255, 0, 101, 30);
 
   // Neutral Colors
   static const Color white = Color(0xFFFFFFFF);

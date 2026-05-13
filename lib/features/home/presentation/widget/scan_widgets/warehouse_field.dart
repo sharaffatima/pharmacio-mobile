@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/input_validator.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';
 
-class WarehouseField extends StatelessWidget {
+class WarehouseFields extends StatelessWidget {
   final TextEditingController controller;
-  const WarehouseField({super.key, required this.controller});
+  const WarehouseFields({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
+       String? notNullValidation(String? str) =>
+      (str == null || str == '') ? 'This_field_is_required' : null;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
@@ -25,8 +28,9 @@ class WarehouseField extends StatelessWidget {
             AppStrings.warehouseName,
             style: AppTextStyles.s12w400.copyWith(fontWeight: FontWeight.bold),
           ),
-          TextField(
+          TextFormField(
             controller: controller,
+            validator: (value) => notNullValidation(value),
             decoration: InputDecoration(
               hintText: AppStrings.enterWarehouseName,
               border: InputBorder.none,
