@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/app_shared_preferences.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/api_services_impl.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/network_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,11 @@ import '../../features/proposal/logic/cubits/proposals_cubit.dart';
 import '../../features/sales/data/datasources/sales_remote_data_source.dart';
 import '../../features/sales/data/repos/sales_repo.dart';
 import '../../features/sales/logic/cubits/sales_cubit.dart';
+import '../../features/pos/data/datasources/pos_remote_data_source.dart';
+import '../../features/pos/data/repos/pos_repo.dart';
+import '../../features/pos/logic/cubits/pos_checkout_cubit.dart';
+import '../../features/pos/logic/cubits/pos_transactions_cubit.dart';
+import '../../features/pos/logic/cubits/pos_receipt_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -111,12 +117,27 @@ Future<void> setupGetit() async {
     () => SalesRemoteDataSourceImpl(apiServicesImpl: getIt()),
   );
 
+  //! feature - pos
+  getIt.registerFactory<PosCheckoutCubit>(() => PosCheckoutCubit(getIt()));
+  getIt.registerFactory<PosTransactionsCubit>(
+    () => PosTransactionsCubit(getIt()),
+  );
+  getIt.registerFactory<PosReceiptCubit>(() => PosReceiptCubit(getIt()));
+  getIt.registerLazySingleton<PosRepo>(
+    () => PosRepo(networkInfo: getIt(), posRemoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton<PosRemoteDataSource>(
+    () => PosRemoteDataSourceImpl(apiServicesImpl: getIt()),
+  );
+
   //! Core
 
   getIt.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImp(internetConnectionChecker: getIt()),
   );
-
+  getIt.registerLazySingleton<AppSharedPreferences>(
+    () => AppSharedPreferences(),
+  );
   getIt.registerLazySingleton(() => ApiServicesImpl());
 
   //! External

@@ -15,6 +15,7 @@ class ProposalCard extends StatelessWidget {
   final Color textColor;
   final Color borderColor;
   final Color backgroundColor;
+  final EdgeInsetsGeometry? margin;
 
   const ProposalCard({
     super.key,
@@ -26,12 +27,13 @@ class ProposalCard extends StatelessWidget {
     required this.textColor,
     required this.borderColor,
     required this.backgroundColor,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 22.w, right: 16.w, top: 11.h),
+      margin: margin ?? EdgeInsets.only(left: 22.w, right: 16.w, top: 11.h),
       padding: EdgeInsets.all(11.r),
       decoration: BoxDecoration(
         color: AppColors.surface,

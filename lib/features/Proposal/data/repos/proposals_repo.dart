@@ -26,10 +26,14 @@ class ProposalsRepo {
     }
   }
 
-  Future<CompareResponse> compareOffers({required List<int> ocrResultIds}) async {
+  Future<CompareResponse> compareOffers({
+    required List<int> ocrResultIds,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.compareOffers(ocrResultIds: ocrResultIds);
+        return await proposalsRemoteDataSource.compareOffers(
+          ocrResultIds: ocrResultIds,
+        );
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -38,10 +42,14 @@ class ProposalsRepo {
     }
   }
 
-  Future<GenerateProposalResponse> generateProposal({required List<int> ocrResultIds}) async {
+  Future<GenerateProposalResponse> generateProposal({
+    required List<int> ocrResultIds,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.generateProposal(ocrResultIds: ocrResultIds);
+        return await proposalsRemoteDataSource.generateProposal(
+          ocrResultIds: ocrResultIds,
+        );
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -62,10 +70,14 @@ class ProposalsRepo {
     }
   }
 
-  Future<ProposalDetailResponse> getProposalDetail({required int proposalId}) async {
+  Future<ProposalDetailResponse> getProposalDetail({
+    required int proposalId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.getProposalDetail(proposalId: proposalId);
+        return await proposalsRemoteDataSource.getProposalDetail(
+          proposalId: proposalId,
+        );
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -74,10 +86,14 @@ class ProposalsRepo {
     }
   }
 
-  Future<ProposalActionResponse> approveProposal({required int proposalId}) async {
+  Future<ProposalActionResponse> approveProposal({
+    required int proposalId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.approveProposal(proposalId: proposalId);
+        return await proposalsRemoteDataSource.approveProposal(
+          proposalId: proposalId,
+        );
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -86,10 +102,14 @@ class ProposalsRepo {
     }
   }
 
-  Future<ProposalActionResponse> rejectProposal({required int proposalId}) async {
+  Future<ProposalActionResponse> rejectProposal({
+    required int proposalId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.rejectProposal(proposalId: proposalId);
+        return await proposalsRemoteDataSource.rejectProposal(
+          proposalId: proposalId,
+        );
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -98,10 +118,26 @@ class ProposalsRepo {
     }
   }
 
-  Future<ProposalStatusResponse> getProposalStatus({required int proposalId}) async {
+  Future<ProposalStatusResponse> getProposalStatus({
+    required int proposalId,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        return await proposalsRemoteDataSource.getProposalStatus(proposalId: proposalId);
+        return await proposalsRemoteDataSource.getProposalStatus(
+          proposalId: proposalId,
+        );
+      } catch (e) {
+        throw NetworkExceptions.getException(e);
+      }
+    } else {
+      throw const NetworkExceptions.noInternetConnection();
+    }
+  }
+
+  Future<String> exportPdf(List<int> ids) async {
+    if (await networkInfo.isConnected) {
+      try {
+        return await proposalsRemoteDataSource.exportPdf(ids);
       } catch (e) {
         throw NetworkExceptions.getException(e);
       }
@@ -110,4 +146,3 @@ class ProposalsRepo {
     }
   }
 }
-

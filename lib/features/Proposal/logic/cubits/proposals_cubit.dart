@@ -12,9 +12,13 @@ class ProposalsCubit extends Cubit<ProposalsState> {
 
   ProposalsCubit(this.proposalsRepo)
     : selectedOfferIds = ValueNotifier<Set<int>>(<int>{}),
+      isProposalSelectionMode = ValueNotifier<bool>(false),
+      selectedProposalIds = ValueNotifier<Set<int>>(<int>{}),
       super(const ProposalsState.initial());
 
   final ValueNotifier<Set<int>> selectedOfferIds;
+  final ValueNotifier<bool> isProposalSelectionMode;
+  final ValueNotifier<Set<int>> selectedProposalIds;
   AvailableOffersResponse? cachedAvailableOffers;
   ProposalListResponse? cachedProposals;
   CompareResponse? cachedCompareResponse;
@@ -32,6 +36,39 @@ class ProposalsCubit extends Cubit<ProposalsState> {
 
   void clearSelection() {
     selectedOfferIds.value = <int>{};
+  }
+
+  void enterProposalSelectionMode() {
+    isProposalSelectionMode.value = true;
+  }
+
+  void exitProposalSelectionMode() {
+    selectedProposalIds.value = <int>{};
+    isProposalSelectionMode.value = false;
+  }
+
+  void toggleProposalSelection(int id) {
+    final current = Set<int>.from(selectedProposalIds.value);
+    if (current.contains(id)) {
+      current.remove(id);
+    } else {
+      current.add(id);
+    }
+    selectedProposalIds.value = current;
+    if (current.isEmpty) {
+      isProposalSelectionMode.value = false;
+    }
+  }
+
+  Future<void> exportPdfProposals(List<int> ids) async {
+    emit(const ProposalsState.pdfLoading());
+    try {
+      final filePath = await proposalsRepo.exportPdf(ids);
+      emit(ProposalsState.pdfSuccess(filePath));
+    } catch (e) {
+      final exception = NetworkExceptions.getException(e);
+      emit(ProposalsState.error(NetworkExceptions.getErrorMessage(exception)));
+    }
   }
 
   Future<void> getAvailableOffers() async {
@@ -157,6 +194,8 @@ class ProposalsCubit extends Cubit<ProposalsState> {
   @override
   Future<void> close() {
     selectedOfferIds.dispose();
+    isProposalSelectionMode.dispose();
+    selectedProposalIds.dispose();
     return super.close();
   }
 }

@@ -29,23 +29,23 @@ class User {
   final int id;
   final String username;
   final String email;
-  
+
   @JsonKey(name: "first_name")
   final String firstName;
-  
+
   @JsonKey(name: "last_name")
   final String lastName;
-  
+
   final List<String> roles;
-  
+
   @JsonKey(name: "phone_number")
   final String? phoneNumber;
-  
+
   @JsonKey(name: "is_active")
   final bool isActive;
-  
+
   @JsonKey(name: "date_joined")
-  final DateTime dateJoined; 
+  final DateTime dateJoined;
 
   User({
     required this.id,
@@ -69,10 +69,7 @@ class Token {
   final String refresh;
   final String access;
 
-  Token({
-    required this.refresh,
-    required this.access,
-  });
+  Token({required this.refresh, required this.access});
 
   factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
 

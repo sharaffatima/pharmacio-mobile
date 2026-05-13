@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/api_services_impl.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/app_link_url.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/error/error_handler/network_exceptions.dart';
@@ -18,6 +22,7 @@ abstract class ProposalsRemoteDataSource {
   Future<ProposalActionResponse> approveProposal({required int proposalId});
   Future<ProposalActionResponse> rejectProposal({required int proposalId});
   Future<ProposalStatusResponse> getProposalStatus({required int proposalId});
+  Future<String> exportPdf(List<int> ids);
 }
 
 class ProposalsRemoteDataSourceImpl implements ProposalsRemoteDataSource {
@@ -167,6 +172,28 @@ class ProposalsRemoteDataSourceImpl implements ProposalsRemoteDataSource {
         token: token,
       );
       return ProposalStatusResponse.fromJson(response);
+    } on DioException catch (e) {
+      throw NetworkExceptions.getException(e);
+    } catch (e) {
+      throw NetworkExceptions.getException(e);
+    }
+  }
+
+  @override
+  Future<String> exportPdf(List<int> ids) async {
+    try {
+      final dio = GetIt.I.get<Dio>();
+      final response = await dio.get(
+        AppLinkUrl.exportPdfProposals,
+        queryParameters: {'ids': ids.join(',')},
+        options: Options(responseType: ResponseType.bytes),
+      );
+      final bytes = response.data as List<int>;
+      final dir = await getTemporaryDirectory();
+      final filePath =
+          '${dir.path}/proposals_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      await File(filePath).writeAsBytes(bytes);
+      return filePath;
     } on DioException catch (e) {
       throw NetworkExceptions.getException(e);
     } catch (e) {

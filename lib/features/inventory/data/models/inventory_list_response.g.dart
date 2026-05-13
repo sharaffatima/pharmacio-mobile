@@ -28,14 +28,20 @@ Map<String, dynamic> _$InventoryListResponseToJson(
 
 InventoryItem _$InventoryItemFromJson(Map<String, dynamic> json) =>
     InventoryItem(
+      id: (json['id'] as num).toInt(),
       product: json['product'] as String,
+      strength: json['strength'] as String?,
       quantity: (json['quantity'] as num).toInt(),
       status: json['status'] as String,
+      barcode: json['barcode'] as String?,
     );
 
 Map<String, dynamic> _$InventoryItemToJson(InventoryItem instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'product': instance.product,
+      'strength': instance.strength,
       'quantity': instance.quantity,
       'status': instance.status,
+      'barcode': instance.barcode,
     };

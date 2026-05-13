@@ -11,10 +11,7 @@ class ChangePasswordResponse {
   @JsonKey(name: 'tokens')
   final Token tokens;
 
-  ChangePasswordResponse({
-    required this.message,
-    required this.tokens,
-  });
+  ChangePasswordResponse({required this.message, required this.tokens});
 
   factory ChangePasswordResponse.fromJson(Map<String, dynamic> json) =>
       _$ChangePasswordResponseFromJson(json);

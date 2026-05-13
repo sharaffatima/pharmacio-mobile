@@ -7,10 +7,7 @@ class InventoryAdjustRequestBody {
   final int adjustment;
   final String reason;
 
-  InventoryAdjustRequestBody({
-    required this.adjustment,
-    required this.reason,
-  });
+  InventoryAdjustRequestBody({required this.adjustment, required this.reason});
 
   factory InventoryAdjustRequestBody.fromJson(Map<String, dynamic> json) =>
       _$InventoryAdjustRequestBodyFromJson(json);

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pharmacio_flutter_mobile/core/constants/shared_pref_keys.dart';
+import 'package:pharmacio_flutter_mobile/core/helpers/app_shared_preferences.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'api_services.dart';
 import 'app_link_url.dart';
@@ -46,7 +48,22 @@ class ApiServicesImpl implements ApiServices {
       ..receiveTimeout = const Duration(minutes: 1)
       ..connectTimeout = const Duration(minutes: 1)
       ..followRedirects = true;
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = GetIt.I.get<AppSharedPreferences>().getString(
+            AppSharedPrefKeys.accessToken,
+          );
 
+          options.headers["Accept"] = "application/json";
+
+          if (token != null && token.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
+          return handler.next(options);
+        },
+      ),
+    );
     if (kDebugMode) {
       _dio.interceptors.add(
         PrettyDioLogger(
@@ -68,12 +85,10 @@ class ApiServicesImpl implements ApiServices {
     String? token,
   }) async {
     try {
-      await setHeaders(token: token);
       final response = await _dio.delete(
         path,
         queryParameters: queryParams,
         data: body,
-        options: Options(headers: _headers),
       );
       return _parseJsonResponse(response);
     } catch (error) {
@@ -88,12 +103,7 @@ class ApiServicesImpl implements ApiServices {
     String? token,
   }) async {
     try {
-      await setHeaders(token: token);
-      final response = await _dio.get(
-        path,
-        queryParameters: queryParams,
-        options: Options(headers: _headers),
-      );
+      final response = await _dio.get(path, queryParameters: queryParams);
       return _parseJsonResponse(response);
     } catch (error) {
       rethrow;
@@ -109,16 +119,11 @@ class ApiServicesImpl implements ApiServices {
     String? token,
   }) async {
     try {
-      await setHeaders(token: token);
-
       final response = await _dio.post(
         path,
         queryParameters: queryParams,
         data: formData ?? body,
-        options: Options(
-          headers: _headers,
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
       return _parseJsonResponse(response);
     } catch (error) {
@@ -135,15 +140,11 @@ class ApiServicesImpl implements ApiServices {
     String? token,
   }) async {
     try {
-      await setHeaders(token: token);
       final response = await _dio.put(
         path,
         queryParameters: queryParams,
         data: formData ?? body,
-        options: Options(
-          headers: _headers,
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
       return _parseJsonResponse(response);
     } catch (error) {
@@ -161,15 +162,11 @@ class ApiServicesImpl implements ApiServices {
     String? token,
   }) async {
     try {
-      await setHeaders(token: token);
       final response = await _dio.patch(
         path,
         queryParameters: queryParams,
         data: formData ?? body,
-        options: Options(
-          headers: _headers,
-          contentType: Headers.jsonContentType,
-        ),
+        options: Options(contentType: Headers.jsonContentType),
       );
       return _parseJsonResponse(response);
     } catch (error) {

@@ -8,10 +8,7 @@ class OffersRepo {
   final OffersRemoteDataSource offersRemoteDataSource;
   final NetworkInfo networkInfo;
 
-  OffersRepo({
-    required this.offersRemoteDataSource,
-    required this.networkInfo,
-  });
+  OffersRepo({required this.offersRemoteDataSource, required this.networkInfo});
 
   Future<UploadOfferResponse> uploadOfferFile({
     required String filePath,

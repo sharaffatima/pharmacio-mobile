@@ -68,10 +68,9 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
                 SizedBox(
                   width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
                   child: CardQuickActionswidget(
-                    title: AppStrings.recordSale,
-                    icon: Icons.point_of_sale_outlined,
-                    onTap: () =>
-                        Navigator.pushNamed(context, Routes.saleScreen),
+                    title: AppStrings.pos,
+                    icon: Icons.point_of_sale,
+                    onTap: () => Navigator.pushNamed(context, Routes.posScreen),
                   ),
                 ),
               ],
