@@ -8,10 +8,7 @@ class SalesRepo {
   final NetworkInfo networkInfo;
   final SalesRemoteDataSource salesRemoteDataSource;
 
-  SalesRepo({
-    required this.networkInfo,
-    required this.salesRemoteDataSource,
-  });
+  SalesRepo({required this.networkInfo, required this.salesRemoteDataSource});
 
   Future<SalesResponseModel> recordSale(SalesRequestModel request) async {
     if (await networkInfo.isConnected) {

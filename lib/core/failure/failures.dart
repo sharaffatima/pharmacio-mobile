@@ -12,10 +12,7 @@ class Failure {
     if (exception is! DioException) {
       // If it's not a DioException, try to extract a meaningful message
       if (exception is Exception || exception is Error) {
-        return Failure(
-          statusCode: -1,
-          message: exception.toString(),
-        );
+        return Failure(statusCode: -1, message: exception.toString());
       }
       return Failure(
         statusCode: -1,
@@ -77,7 +74,7 @@ class Failure {
                   fieldErrors.add(value.first.toString());
                 }
               });
-              
+
               if (fieldErrors.isNotEmpty) {
                 errorMsg = fieldErrors.join(', ');
               } else {
@@ -88,18 +85,12 @@ class Failure {
             errorMsg = 'Something went wrong, please try again.';
           }
 
-          return Failure(
-            statusCode: status,
-            message: errorMsg,
-          );
+          return Failure(statusCode: status, message: errorMsg);
         } else {
           //* If data is null or empty
           switch (status) {
             case 400:
-              return Failure(
-                statusCode: status,
-                message: 'Invalid request',
-              );
+              return Failure(statusCode: status, message: 'Invalid request');
 
             case 401:
               return Failure(
@@ -108,16 +99,10 @@ class Failure {
               );
 
             case 404:
-              return Failure(
-                statusCode: status,
-                message: 'Resource not found',
-              );
+              return Failure(statusCode: status, message: 'Resource not found');
 
             case 422:
-              return Failure(
-                statusCode: status,
-                message: 'Validation error',
-              );
+              return Failure(statusCode: status, message: 'Validation error');
 
             case 500:
               return Failure(statusCode: status, message: 'Server Error');

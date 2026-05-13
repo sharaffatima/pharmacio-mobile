@@ -55,7 +55,7 @@ extension ProposalsStatePatterns on ProposalsState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( AvailableOffersLoading value)?  availableOffersLoading,TResult Function( AvailableOffersSuccess value)?  availableOffersSuccess,TResult Function( ProposalsLoading value)?  proposalsLoading,TResult Function( ProposalsSuccess value)?  proposalsSuccess,TResult Function( ProposalDetailLoading value)?  proposalDetailLoading,TResult Function( ProposalDetailSuccess value)?  proposalDetailSuccess,TResult Function( ActionLoading value)?  actionLoading,TResult Function( CompareSuccess value)?  compareSuccess,TResult Function( GenerateSuccess value)?  generateSuccess,TResult Function( ApproveSuccess value)?  approveSuccess,TResult Function( RejectSuccess value)?  rejectSuccess,TResult Function( StatusSuccess value)?  statusSuccess,TResult Function( ProposalsError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( AvailableOffersLoading value)?  availableOffersLoading,TResult Function( AvailableOffersSuccess value)?  availableOffersSuccess,TResult Function( ProposalsLoading value)?  proposalsLoading,TResult Function( ProposalsSuccess value)?  proposalsSuccess,TResult Function( ProposalDetailLoading value)?  proposalDetailLoading,TResult Function( ProposalDetailSuccess value)?  proposalDetailSuccess,TResult Function( ActionLoading value)?  actionLoading,TResult Function( CompareSuccess value)?  compareSuccess,TResult Function( GenerateSuccess value)?  generateSuccess,TResult Function( ApproveSuccess value)?  approveSuccess,TResult Function( RejectSuccess value)?  rejectSuccess,TResult Function( StatusSuccess value)?  statusSuccess,TResult Function( PdfLoading value)?  pdfLoading,TResult Function( PdfSuccess value)?  pdfSuccess,TResult Function( ProposalsError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -71,7 +71,9 @@ return compareSuccess(_that);case GenerateSuccess() when generateSuccess != null
 return generateSuccess(_that);case ApproveSuccess() when approveSuccess != null:
 return approveSuccess(_that);case RejectSuccess() when rejectSuccess != null:
 return rejectSuccess(_that);case StatusSuccess() when statusSuccess != null:
-return statusSuccess(_that);case ProposalsError() when error != null:
+return statusSuccess(_that);case PdfLoading() when pdfLoading != null:
+return pdfLoading(_that);case PdfSuccess() when pdfSuccess != null:
+return pdfSuccess(_that);case ProposalsError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -90,7 +92,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( AvailableOffersLoading value)  availableOffersLoading,required TResult Function( AvailableOffersSuccess value)  availableOffersSuccess,required TResult Function( ProposalsLoading value)  proposalsLoading,required TResult Function( ProposalsSuccess value)  proposalsSuccess,required TResult Function( ProposalDetailLoading value)  proposalDetailLoading,required TResult Function( ProposalDetailSuccess value)  proposalDetailSuccess,required TResult Function( ActionLoading value)  actionLoading,required TResult Function( CompareSuccess value)  compareSuccess,required TResult Function( GenerateSuccess value)  generateSuccess,required TResult Function( ApproveSuccess value)  approveSuccess,required TResult Function( RejectSuccess value)  rejectSuccess,required TResult Function( StatusSuccess value)  statusSuccess,required TResult Function( ProposalsError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( AvailableOffersLoading value)  availableOffersLoading,required TResult Function( AvailableOffersSuccess value)  availableOffersSuccess,required TResult Function( ProposalsLoading value)  proposalsLoading,required TResult Function( ProposalsSuccess value)  proposalsSuccess,required TResult Function( ProposalDetailLoading value)  proposalDetailLoading,required TResult Function( ProposalDetailSuccess value)  proposalDetailSuccess,required TResult Function( ActionLoading value)  actionLoading,required TResult Function( CompareSuccess value)  compareSuccess,required TResult Function( GenerateSuccess value)  generateSuccess,required TResult Function( ApproveSuccess value)  approveSuccess,required TResult Function( RejectSuccess value)  rejectSuccess,required TResult Function( StatusSuccess value)  statusSuccess,required TResult Function( PdfLoading value)  pdfLoading,required TResult Function( PdfSuccess value)  pdfSuccess,required TResult Function( ProposalsError value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -106,7 +108,9 @@ return compareSuccess(_that);case GenerateSuccess():
 return generateSuccess(_that);case ApproveSuccess():
 return approveSuccess(_that);case RejectSuccess():
 return rejectSuccess(_that);case StatusSuccess():
-return statusSuccess(_that);case ProposalsError():
+return statusSuccess(_that);case PdfLoading():
+return pdfLoading(_that);case PdfSuccess():
+return pdfSuccess(_that);case ProposalsError():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -124,7 +128,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( AvailableOffersLoading value)?  availableOffersLoading,TResult? Function( AvailableOffersSuccess value)?  availableOffersSuccess,TResult? Function( ProposalsLoading value)?  proposalsLoading,TResult? Function( ProposalsSuccess value)?  proposalsSuccess,TResult? Function( ProposalDetailLoading value)?  proposalDetailLoading,TResult? Function( ProposalDetailSuccess value)?  proposalDetailSuccess,TResult? Function( ActionLoading value)?  actionLoading,TResult? Function( CompareSuccess value)?  compareSuccess,TResult? Function( GenerateSuccess value)?  generateSuccess,TResult? Function( ApproveSuccess value)?  approveSuccess,TResult? Function( RejectSuccess value)?  rejectSuccess,TResult? Function( StatusSuccess value)?  statusSuccess,TResult? Function( ProposalsError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( AvailableOffersLoading value)?  availableOffersLoading,TResult? Function( AvailableOffersSuccess value)?  availableOffersSuccess,TResult? Function( ProposalsLoading value)?  proposalsLoading,TResult? Function( ProposalsSuccess value)?  proposalsSuccess,TResult? Function( ProposalDetailLoading value)?  proposalDetailLoading,TResult? Function( ProposalDetailSuccess value)?  proposalDetailSuccess,TResult? Function( ActionLoading value)?  actionLoading,TResult? Function( CompareSuccess value)?  compareSuccess,TResult? Function( GenerateSuccess value)?  generateSuccess,TResult? Function( ApproveSuccess value)?  approveSuccess,TResult? Function( RejectSuccess value)?  rejectSuccess,TResult? Function( StatusSuccess value)?  statusSuccess,TResult? Function( PdfLoading value)?  pdfLoading,TResult? Function( PdfSuccess value)?  pdfSuccess,TResult? Function( ProposalsError value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -140,7 +144,9 @@ return compareSuccess(_that);case GenerateSuccess() when generateSuccess != null
 return generateSuccess(_that);case ApproveSuccess() when approveSuccess != null:
 return approveSuccess(_that);case RejectSuccess() when rejectSuccess != null:
 return rejectSuccess(_that);case StatusSuccess() when statusSuccess != null:
-return statusSuccess(_that);case ProposalsError() when error != null:
+return statusSuccess(_that);case PdfLoading() when pdfLoading != null:
+return pdfLoading(_that);case PdfSuccess() when pdfSuccess != null:
+return pdfSuccess(_that);case ProposalsError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -158,7 +164,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  availableOffersLoading,TResult Function( AvailableOffersResponse response)?  availableOffersSuccess,TResult Function()?  proposalsLoading,TResult Function( ProposalListResponse response)?  proposalsSuccess,TResult Function()?  proposalDetailLoading,TResult Function( ProposalDetailResponse response)?  proposalDetailSuccess,TResult Function()?  actionLoading,TResult Function( CompareResponse response)?  compareSuccess,TResult Function( GenerateProposalResponse response)?  generateSuccess,TResult Function( ProposalActionResponse response)?  approveSuccess,TResult Function( ProposalActionResponse response)?  rejectSuccess,TResult Function( ProposalStatusResponse response)?  statusSuccess,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  availableOffersLoading,TResult Function( AvailableOffersResponse response)?  availableOffersSuccess,TResult Function()?  proposalsLoading,TResult Function( ProposalListResponse response)?  proposalsSuccess,TResult Function()?  proposalDetailLoading,TResult Function( ProposalDetailResponse response)?  proposalDetailSuccess,TResult Function()?  actionLoading,TResult Function( CompareResponse response)?  compareSuccess,TResult Function( GenerateProposalResponse response)?  generateSuccess,TResult Function( ProposalActionResponse response)?  approveSuccess,TResult Function( ProposalActionResponse response)?  rejectSuccess,TResult Function( ProposalStatusResponse response)?  statusSuccess,TResult Function()?  pdfLoading,TResult Function( String filePath)?  pdfSuccess,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case AvailableOffersLoading() when availableOffersLoading != null:
@@ -173,7 +179,9 @@ return compareSuccess(_that.response);case GenerateSuccess() when generateSucces
 return generateSuccess(_that.response);case ApproveSuccess() when approveSuccess != null:
 return approveSuccess(_that.response);case RejectSuccess() when rejectSuccess != null:
 return rejectSuccess(_that.response);case StatusSuccess() when statusSuccess != null:
-return statusSuccess(_that.response);case ProposalsError() when error != null:
+return statusSuccess(_that.response);case PdfLoading() when pdfLoading != null:
+return pdfLoading();case PdfSuccess() when pdfSuccess != null:
+return pdfSuccess(_that.filePath);case ProposalsError() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -192,7 +200,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  availableOffersLoading,required TResult Function( AvailableOffersResponse response)  availableOffersSuccess,required TResult Function()  proposalsLoading,required TResult Function( ProposalListResponse response)  proposalsSuccess,required TResult Function()  proposalDetailLoading,required TResult Function( ProposalDetailResponse response)  proposalDetailSuccess,required TResult Function()  actionLoading,required TResult Function( CompareResponse response)  compareSuccess,required TResult Function( GenerateProposalResponse response)  generateSuccess,required TResult Function( ProposalActionResponse response)  approveSuccess,required TResult Function( ProposalActionResponse response)  rejectSuccess,required TResult Function( ProposalStatusResponse response)  statusSuccess,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  availableOffersLoading,required TResult Function( AvailableOffersResponse response)  availableOffersSuccess,required TResult Function()  proposalsLoading,required TResult Function( ProposalListResponse response)  proposalsSuccess,required TResult Function()  proposalDetailLoading,required TResult Function( ProposalDetailResponse response)  proposalDetailSuccess,required TResult Function()  actionLoading,required TResult Function( CompareResponse response)  compareSuccess,required TResult Function( GenerateProposalResponse response)  generateSuccess,required TResult Function( ProposalActionResponse response)  approveSuccess,required TResult Function( ProposalActionResponse response)  rejectSuccess,required TResult Function( ProposalStatusResponse response)  statusSuccess,required TResult Function()  pdfLoading,required TResult Function( String filePath)  pdfSuccess,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case AvailableOffersLoading():
@@ -207,7 +215,9 @@ return compareSuccess(_that.response);case GenerateSuccess():
 return generateSuccess(_that.response);case ApproveSuccess():
 return approveSuccess(_that.response);case RejectSuccess():
 return rejectSuccess(_that.response);case StatusSuccess():
-return statusSuccess(_that.response);case ProposalsError():
+return statusSuccess(_that.response);case PdfLoading():
+return pdfLoading();case PdfSuccess():
+return pdfSuccess(_that.filePath);case ProposalsError():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -225,7 +235,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  availableOffersLoading,TResult? Function( AvailableOffersResponse response)?  availableOffersSuccess,TResult? Function()?  proposalsLoading,TResult? Function( ProposalListResponse response)?  proposalsSuccess,TResult? Function()?  proposalDetailLoading,TResult? Function( ProposalDetailResponse response)?  proposalDetailSuccess,TResult? Function()?  actionLoading,TResult? Function( CompareResponse response)?  compareSuccess,TResult? Function( GenerateProposalResponse response)?  generateSuccess,TResult? Function( ProposalActionResponse response)?  approveSuccess,TResult? Function( ProposalActionResponse response)?  rejectSuccess,TResult? Function( ProposalStatusResponse response)?  statusSuccess,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  availableOffersLoading,TResult? Function( AvailableOffersResponse response)?  availableOffersSuccess,TResult? Function()?  proposalsLoading,TResult? Function( ProposalListResponse response)?  proposalsSuccess,TResult? Function()?  proposalDetailLoading,TResult? Function( ProposalDetailResponse response)?  proposalDetailSuccess,TResult? Function()?  actionLoading,TResult? Function( CompareResponse response)?  compareSuccess,TResult? Function( GenerateProposalResponse response)?  generateSuccess,TResult? Function( ProposalActionResponse response)?  approveSuccess,TResult? Function( ProposalActionResponse response)?  rejectSuccess,TResult? Function( ProposalStatusResponse response)?  statusSuccess,TResult? Function()?  pdfLoading,TResult? Function( String filePath)?  pdfSuccess,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case AvailableOffersLoading() when availableOffersLoading != null:
@@ -240,7 +250,9 @@ return compareSuccess(_that.response);case GenerateSuccess() when generateSucces
 return generateSuccess(_that.response);case ApproveSuccess() when approveSuccess != null:
 return approveSuccess(_that.response);case RejectSuccess() when rejectSuccess != null:
 return rejectSuccess(_that.response);case StatusSuccess() when statusSuccess != null:
-return statusSuccess(_that.response);case ProposalsError() when error != null:
+return statusSuccess(_that.response);case PdfLoading() when pdfLoading != null:
+return pdfLoading();case PdfSuccess() when pdfSuccess != null:
+return pdfSuccess(_that.filePath);case ProposalsError() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -931,6 +943,104 @@ class _$StatusSuccessCopyWithImpl<$Res>
   return _then(StatusSuccess(
 null == response ? _self.response : response // ignore: cast_nullable_to_non_nullable
 as ProposalStatusResponse,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class PdfLoading implements ProposalsState {
+  const PdfLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PdfLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ProposalsState.pdfLoading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class PdfSuccess implements ProposalsState {
+  const PdfSuccess(this.filePath);
+  
+
+ final  String filePath;
+
+/// Create a copy of ProposalsState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PdfSuccessCopyWith<PdfSuccess> get copyWith => _$PdfSuccessCopyWithImpl<PdfSuccess>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PdfSuccess&&(identical(other.filePath, filePath) || other.filePath == filePath));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,filePath);
+
+@override
+String toString() {
+  return 'ProposalsState.pdfSuccess(filePath: $filePath)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $PdfSuccessCopyWith<$Res> implements $ProposalsStateCopyWith<$Res> {
+  factory $PdfSuccessCopyWith(PdfSuccess value, $Res Function(PdfSuccess) _then) = _$PdfSuccessCopyWithImpl;
+@useResult
+$Res call({
+ String filePath
+});
+
+
+
+
+}
+/// @nodoc
+class _$PdfSuccessCopyWithImpl<$Res>
+    implements $PdfSuccessCopyWith<$Res> {
+  _$PdfSuccessCopyWithImpl(this._self, this._then);
+
+  final PdfSuccess _self;
+  final $Res Function(PdfSuccess) _then;
+
+/// Create a copy of ProposalsState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? filePath = null,}) {
+  return _then(PdfSuccess(
+null == filePath ? _self.filePath : filePath // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

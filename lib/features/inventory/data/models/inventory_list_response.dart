@@ -24,14 +24,20 @@ class InventoryListResponse {
 
 @JsonSerializable()
 class InventoryItem {
+  final int id;
   final String product;
+  final String? strength;
   final int quantity;
   final String status;
+  final String? barcode;
 
   InventoryItem({
+    required this.id,
     required this.product,
+    this.strength,
     required this.quantity,
     required this.status,
+    this.barcode,
   });
 
   factory InventoryItem.fromJson(Map<String, dynamic> json) =>

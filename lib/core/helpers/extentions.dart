@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-
 extension Navigation on BuildContext {
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
     return Navigator.of(this).pushNamed(routeName, arguments: arguments);
@@ -25,13 +24,4 @@ extension Navigation on BuildContext {
   void pop() => Navigator.of(this).pop();
 }
 
-
-
-
-
-enum EnumTypeAction {
-  proposal,
-  alert,
-  inventory,
-  stock
-}
+enum EnumTypeAction { proposal, alert, inventory, stock }

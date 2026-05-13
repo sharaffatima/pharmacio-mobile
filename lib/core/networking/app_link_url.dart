@@ -1,5 +1,5 @@
 class AppLinkUrl {
-  static const String baseUrl = "https://api.35.228.22.79.nip.io//api/v1";
+  static const String baseUrl = "https://api.35.228.22.79.nip.io/api/v1";
   static const String login = "/auth/login/";
   static const String register = "/auth/register/";
   static const String logout = "/auth/logout/";
@@ -16,11 +16,16 @@ class AppLinkUrl {
   // Proposals
   static const String availableOffers = "/available-offers/";
   static const String purchaseProposals = "/purchase-proposals/";
+  static const String exportPdfProposals = "/purchase-proposals/export/pdf/";
   static const String compareOffers = "/purchase-proposals/compare/";
   static const String generateProposal = "/purchase-proposals/generate/";
 
   // Sales
   static const String recordSale = "/sales/";
+
+  // POS
+  static const String posCheckout = "/pos/checkout/";
+  static const String posTransactions = "/pos/transactions/";
 
   // Notifications
   static const String notifications = "/notifications/";

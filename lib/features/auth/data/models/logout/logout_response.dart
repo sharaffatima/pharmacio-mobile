@@ -13,4 +13,3 @@ class LogoutResponse {
 
   Map<String, dynamic> toJson() => _$LogoutResponseToJson(this);
 }
-

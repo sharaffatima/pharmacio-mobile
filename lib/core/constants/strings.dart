@@ -309,6 +309,67 @@ class AppStrings {
   static String get adjustmentRequired =>
       _isArabic ? 'قيمة التعديل مطلوبة' : 'Adjustment value is required';
 
+  // POS
+  static String get pos => _isArabic ? 'نقطة البيع' : 'POS';
+  static String get posSubtitle =>
+      _isArabic ? 'إدارة المبيعات والمعاملات' : 'Manage sales and transactions';
+  static String get checkout => _isArabic ? 'الدفع' : 'Checkout';
+  static String get posTransactions => _isArabic ? 'المعاملات' : 'Transactions';
+  static String get discountPercentage =>
+      _isArabic ? 'الخصم (%)' : 'Discount (%)';
+  static String get posSubtotalLabel =>
+      _isArabic ? 'المجموع الجزئي' : 'Subtotal';
+  static String get posTotalLabel => _isArabic ? 'الإجمالي' : 'Total';
+  static String get posTotalPaid => _isArabic ? 'إجمالي المدفوع' : 'Total Paid';
+  static String get addPayment => _isArabic ? 'إضافة دفعة' : 'Add Payment';
+  static String get paymentMethod =>
+      _isArabic ? 'طريقة الدفع' : 'Payment Method';
+  static String get amountPaidLabel =>
+      _isArabic ? 'المبلغ المدفوع' : 'Amount Paid';
+  static String get cash => _isArabic ? 'نقدي' : 'Cash';
+  static String get card => _isArabic ? 'بطاقة' : 'Card';
+  static String get insuranceMethod => _isArabic ? 'تأمين' : 'Insurance';
+  static String get checkoutSuccess =>
+      _isArabic ? 'تمت عملية الدفع بنجاح!' : 'Checkout completed!';
+  static String get paymentMismatch => _isArabic
+      ? 'مجموع المدفوعات يجب أن يساوي الإجمالي'
+      : 'Payments total must equal the order total';
+  static String get paymentAmountRequired =>
+      _isArabic ? 'أدخل مبلغ صحيح > 0' : 'Enter a valid amount > 0';
+  static String get receiptNumber =>
+      _isArabic ? 'رقم الإيصال: ' : 'Receipt #: ';
+  static String get cashierLabel => _isArabic ? 'الكاشير' : 'Cashier';
+  static String get statusLabel => _isArabic ? 'الحالة' : 'Status';
+  static String get itemsSection => _isArabic ? 'المنتجات' : 'Items';
+  static String get paymentsSection => _isArabic ? 'طرق الدفع' : 'Payments';
+  static String get refund => _isArabic ? 'استرداد' : 'Refund';
+  static String get refundConfirmTitle =>
+      _isArabic ? 'تأكيد الاسترداد' : 'Confirm Refund';
+  static String get refundConfirmMessage => _isArabic
+      ? 'هل أنت متأكد من استرداد هذه المعاملة؟'
+      : 'Are you sure you want to refund this transaction?';
+  static String get refundSuccess =>
+      _isArabic ? 'تم الاسترداد بنجاح!' : 'Refund successful!';
+  static String get alreadyRefunded => _isArabic
+      ? 'تم استرداد هذه المعاملة مسبقًا'
+      : 'Transaction already refunded';
+  static String get noTransactions =>
+      _isArabic ? 'لا توجد معاملات' : 'No transactions found';
+  static String get transactionDetails =>
+      _isArabic ? 'تفاصيل المعاملة' : 'Transaction Details';
+  static String get posStatusCompleted => _isArabic ? 'مكتمل' : 'Completed';
+  static String get posStatusRefunded => _isArabic ? 'مسترد' : 'Refunded';
+
+  // Proposal PDF Export / Selection
+  static String get downloadPdf => _isArabic ? 'تنزيل PDF' : 'Download PDF';
+  static String get selectToDownload =>
+      _isArabic ? 'اختر المقترحات للتنزيل' : 'Select proposals to download';
+  static String get selectedCountSuffix => _isArabic ? 'محدد' : 'selected';
+  static String get pdfDownloadSuccess =>
+      _isArabic ? 'تم تنزيل ملف PDF بنجاح' : 'PDF downloaded successfully';
+  static String get noProposalSelected =>
+      _isArabic ? 'اختر مقترحًا على الأقل' : 'Select at least one proposal';
+
   // camera/upload
   static String get camera => _isArabic ? 'الكاميرا' : 'Camera';
   static String get captureFailedPrefix =>

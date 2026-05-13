@@ -16,6 +16,8 @@ import 'package:pharmacio_flutter_mobile/features/proposal/presentation/secreens
 import 'package:pharmacio_flutter_mobile/features/proposal/presentation/secreens/proposal_detail_screen.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/logic/cubits/sales_cubit.dart';
 import 'package:pharmacio_flutter_mobile/features/sales/presentation/screens/sale_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/pos/presentation/screens/pos_screen.dart';
+import 'package:pharmacio_flutter_mobile/features/pos/presentation/screens/pos_transaction_detail_screen.dart';
 
 import 'routes.dart';
 
@@ -112,6 +114,16 @@ class AppRouter {
             create: (_) => getIt<SalesCubit>(),
             child: const SaleScreen(),
           ),
+        );
+
+      case Routes.posScreen:
+        return MaterialPageRoute(builder: (_) => const PosScreen());
+
+      case Routes.posTransactionDetailScreen:
+        final transactionId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) =>
+              PosTransactionDetailScreen(transactionId: transactionId),
         );
 
       default:
