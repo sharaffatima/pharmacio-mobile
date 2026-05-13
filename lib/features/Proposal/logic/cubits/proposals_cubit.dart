@@ -84,7 +84,7 @@ class ProposalsCubit extends Cubit<ProposalsState> {
   }
 
   Future<void> compareOffers(List<int> ocrResultIds) async {
-    if (ocrResultIds.length < 2) {
+    if (ocrResultIds.length < 1) {
       emit(
         const ProposalsState.error(
           "Please select at least 2 offers to compare.",

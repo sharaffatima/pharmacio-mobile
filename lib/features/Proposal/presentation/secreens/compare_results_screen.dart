@@ -26,7 +26,7 @@ class CompareResultsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backGroundBody,
       appBar: CustomAppBar(
-        title: AppStrings.compare,
+        title: AppStrings.extraction,//ToDo 
         subtitle: AppStrings.comparisonSuccess,
       ),
       body: BlocListener<ProposalsCubit, ProposalsState>(

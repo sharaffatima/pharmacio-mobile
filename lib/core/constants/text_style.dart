@@ -151,6 +151,13 @@ class AppTextStyles {
     fontSize: 32.sp,
     fontFamily: AppFonts.inter,
   );
+  static TextStyle get s36w500 => TextStyle(
+    color: AppColors.textPrimary,
+    fontWeight: AppFontWeight.bold,
+    fontSize: 36.sp,
+    fontFamily: AppFonts.inter,
+  );
+
 
   static TextStyle get s15w500 => TextStyle(
     color: AppColors.textPrimary,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
@@ -20,7 +22,7 @@ class RecentUploadsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180.h,
+      height: 200.h,
       width: double.infinity,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -161,6 +163,204 @@ class _StatusBadge extends StatelessWidget {
           color: color,
           fontWeight: FontWeight.bold,
         ),
+      ),
+    );
+  }
+}
+
+class ProcessingStatusCard extends StatefulWidget {
+  const ProcessingStatusCard({super.key});
+
+  @override
+  State<ProcessingStatusCard> createState() => _ProcessingStatusCardState();
+}
+
+class _ProcessingStatusCardState extends State<ProcessingStatusCard>
+    with SingleTickerProviderStateMixin {
+  double _progress = 0.0;
+  late AnimationController _spinController;
+
+  final List<Map<String, dynamic>> _steps = [
+    {'label': 'Uploading file...', 'status': 'done'},
+    {'label': 'Processing document...', 'status': 'active'},
+    {'label': 'Processing complete!', 'status': 'pending'},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _spinController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    )..repeat();
+
+    // Simulate progress
+    Future.doWhile(() async {
+      await Future.delayed(const Duration(milliseconds: 80));
+      if (!mounted) return false;
+      setState(() => _progress += 0.01);
+      return _progress < 1.0;
+    });
+  }
+
+  @override
+  void dispose() {
+    _spinController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: AppColors.white),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // // Title
+            // const Text(
+            //   'Processing Status',
+            //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            // ),
+            // const SizedBox(height: 16),
+
+            // Spinner + label
+            Row(
+              children: [
+                // RotationTransition(
+                //   turns: _spinController,
+                //   child: SizedBox(
+                //     width: 24,
+                //     height: 24,
+                //     child: CircularProgressIndicator(
+                //       strokeWidth: 2.5,
+
+                //       valueColor: AlwaysStoppedAnimation<Color>(
+                //         Colors.blue.shade400,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(width: 10),
+                // const Text(
+                //   'Processing document...',
+                //   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                // ),
+              ],
+            ),
+            const SizedBox(height: 4),
+
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 34),
+            //   child: Text(
+            //     'Please wait...',
+            //     style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+            //   ),
+            // ),
+            // const SizedBox(height: 12),
+
+            // Progress bar
+            // LinearProgressIndicator(
+            //   value: _progress,
+            //   backgroundColor: Colors.grey.shade200,
+            //   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue.shade400),
+            //   borderRadius: BorderRadius.circular(4),
+            //   minHeight: 6,
+            // ),
+            const SizedBox(height: 12),
+
+            // Steps
+            ..._steps.asMap().entries.map((entry) {
+              final index = entry.key + 1;
+              final step = entry.value;
+              return _buildStep(index, step['label'], step['status']);
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStep(int number, String label, String status) {
+    Widget icon;
+    Color labelColor;
+
+    switch (status) {
+      case 'done':
+        icon = Container(
+          width: 24,
+          height: 24,
+          decoration: const BoxDecoration(
+            color: Colors.green,
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.check, size: 14, color: Colors.white),
+        );
+        labelColor = Colors.grey.shade500;
+        break;
+      case 'active':
+        icon = Container(
+          width: 24,
+          height: 24,
+          decoration: BoxDecoration(
+            color: Colors.blue.shade400,
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Text(
+              '$number',
+              style: const TextStyle(
+                fontSize: 11,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        );
+        labelColor = Colors.black87;
+        break;
+      default:
+        icon = Container(
+          width: 24,
+          height: 24,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey.shade300),
+          ),
+          child: Center(
+            child: Text(
+              '$number',
+              style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+            ),
+          ),
+        );
+        labelColor = Colors.grey.shade400;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          icon,
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              color: labelColor,
+              fontWeight: status == 'active'
+                  ? FontWeight.w500
+                  : FontWeight.normal,
+            ),
+          ),
+        ],
       ),
     );
   }

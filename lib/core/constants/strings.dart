@@ -257,6 +257,7 @@ class AppStrings {
   static String get itemsSuffix => _isArabic ? 'عنصر' : 'items';
   static String get totalCost => _isArabic ? 'التكلفة الإجمالية' : 'Total cost';
   static String get compare => _isArabic ? 'مقارنة' : 'Compare';
+   static String get extraction => _isArabic ? 'استخراج' : 'Extraction';
   static String get generateProposal =>
       _isArabic ? 'توليد مقترح' : 'Generate Proposal';
   static String get proposalGeneratedSuccess => _isArabic

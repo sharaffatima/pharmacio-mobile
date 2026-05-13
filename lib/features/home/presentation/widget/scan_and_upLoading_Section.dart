@@ -33,10 +33,10 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
             ),
-            verticalSpace(16.h),
+            SizedBox(height: 16),
             Wrap(
-              spacing: 12.w,
-              runSpacing: 12.h,
+              // spacing: 12.w,
+              // runSpacing: 12.h,
               children: [
                 /*
                 // Temporarily disabled for future releases.
@@ -53,20 +53,24 @@ class ScanAndUploadFileSectionWidget extends StatelessWidget {
                   ),
                 ),
                 */
-                SizedBox(
-                  width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
-                  child: CardQuickActionswidget(
-                    title: AppStrings.uploadFile,
-                    icon: Icons.file_upload_outlined,
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      Routes.scanScreen,
-                      arguments: 0,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: SizedBox(
+                    width: (MediaQuery.of(context).size.width - 48.w - 12.w),
+                    child: CardQuickActionswidget(
+                      title: AppStrings.uploadFile,
+                      icon: Icons.file_upload_outlined,
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        Routes.scanScreen,
+                        arguments: 0,
+                      ),
                     ),
                   ),
                 ),
+                verticalSpace(16.h),
                 SizedBox(
-                  width: (MediaQuery.of(context).size.width - 48.w - 12.w) / 2,
+                  width: (MediaQuery.of(context).size.width - 48.w - 12.w),
                   child: CardQuickActionswidget(
                     title: AppStrings.pos,
                     icon: Icons.point_of_sale,
