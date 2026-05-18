@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacio_flutter_mobile/core/constants/strings.dart';
-import 'package:pharmacio_flutter_mobile/core/helpers/input_validator.dart';
 
 import '../../../../../core/constants/colors.dart';
 import '../../../../../core/constants/text_style.dart';

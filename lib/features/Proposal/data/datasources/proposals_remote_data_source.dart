@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/api_services_impl.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/app_link_url.dart';
 import 'package:pharmacio_flutter_mobile/core/networking/error/error_handler/network_exceptions.dart';
@@ -186,13 +188,16 @@ class ProposalsRemoteDataSourceImpl implements ProposalsRemoteDataSource {
       final response = await dio.get(
         AppLinkUrl.exportPdfProposals,
         queryParameters: {'ids': ids.join(',')},
-        options: Options(responseType: ResponseType.bytes),
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {'Accept': 'application/pdf'},
+        ),
       );
-      final bytes = response.data as List<int>;
-      final dir = await getTemporaryDirectory();
-      final filePath =
-          '${dir.path}/proposals_${DateTime.now().millisecondsSinceEpoch}.pdf';
-      await File(filePath).writeAsBytes(bytes);
+      final bytes = _coerceBytes(response.data);
+      final fileName = 'proposals_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final dir = await _resolveDownloadDirectory();
+      final filePath = '${dir.path}/$fileName';
+      await File(filePath).writeAsBytes(bytes, flush: true);
       return filePath;
     } on DioException catch (e) {
       throw NetworkExceptions.getException(e);
@@ -200,4 +205,45 @@ class ProposalsRemoteDataSourceImpl implements ProposalsRemoteDataSource {
       throw NetworkExceptions.getException(e);
     }
   }
+}
+
+Future<Directory> _resolveDownloadDirectory() async {
+  if (Platform.isAndroid) {
+    await Permission.storage.request();
+    final commonDownloads = Directory('/storage/emulated/0/Download');
+    if (await commonDownloads.exists()) {
+      return commonDownloads;
+    }
+    final externalDir = await getExternalStorageDirectory();
+    if (externalDir != null) {
+      final fallback = Directory('${externalDir.path}/Download');
+      await fallback.create(recursive: true);
+      return fallback;
+    }
+    throw const NetworkExceptions.unableToProcess();
+  }
+
+  if (Platform.isIOS) {
+    final documentsDir = await getApplicationDocumentsDirectory();
+    final downloadsDir = Directory('${documentsDir.path}/Downloads');
+    await downloadsDir.create(recursive: true);
+    return downloadsDir;
+  }
+
+  final dir = Directory('${Directory.systemTemp.path}/pharmacio');
+  await dir.create(recursive: true);
+  return dir;
+}
+
+List<int> _coerceBytes(dynamic data) {
+  if (data is List<int>) {
+    return data;
+  }
+  if (data is Uint8List) {
+    return data;
+  }
+  if (data is List<dynamic>) {
+    return data.cast<int>();
+  }
+  throw const NetworkExceptions.unableToProcess();
 }

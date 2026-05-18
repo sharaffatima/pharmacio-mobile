@@ -48,6 +48,11 @@ class AppStrings {
 
   // proposal screen
   static String get proposalTitle => _isArabic ? 'العروض' : 'Proposal';
+  static String get somethingWentWrong =>
+      _isArabic ? 'حدث خطأ ما' : 'Something went wrong';
+  static String get pdfOpenRequiresRestart => _isArabic
+      ? 'تم تنزيل الملف، يرجى إعادة تشغيل التطبيق لفتح الملف'
+      : 'File downloaded. Please restart the app to open it.';
   static String get proposalSubTitle => _isArabic
       ? 'تجديد وإدارة عروض الشراء'
       : 'Renew and manage purchase proposals';
@@ -145,7 +150,7 @@ class AppStrings {
   static String get strengthExample => _isArabic ? 'مثل 500mg' : 'e.g. 500mg';
   static String get imageFormats =>
       _isArabic ? 'JPG, PNG, إلخ' : 'JPG, PNG, etc.';
-  static String get pdfDocuments => _isArabic ? 'مستندات PDF' : 'PDF documents';
+  static String get pdfDocuments => _isArabic ? 'مستندات PDF/Excel' : 'PDF/Excel documents';
   static String get spreadsheetFormats =>
       _isArabic ? 'XLSX, XLS, CSV' : 'XLSX, XLS, CSV';
 
@@ -257,7 +262,7 @@ class AppStrings {
   static String get itemsSuffix => _isArabic ? 'عنصر' : 'items';
   static String get totalCost => _isArabic ? 'التكلفة الإجمالية' : 'Total cost';
   static String get compare => _isArabic ? 'مقارنة' : 'Compare';
-   static String get extraction => _isArabic ? 'استخراج' : 'Extraction';
+  static String get extraction => _isArabic ? 'استخراج' : 'Extraction';
   static String get generateProposal =>
       _isArabic ? 'توليد مقترح' : 'Generate Proposal';
   static String get proposalGeneratedSuccess => _isArabic
@@ -366,8 +371,9 @@ class AppStrings {
   static String get selectToDownload =>
       _isArabic ? 'اختر المقترحات للتنزيل' : 'Select proposals to download';
   static String get selectedCountSuffix => _isArabic ? 'محدد' : 'selected';
-  static String get pdfDownloadSuccess =>
-      _isArabic ? 'تم تنزيل ملف PDF بنجاح' : 'PDF downloaded successfully';
+  static String get pdfDownloadSuccess => _isArabic
+      ? 'تم تنزيل ملف PDF في مجلد التنزيلات'
+      : 'PDF saved to the Downloads folder';
   static String get noProposalSelected =>
       _isArabic ? 'اختر مقترحًا على الأقل' : 'Select at least one proposal';
 
@@ -380,7 +386,7 @@ class AppStrings {
       ? 'ارفع ملفات PDF أو Excel أو صور'
       : 'Upload PDF, Excel, or Image files';
   static String get uploadImage => _isArabic ? 'رفع صورة' : 'Upload Image';
-  static String get uploadPdf => _isArabic ? 'رفع PDF' : 'Upload PDF';
+  static String get uploadPdf => _isArabic ? 'رفع PDF/Excel' : 'Upload PDF/Excel';
   static String get uploadExcel => _isArabic ? 'رفع Excel' : 'Upload Excel';
   static String get filePickingNotAvailable => _isArabic
       ? 'اختيار الملفات غير متاح على هذه المنصة/النسخة.'

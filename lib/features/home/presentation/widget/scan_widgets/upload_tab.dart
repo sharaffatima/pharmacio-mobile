@@ -117,7 +117,7 @@ class _UploadContentCard extends StatelessWidget {
           verticalSpace(12.h),
           */
           _UploadOptionCards(
-            icon: Icons.picture_as_pdf_outlined,
+            icon: Icons.file_present_outlined,
             iconColor: AppColors.redError,
             title: AppStrings.uploadPdf,
             subtitle: AppStrings.pdfDocuments,
@@ -235,7 +235,10 @@ class _UploadContentCard extends StatelessWidget {
           ),
           verticalSpace(10.h),
           // _BulletLine(label: AppStrings.images, value: 'JPG, PNG, JPEG'),
-          _BulletLine(label: AppStrings.documents, value: 'PDF'),
+          _BulletLine(
+            label: AppStrings.pdfDocuments,
+            value: 'PDF, XLSX, XLS, CSV',
+          ),
           // _BulletLine(label: AppStrings.spreadsheets, value: 'XLSX, XLS, CSV'),
           verticalSpace(10.h),
           Text(

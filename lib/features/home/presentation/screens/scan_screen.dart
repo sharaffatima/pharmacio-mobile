@@ -10,18 +10,17 @@ import 'package:pharmacio_flutter_mobile/core/public_widgets/snack_bar_widget.da
 import 'package:pharmacio_flutter_mobile/features/offers/data/models/upload_offer_response.dart';
 import 'package:pharmacio_flutter_mobile/features/offers/logic/cubits/offers_cubit.dart';
 
-// import '../widget/scan_widgets/camera_tab.dart';
 import '../widget/scan_widgets/header.dart';
 import '../widget/scan_widgets/recent_uploads_section.dart';
-import '../widget/scan_widgets/segmented_tabs.dart';
 import '../widget/scan_widgets/upload_tab.dart';
 import '../widget/scan_widgets/warehouse_field.dart';
 
+// ignore: must_be_immutable
 class ScanScreen extends StatelessWidget {
-   ScanScreen({super.key, this.initialTabIndex = 0});
+  ScanScreen({super.key, this.initialTabIndex = 0});
 
   final int initialTabIndex;
-  GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +67,12 @@ class ScanScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
-                    Form(key: _form,
-                      child: WarehouseFields(controller: offersCubit.warehouseController)),
+                    Form(
+                      key: _form,
+                      child: WarehouseFields(
+                        controller: offersCubit.warehouseController,
+                      ),
+                    ),
                     verticalSpace(12.h),
                     // SegmentedTabs(),
                   ],
@@ -86,7 +89,8 @@ class ScanScreen extends StatelessWidget {
                     ),
                     */
                     UploadTabs(
-                      wareHouseName: offersCubit.warehouseController.text, form: _form,
+                      wareHouseName: offersCubit.warehouseController.text,
+                      form: _form,
                     ),
                   ],
                 ),
@@ -105,8 +109,6 @@ class ScanScreen extends StatelessWidget {
                   );
                 },
               ),
-
-
             ],
           ),
         ),
@@ -115,10 +117,10 @@ class ScanScreen extends StatelessWidget {
   }
 }
 
-
 class ProcessingStatusCard extends StatefulWidget {
   final Duration checkInterval;
-  final Future<String> Function() onCheckStatus; // returns 'processing' or 'completed'
+  final Future<String> Function()
+  onCheckStatus; // returns 'processing' or 'completed'
 
   const ProcessingStatusCard({
     super.key,
@@ -192,7 +194,11 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
             Row(
               children: [
                 _isCompleted
-                    ? const Icon(Icons.check_circle, color: Colors.green, size: 24)
+                    ? const Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 24,
+                      )
                     : RotationTransition(
                         turns: _spinController,
                         child: SizedBox(
@@ -208,8 +214,13 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
                       ),
                 const SizedBox(width: 10),
                 Text(
-                  _isCompleted ? 'Processing complete!' : 'Processing document...',
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  _isCompleted
+                      ? 'Processing complete!'
+                      : 'Processing document...',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 _StatusBadge(status: _status),
@@ -218,11 +229,7 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
             const SizedBox(height: 16),
 
             // Step 1 — always done
-            _buildStep(
-              number: 1,
-              label: 'Uploading file...',
-              status: 'done',
-            ),
+            _buildStep(number: 1, label: 'Uploading file...', status: 'done'),
             // Step 2
             _buildStep(
               number: 2,
@@ -241,8 +248,11 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
     );
   }
 
-  Widget _buildStep(
-      {required int number, required String label, required String status}) {
+  Widget _buildStep({
+    required int number,
+    required String label,
+    required String status,
+  }) {
     Widget icon;
     Color labelColor;
     FontWeight labelWeight;
@@ -253,7 +263,9 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
           width: 24,
           height: 24,
           decoration: const BoxDecoration(
-              color: Colors.green, shape: BoxShape.circle),
+            color: Colors.green,
+            shape: BoxShape.circle,
+          ),
           child: const Icon(Icons.check, size: 14, color: Colors.white),
         );
         labelColor = Colors.grey.shade500;
@@ -264,13 +276,18 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-              color: Colors.blue.shade400, shape: BoxShape.circle),
+            color: Colors.blue.shade400,
+            shape: BoxShape.circle,
+          ),
           child: Center(
-            child: Text('$number',
-                style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600)),
+            child: Text(
+              '$number',
+              style: const TextStyle(
+                fontSize: 11,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         );
         labelColor = Colors.black87;
@@ -286,8 +303,10 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
             border: Border.all(color: Colors.grey.shade300),
           ),
           child: Center(
-            child: Text('$number',
-                style: TextStyle(fontSize: 11, color: Colors.grey.shade400)),
+            child: Text(
+              '$number',
+              style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+            ),
           ),
         );
         labelColor = Colors.grey.shade400;
@@ -300,9 +319,14 @@ class _ProcessingStatusCardState extends State<ProcessingStatusCard>
         children: [
           icon,
           const SizedBox(width: 10),
-          Text(label,
-              style: TextStyle(
-                  fontSize: 13, color: labelColor, fontWeight: labelWeight)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              color: labelColor,
+              fontWeight: labelWeight,
+            ),
+          ),
         ],
       ),
     );
